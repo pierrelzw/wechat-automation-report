@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>更新日志 / Changelog — 微信自动化工具</title>
+<style>
+  :root { --bg:#f5f5f7; --card:#fff; --ink:#1d1d1f; --sub:#86868b;
+          --line:#d2d2d7; --accent:#0071e3; --code-bg:#f0f0f2; }
+  * { box-sizing: border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;
+         background:var(--bg); color:var(--ink); margin:0; line-height:1.65;
+         -webkit-font-smoothing:antialiased; }
+  a { color:var(--accent); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  .site-nav { background:rgba(255,255,255,.82); backdrop-filter:saturate(180%) blur(18px);
+              border-bottom:1px solid var(--line); position:sticky; top:0; z-index:10; }
+  .site-nav .inner { max-width:900px; margin:0 auto; padding:0 20px; display:flex;
+                     flex-wrap:wrap; gap:4px; align-items:center; min-height:48px; }
+  .site-nav a { font-size:14px; color:var(--sub); padding:8px 12px; border-radius:8px;
+                white-space:nowrap; }
+  .site-nav a:hover { background:rgba(0,0,0,.04); color:var(--ink); text-decoration:none; }
+  .site-nav a.on { color:var(--ink); font-weight:600; background:rgba(0,0,0,.05); }
+  .wrap { max-width:900px; margin:0 auto; padding:36px 20px 80px; }
+  .page-head h1 { font-size:28px; margin:0 0 6px; letter-spacing:-.01em; }
+  .page-head p.lead { color:var(--sub); font-size:14px; margin:0 0 32px; }
+  .site-foot { max-width:900px; margin:0 auto; padding:28px 20px 60px; color:var(--sub);
+               font-size:13px; border-top:1px solid var(--line); }
+
+  .summary { background:var(--card); border-radius:14px; box-shadow:0 1px 3px rgba(0,0,0,.08);
+             padding:24px 28px; margin-bottom:34px; }
+  .summary h2 { font-size:17px; margin:0 0 4px; }
+  .summary > p { color:var(--sub); font-size:14px; margin:0 0 18px; }
+  .ms { display:grid; grid-template-columns:auto 1fr; gap:10px 18px; }
+  .ms .k { font-family:"SF Mono",Menlo,monospace; font-size:13px; color:var(--sub);
+           white-space:nowrap; padding-top:2px; }
+  .ms .k b { display:block; color:var(--accent); font-size:14px; }
+  .ms .v strong { display:block; font-size:15px; }
+  .ms .v span { color:var(--sub); font-size:14px; }
+  @media (max-width:600px) { .ms { grid-template-columns:1fr; gap:4px 0; }
+                             .ms .k { padding-top:12px; } }
+
+  .timeline { position:relative; padding-left:28px; }
+  .timeline::before { content:""; position:absolute; left:7px; top:6px; bottom:6px;
+                      width:2px; background:var(--line); }
+  .node { position:relative; margin-bottom:28px; }
+  .dot { position:absolute; left:-28px; top:6px; width:16px; height:16px; border-radius:50%;
+         background:var(--accent); border:3px solid var(--bg); }
+  .meta { display:flex; align-items:baseline; gap:12px; margin-bottom:8px; }
+  .ver { font-size:18px; font-weight:600; font-family:"SF Mono",Menlo,monospace; }
+  .date { color:var(--sub); font-size:13px; }
+  .body { background:var(--card); border-radius:12px; box-shadow:0 1px 3px rgba(0,0,0,.08);
+          padding:14px 20px; overflow-wrap:anywhere; }
+  .body h3.sec { font-size:14px; margin:14px 0 6px; color:var(--sub); font-weight:600; }
+  .body h3.sec:first-child { margin-top:2px; }
+  .body ul { margin:4px 0; padding-left:20px; }
+  .body li { margin:4px 0; }
+  .body code { background:var(--code-bg); border-radius:4px; padding:1px 5px;
+               font-family:"SF Mono",Menlo,monospace; font-size:13px; }
+  .body p { margin:6px 0; }
+  .empty { color:var(--sub); }
+</style>
+</head>
+<body>
+<nav class="site-nav"><div class="inner"><a href="index.html">项目总结</a><a href="report.html">生产数据报告</a><a href="manual.html">使用手册</a><a href="changelog.html" class="on">更新日志</a><a href="archive.html">历史报告</a></div></nav>
+<div class="wrap">
+  <div class="page-head">
+    <h1>更新日志</h1>
+    <p class="lead">共 70 个发布版本，2025-12-16 → 2026-07-23。每条都写了「为什么这么改」，而不只是「改了什么」。</p>
+  </div>
+  <div class="summary">
+    <h2>七个月，九个转折点</h2>
+    <p>下面是从 70 个发布版本里挑出的、运营侧真正能感知到变化的几次。完整记录见页面下方时间线。</p>
+    <div class="ms"><div class="k">2025-12-16<b>v1.0.0</b></div><div class="v"><strong>批量邀请上线</strong><span>CSV 一行一个人，脚本按表把人拉进群，替代逐个手工搜索、点选、确认。</span></div><div class="k">2026-02-23<b>v2.0.0</b></div><div class="v"><strong>从单一脚本变成通用框架</strong><span>同群多人合并成一批，一个邀请窗口一次处理多人；同时新增「批量发消息」工作流。</span></div><div class="k">2026-05-21<b>v2.15.0</b></div><div class="v"><strong>发消息支持多账号，并产出人工复核报告</strong><span>一个收件人可发多条、按顺序执行；每条发完自动截图，跑完生成 review.html 供逐条验收。</span></div><div class="k">2026-06-06<b>v2.25.0</b></div><div class="v"><strong>配置随发布包分发、运行期只读</strong><span>坐标和配置不再由运行时改写，「这台机器跑的是哪份配置」可以直接审计。</span></div><div class="k">2026-06-06<b>v3.0.0</b></div><div class="v"><strong>批量转发工作流成型</strong><span>公众号文章卡片以卡片形态逐条转发；CSV 收敛成两列，更短也更难填错。</span></div><div class="k">2026-06-15<b>v3.8.0</b></div><div class="v"><strong>支持企业微信拉群</strong><span>同一套流程覆盖微信与企业微信两个平台。</span></div><div class="k">2026-07-20<b>v3.13.0</b></div><div class="v"><strong>堵住「静默假成功」</strong><span>开启「群聊邀请确认」的群补上第三步确认；识别不出按钮时如实报失败，不再翻译成「这个群本来就不需要确认」。</span></div><div class="k">2026-07-22<b>v3.14.0</b></div><div class="v"><strong>选人判定从「画面变了吗」改成读计数器</strong><span>直接读弹窗上的「已选择 N 个」：+1 才算选中，数字变少说明把上一个人取消了。批次发送前再独立核对一次人数，对不上就不发。</span></div><div class="k">2026-07-23<b>v3.14.2</b></div><div class="v"><strong>项目交付版本</strong><span>最终发布版本，历时 7 个月。</span></div></div>
+  </div>
+  <div class="timeline">
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.14.2</span><span class="date">2026-07-23</span></div>
+      <div class="body">
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>粘贴微信号后的等待从 0.3 秒提到 0.8 秒（微信拉群 + 全部转发）</strong>——为什么这么改：0.3 秒下粘贴结果未必渲染完，下一个按键会打在旧画面上，用于判定的截图反映的是粘贴<strong>之前</strong>的状态，于是一个有效联系人被误判成 <code>[suspect]</code>，运营还得人工核对、整批重跑。<strong>这条分支正是 3.14.0 的「按弹窗已选计数判定」没覆盖到的那条</strong>——计数判定只在企业微信生效，微信拉群和微信转发仍然靠帧差判定，仍然依赖粘贴已经渲染完成。0.8 不是拍脑袋：定 <code>inviteSearchSettleSec</code> 的那次 spike 已经测出 0.3 过低、0.9 足够，0.8 落在其内。企业微信拉群走另一条分支，本次不动。<ul><li><strong>代价</strong>：每个收件人多等约 0.5 秒，227 人的一轮约 <strong>+2 分钟</strong>。相比一次误判导致的人工核对加重跑，这个代价可以接受。固定延时是钝器，长期正解是「轮询到画面稳定」（issue #165）。</li></ul></li></ul>
+<h3 class="sec">测试 🧪</h3>
+<ul><li><strong>端到端断言改为按收件人身份绑定，不再按行号</strong>——为什么这么改：原先 <code>assert_status 3 &quot;success&quot;</code> 是按<strong>行号</strong>定位的，CSV 一重排断言就会落到<strong>另一个联系人</strong>身上、却依然通过；断言还在，保护没了。现在按 <code>wechat_id</code> / <code>recipient</code> 查行。</li><li><strong>补上从未被验证的 <code>[suspect]</code> 子类</strong>——原断言的标签写着「message=[suspect] …」，但代码只比对 status 列，从来没看过 message。<code>failed</code> 本身分不出「坏收件人」和「别的失败」，而运营看的正是子类。</li><li><strong>加一条 <code>SESSION_END</code> 完整分解断言</strong>，并把「截图数 ≥6」「检测器 ≥3 个联系人」这类下限改成精确值——固定 fixture 下这些数是确定的，用下限等于放过「少跑了一个人」这种回归。</li><li><strong>端到端跑得更快</strong>：拉群测试的四行并进同一个群（少一次弹窗会话），发送测试去掉冗余的第二次成功发送（一条正常发送 + 一条坏收件人检测，两条路都还在）。</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.14.1</span><span class="date">2026-07-23</span></div>
+      <div class="body">
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>同一批里重复出现的收件人会互相抵消，两行都被记成成功（issue #234）</strong>——为什么这么改：多选弹窗里第二次粘贴同一个 id 再回车，落点是<strong>已经勾选</strong>的那一行，回车把第一次的选中 <strong>toggle 掉了</strong>。结果这个人一条都没收到，而两行 CSV 都写着 <code>success</code>。<code>bugs/20260720_161930</code> 那批就是这样：<code>155**<strong>1263</code> 在同一批出现两次（p5 和 p7），实际零送达。现在分批之后、进弹窗之前先做</strong>批内去重<strong>：保留首行，后续重复行不进弹窗。</strong>跨批重复不动<strong>——那是两次独立的弹窗会话，属合法的重复发送。send 明确排除：它按 <code>(inviter, recipient)</code> 分批，同一收件人的多行</strong>就是**多消息 <code>seq</code> 设计，去重会直接丢消息。<ul><li>与 3.14.0 的「按弹窗已选计数判定」是<strong>互补而非重复</strong>：那个负责在选中出问题时<strong>发现</strong>，这个负责让重复项<strong>根本不进弹窗</strong>。</li><li>被跳过的行<strong>镜像首行的真实结果</strong>：首行成功 → <code>success</code> + <code>[skip] 同批重复收件人（已随首行发送）</code>；首行失败 → 同样失败 + <code>[blocked] 同批首行未送达，请重试</code>（可被 <code>--retry-failed</code> 捞回）；该批次没跑 → 保持 <code>pending</code> 下次重放。记 <code>success</code> 而不是 <code>failed</code>，是因为这个人<strong>确实收到了</strong>（随首行发出），记失败会让运营去重发一条已经发过的消息。</li><li><strong>一个可见后果</strong>：<code>[skip]</code> 行在会话汇总里落「跳过」桶、不落「成功」桶（<code>analyze_session_state</code> 先看 message 前缀再看 status）。所以「成功 N」是真正发出去的条数，重复行单独计。这是既有 <code>[skip]</code> 语义的直接结果，不是新行为。</li></ul></li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.14.0</span><span class="date">2026-07-22</span></div>
+      <div class="body">
+<h3 class="sec">新增 ✨</h3>
+<ul><li><strong>逐人选人改用 picker「已选择 N 个」计数器做绝对判定（issue #232 / #235）</strong>——为什么这么改：原来的判据是<strong>差分哈希</strong>（对弹窗连拍三到四帧比 MD5），它只回答「画面变了吗」，不回答「往哪变」。于是三种截然不同的结果在哈希上完全同构、全判 success：正常选中一个人、什么都没选上、以及<strong>把上一个人取消掉</strong>。第三种最坏——它让收件人数不升反降，却被记成成功。生产 run（<code>bugs/20260720_161930</code>，企微转发 233 行 / 26 批）因此把 16 个从未进入收件人列表的人写成 <code>success</code>，日志报 227 成功、实际只选中 211。计数器把这三种拆开了：<code>+1</code> 成功、不变 = 没选上、<strong>变少 = 取消了上一位（本人和上一位一起标 suspect）</strong>。新增 <code>wca-ax --selected-count</code> 子命令读这个数字，新增引擎 handler <code>findPickerSelectedCount</code> / 判定 handler <code>evalSelectedCountVerdict</code>。</li><li><strong>判定策略可配置、且天然可回滚</strong>：<code>apps.&lt;bundleId&gt;.&lt;workflow&gt;.verify_strategies</code> 现在是 <code>[&quot;ocr_selected_count&quot;, &quot;hash_2point&quot;]</code>——先绝对、后差分。<strong>OCR 读不到计数器时不返回判定，而是落到原来的哈希路径</strong>，行为与 3.13.0 完全一致。这条回退是刻意的，而且真机证明它是必需的：企微<strong>转发</strong>与<strong>邀请</strong>的计数器都已取证可读，但 picker 在<strong>已选 0 人时根本不渲染</strong>这行字——所以「第一个人就没选上」必然读不到计数，只能靠 hash 兜底。两种判据互补：计数器独有「变少」这一维，hash 独有「已在群内 vs 没搜到」的区分，因此 hash <strong>不能删</strong>。微信（非企微）转发 picker 没有这个计数器，该路径上本方案惰性、行为不变。回滚方式是从该列表里删掉 <code>ocr_selected_count</code>，改配置即可，不用改代码。</li><li>新增配置块 <code>picker_selected_count</code>（<code>top_fraction=0.15</code>、<code>min_confidence=0.1</code>）。<code>top_fraction</code> 是<strong>弹窗高度的比例</strong>而非像素偏移，因此与分辨率无关（计数器固定在距顶部约 6–8% 处，实测有效区间 0.08–0.40，默认值两端各有近一倍余量），不需要按机器指纹分桶。</li></ul>
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>转发点「分别发送」前新增一道独立核对闸门（issue #233）</strong>——为什么这么改：批次末那行 <code>分别发送成功（弹窗已关闭），成功收件人=N</code> 看着像一次验证，其实 <code>N</code> 就是<strong>同一批 per-task 判定的累加</strong>，它和逐人判定永远自洽，逐人错多少它就跟着错多少。#231 里 b25 报 8、实际 6，这行日志毫无察觉；「弹窗已关闭」也只证明按钮点击被接受了，不证明每个人都收到了。现在点发送<strong>之前</strong>独立读一次计数器，与本批<strong>唯一</strong>收件人数比对（<code>wca/batching.py</code> 不去重，一批里合法地可能有重复行——#231 的 b26 就是 8 行 / 7 唯一）。比对的是一个<strong>区间</strong>而不是单个数：下限＝本批判定为成功的唯一收件人数（这些人必须在弹窗里，少一个就说明有人被记成已送却根本不在），上限＝本批实际输入过的唯一收件人数（弹窗不可能比这更多），中间那段差额就是 suspect——本来就没把握的人，在不在都不算异常。<strong>落到区间外才不发送</strong>，整批标 <code>failed</code> 并写明「应选中 N 人、实际选中 M 人」。之所以不要求严格相等：一批 9 人里只要有 1 个 id 没选中，严格相等会把整批拦下、另外 8 个已正确选中的人一个都收不到——那是把「静默少发」换成了「响亮地全不发」。读不到计数器时放行（fail-soft）——读不到不等于漏选，不能因为 OCR 失效就拦下正常批次。成本约 0.33 秒/批，26 批的 run 里合计约 9 秒。</li><li>那行误导的 <code>成功收件人=</code> 日志已按「supersede by deletion」删除，改为打印闸门实际读到的人数；闸门没读到时如实写「本批已选人数未能核对」，而不是拿一个从没被核对过的数字顶上。</li></ul>
+<h3 class="sec">测试 ✅</h3>
+<ul><li>新增 <code>make test-ocr-selected-count</code>（30 例）：26 张来自生产 run 的计数器裁剪图，真值取自 #231 的人工核对表（含六个漏选批次 b8/b12/b23/b24/b25/b26），外加一张<strong>合成干扰图</strong>（真实计数器条 + 三个<strong>假</strong>手机号，验证锚定正则不会把手机号读成计数）、一张无计数器的负例、以及 <code>top_fraction</code> 上下界。裁剪图<strong>逐张验证过不含昵称与手机号</strong>才入库——未裁剪的原图顶部条带里同时有收件人手机号和联系人昵称，不能入库；这也是 <code>--selected-count</code> 只输出 <code>COUNT=</code>、任何情况下都不回显识别文本的原因。</li><li>新增 <code>make test-selected-count-eval</code>（9 例）：<code>evalSelectedCountVerdict</code> 是两个整数的纯函数，判定表逐行锁定，其中「计数变少」正是差分哈希结构上看不见的那一种。</li><li>新增 <code>make test-batch-gate-range</code>（7 例）：批次闸门的期望区间是 <code>perRecipient</code> 列表的纯算术，锁住「一人 suspect 只是把窗口放宽、不会把整批拦下」，以及去重、重复行成败混合、canceled 不计入等口径。</li><li>三个新测试均已并入 <code>make ci</code>，不需要微信、不需要辅助功能权限。</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.13.0</span><span class="date">2026-07-20</span></div>
+      <div class="body">
+<h3 class="sec">新增 ✨</h3>
+<ul><li><strong>企业微信：开启「群聊邀请确认」的群，邀请多一步「发送」确认（issue #227）</strong>——为什么这么改：之前的流程假设点完「邀请」就发出去了。但群主开启「群聊邀请确认」后，企微会再弹一个独立对话框（标题「提示」，正文「群主或群管理员已启用&quot;群聊邀请确认&quot;」，一个选填的理由输入框，按钮「取消 / 发送」），<strong>必须点「发送」邀请才会转给群主/管理员审批</strong>。旧代码不认识它，被后置成功门当成「弹窗没关掉 = 邀请失败」，于是按 ESC 把它关掉——<strong>等于主动取消了这次邀请</strong>，还报了句误导的「可能已被对方删除」。现在点完「邀请」后追加一次条件式定位：找到「发送」就点，找不到（未开启该设置的群）就什么都不做，两种群共用一条代码路径，<strong>不判断也不配置邀请人是不是管理员</strong>。真机验证 <code>企微自动拉群测试</code> success、<code>企微批量群邀请test</code>（未开启该设置）不触发第三步且无回归。</li><li>新增配置项 <code>apps.&lt;bundleId&gt;.invite.send_confirm_labels</code>（默认 <code>[&quot;发送&quot;,&quot;Send&quot;]</code>），仅为该按钮文案，便于客户端改字或英文版时免重新打包。</li><li><strong>会话日志第一行记录版本号</strong>（<code>[INFO] wechat_automation v3.13.0 workflow=invite dry_run=false</code>）——为什么这么改：issue #226 的定位依赖&quot;这次跑的是 3.12.5&quot;，而这个信息日志里根本没有，是靠操作同学回忆出来的。现在它是 <code>run()</code> 里<strong>最先</strong>写的一行，早于任何可能中止的步骤（配置校验、辅助功能权限预检），因为<strong>预检失败正是最需要知道版本的时候</strong>。单独一行而不是挂在 <code>SESSION_START</code> 上，就是为了这个顺序；<code>VERSION</code> 读不到时记 <code>unknown</code>，绝不因此中断会话。</li></ul>
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong><code>apps.&lt;bundleId&gt;.invite</code> 的三个文案配置项恢复生效（本分支自身引入的回归）</strong>——为什么这么改：删除 <code>picker_confirm_labels</code> / <code>picker_cancel_labels</code> 时，连带把旁边 <code>picker_titles</code>、<code>delayed_confirm_labels</code> 以及本次新增的 <code>send_confirm_labels</code> 的<strong>赋值行</strong>一起删掉了。三者仍被解析、仍存进临时变量，但再也没有写回 <code>appProfile*</code> 属性——<strong>改了配置等于没改</strong>，永远只用编译期默认值。因为出厂配置的值恰好等于默认值，行为上看不出来。这直接推翻了 <code>send_confirm_labels</code> 的存在理由（&quot;客户端改了文案时不用在没有开发环境的目标机上重新打包&quot;）。已补回三行赋值，并把 init 日志里的<strong>计数</strong>改为<strong>实际文案</strong>，这样配置没生效可以一眼看出来（计数改不改都是 2）。</li><li><strong><code>invite_ocr.enabled=false</code> 不再是这两个条件式弹窗的回滚开关</strong>——延迟「邀请」和「确认发送」只能靠 OCR 定位（弹窗是临时的，plist 里没有记录锚点），关掉 OCR 只会让每一步空转到超时再报「识别不出按钮」。现在检测到 <code>enabled=false</code> 时立即返回并在日志点名这个配置项，而不是烧掉 5 秒预算让人以为是 OCR 认错了。AGENTS.md 对应旋钮说明同步修正（该开关只回滚有 plist 兜底的按钮）。</li><li><strong>邀请确认改为「所有弹窗清空」判定，识别不出按钮一律报错</strong>——为什么这么改：原来的成功判据是 <code>checkInvitePickerOpened</code>，它只看「添加群成员」这一个弹窗，而「确认发送」是<strong>独立顶层窗口</strong>，它根本看不见——之前没出事只是因为提示弹窗出现时添加群成员恰好还叠在后面，属于运气不是设计。现在每一步都问同一个问题：<strong>弹窗是不是全没了</strong>（窗口数≤1 且无 sheet，与每批干净基线同一定义），全没了才算成功。流程也从「固定超时」改为「看屏幕状态」：点完确定 → 弹窗没了就结束（无需二次确认的群）→ 否则找「邀请」点击 → 弹窗没了就结束（管理员群）→ 否则找「发送」点击 → 弹窗没了才算成功。副作用是无需二次确认的群不再空等 5 秒，第一次窗口读取（约 100ms）就返回。</li><li><strong>「多次识别不出按钮」现在是一个会报出来的失败，不再被当成「本来就没有」</strong>——这是 issue #226 静默假成功的根源：超时被翻译成「小群，无需二次确认」这个<strong>语义结论</strong>，而超时真正的含义只是「我没看见」。现在只要弹窗还在却识别不到已知按钮，就 <code>failed</code> 并在日志写明尝试了哪些文案、试了几次、扫了哪块区域（每次尝试的 OCR 候选列表也在上方），同时存一张截图。无论企微将来加出第几个弹窗，判据都不用改。</li><li><strong>批次异常时，选人阶段记下的 success 会被回收</strong>——选中 ≠ 已邀请：每个收件人在选人阶段就带着 <code>success</code> 进了结果集，但「确定→邀请→发送」还没点。正常路径早有降级逻辑（<code>inviteFailed</code> 时改回 failed），<strong>异常路径没有</strong>，于是确认阶段一抛错就绕过它，真机实测出现过「批次报错 status=error，任务却写 success」。现在异常处理里补上同样的回收，且失败文案按实际观察到的状态区分，不再一律「可能已被对方删除」。</li><li><strong>新增 <code>make lint</code> 静态检查 <code>scripts/check-handler-calls.sh</code></strong>——AppleScript 的 handler 调用是<strong>运行时</strong>解析的，所以改名漏改调用点能正常编译，只在那条分支真正执行时才炸 <code>-1708</code>。而那条分支可能恰好是 e2e 够不到的：invite e2e 跑在 <code>WCA_SUPPRESS_INVITE_FINAL_CLICK=1</code> 下，停在「邀请」点击之前，所以下游「确认发送」里的坏调用一路绿灯发了出去。新检查逐个校验 workflow 里的 <code>engineRef&#x27;s &lt;handler&gt;</code> 是否在引擎中存在，不需要微信、不需要辅助功能权限、可进 CI，覆盖所有调用点而不管 e2e 能跑到哪几条。</li><li><strong>点击抖动过大导致小按钮被点空（全局默认 <code>sigma</code> 5.0→2.0、<code>max_radius</code> 12→5）</strong>——为什么这么改：<code>click_jitter</code> 是防指纹用的随机偏移，但 <code>max_radius</code> 实际是<strong>逐轴</strong>夹紧，即 ±N 的方框而非半径，对角线最大位移达 N×√2 ≈ 17pt。而「发送」按钮只有约 24pt 高（半高 12pt），抖动半径和它半高相当，等于抛硬币：真机实测 <code>target=(1194,575) actual=(1191.0,584.7)</code> 点在按钮边缘外，弹窗没关，随后被后置门 ESC 掉。之前一直没暴露，是因为其它按钮（如「确定」约 44pt 高）足够大扛得住。抖动的意义是模拟人手，而人手不会点到按钮外面去，所以按<strong>最小可点目标</strong>重新定尺寸而非给单个按钮开特例。改后实测偏移收敛到 (-1.4,-4.7)，稳定落在按钮内；防指纹的随机性保留。</li></ul>
+<h3 class="sec">重构 ♻️</h3>
+<ul><li><strong>延迟「邀请」改用 OCR 定位，<code>--picker-state</code> 整条 AX 子命令下线（issue #226 根因修复）</strong>——为什么这么改：生产日志（3.12.5，204 人大群）显示这次 AX 读取耗时 <strong>13.9 秒</strong>，而同一段代码在小测试群只要 <strong>94 毫秒</strong>——<code>--picker-state</code> 会遍历右侧成员列表，规模一上去就退化。5 秒的轮询预算被第一次采样就撑爆，于是大群被判成「小群，无需二次确认」，<strong>邀请没发出去却写了 success</strong>。改用 OCR 后耗时只跟裁剪区大小有关，与成员数无关；真机实测 OCR 定位到的坐标 <code>(1211,550)</code> 与原 AX 读数完全一致。</li><li>顺带清掉随之失效的死代码：<code>readForwardPickerState</code>（只在 <code>verify_strategies</code> 含 <code>ax_selected_count</code>/<code>ax_row_checked</code> 时运行，而编译默认和 <code>config.example.json</code> 的所有档案全是 <code>hash_2point</code>，出厂配置跑不到）、<code>ax_selected_count</code>/<code>ax_row_checked</code> 两个校验策略、以及 <code>wca-ax --picker-state</code> 子命令及其 <code>--picker-titles</code>/<code>--confirm-labels</code>/<code>--cancel-labels</code>/<code>--count-patterns</code> 参数。对应的 <code>config.example.json</code> 假旋钮（<code>picker_confirm_labels</code>/<code>picker_cancel_labels</code>/<code>selected_count_patterns</code>）一并移除，避免留下无人读取的配置项。引擎 -8 KB，inspector -8 KB。</li><li><strong><code>--reset-drag</code> 从来没有把框选矩形写回 <code>config.json</code></strong>——为什么这么改：它调的是 <code>wca-ax --screen-fingerprint</code>，而这个子命令<strong>不存在</strong>（实测 exit=66、stdout 为空），<code>WeChatEngine.applescript</code> 里那个同名 handler 的注释就写着 &quot;there is NO --screen-fingerprint subcommand&quot;，引擎自己是用 <code>--screen-info</code> 拼指纹的。于是每次 <code>--reset-drag</code> 都在 <code>check_output</code> 抛异常 → 记一条 WARN → 静默跳过写回，而&quot;保存到 config.json&quot;正是这个开关存在的全部理由：手工拖的矩形只活在本次 session 里，跑完就没了。之所以带着这个 bug 发布，是因为<strong>单元测试把不存在的子命令 mock 成了存在</strong>（<code>return_value=b&quot;1710x1107@2x\n&quot;</code>，直接返回一个拼好的指纹），测的是 mock 不是行为。现改为与引擎同源地从 <code>--screen-info</code> 组装；新增的 3 个测试断言的是<strong>实际执行的 argv</strong> 和拼接结果（旧 bug 会让它们失败），并覆盖字段缺失、非零退出两种降级。另有一个测试确保微信写的是顶层 <code>forward.select_drag_region</code>，企微写的是 <code>apps.&lt;canonical&gt;</code> —— 之前只有企微那条被覆盖。</li><li><strong><code>config.example.json</code> 里微信转发的出厂预设是错的（<code>1710x1107@2x</code>）</strong>——为什么这么改：<code>window_rect</code> 给 920 宽，而会话列表侧边栏固定吃掉约 310pt，消息面板只剩约 610pt；预设的框选起点 <code>[340,115]</code> 因此<strong>落在会话列表里</strong>，拖拽扫过的是聊天行而不是消息，一条卡片都选不中，「逐条转发」工具栏根本不出现，整批以 OCR miss 失败。改为 <code>{x:180,y:56,w:1350,h:1000}</code> + <code>start:[420,150] end:[1300,910]</code>（起点距侧边栏边界留 110pt 余量，y 避开约 100pt 的会话标题栏——落在标题栏上拖动的是<strong>窗口本身</strong>）。真机 <code>make test-forward-e2e</code> 验证 success=2 failed=0。这份模板是 <code>.github/workflows/release.yml</code> 自动发版时 <code>cp</code> 成 <code>config.json</code> 打进 zip 的，所以坏预设会直接发给同指纹的使用者。两处 <code>_comment</code> 补上四条边各自的约束和实测数值，避免下一个人再照着错的缩放。</li><li><strong>补齐删除清扫（delete-grep）漏掉的三处</strong>：<code>docs/product-overview.md</code> 是整份恢复回来的，因此仍在描述本版已删除的东西——<code>wca-ax</code> 能力表里的 <code>--picker-state</code>、invite 确认弹窗一栏里的 <code>pollForDelayedInviteConfirm</code> 与<strong>「小群超时即视为完成」</strong>（这句正是 issue #226 的 bug 被当成设计写了下来）、已删除的 <code>WCA_SUPPRESS_INVITE_FINAL_CLICK</code>、以及&quot;仍可用 <code>verify_strategies</code> 切回&quot;（同一个 PR 里 <code>config.example.json</code> 已改口说改不回去了）。四处均已改写为当前行为，版本号同步到 v3.13.0。</li><li>删除引擎里三行读不到的解析代码：<code>confirm_label=</code> / <code>cancel_label=</code> / <code>count_pattern=</code> 仍在往 <code>cfgConfirmLabels</code> / <code>cfgCancelLabels</code> / <code>cfgCountPatterns</code> 里写，而这三个变量的声明已随 AX 路径删掉。今天不会真的执行（Perl 发射端不再产出这三个前缀），但这正是本版刚修过的那类隐患——正是这种残留让当初&quot;解析了却没赋值回去&quot;的三行漏了很久没人发现。</li><li>新增 <code>invite_ocr.dialog_min_confidence</code>（默认 0.15）：企微把这两个条件式弹窗的按钮画成浅色小字，Vision 只给 ~0.5 分，沿用 0.6 的门槛会把<strong>已经正确识别出来的</strong>「邀请」丢掉（真机实测候选里明明有 <code>text=邀请 conf=0.50</code>）。真正的判据是裁剪区内的逐 token 精确匹配而非分数，与既有的 <code>forward.toolbar_min_confidence</code> 同理同值。</li></ul>
+<h3 class="sec">测试 🧪</h3>
+<ul><li><strong>大群 e2e 改为真实运行，删除 <code>WCA_SUPPRESS_INVITE_FINAL_CLICK</code></strong>——为什么这么改：该开关让 e2e 停在「邀请」点击之前，于是<strong>它下游的一切都无法被任何断言观察到</strong>——issue #227 的「确认发送」正是这样带着一个运行时错误（handler 改名漏改调用点）通过了绿色测试。与其在注释里写明&quot;这里没覆盖&quot;，不如让测试真的跑到：e2e 现在不加抑制跑完整流程，新增断言覆盖「确认发送」确实执行、且<strong>只在开启群聊邀请确认的那个群执行</strong>（两个方向都断言，才能证明它是条件式而非总是执行）、以及每次邀请后弹窗确实清空。可重复性有实证支撑：autohighlight 是被邀请进企微外部群的<strong>微信用户</strong>，入群需对方接受/管理员审批，测试环境无人接受，故不会真正入群——2026-07-21 连续 8 次以上真实运行均为「成功」，从未变成「已在群内」。开关删除后 dry-run 对「确定」变为<strong>永远只移动不点击</strong>（安全默认更严），真实路径不受影响。</li><li><strong>清理本次重构遗留的死代码</strong>：<code>pollForInviteDialogByOcr</code>（被 <code>awaitInviteDialogOrCleared</code> 取代后零调用）及仅为它存在的 <code>centeredDialogCrop</code> 辅助函数，共 -3.3KB。</li><li><strong>两处日志改到点击之后再写，文案也改准</strong>：<code>进度 二次邀请: 已发送</code> 原先写在 <code>performDirectClick</code> <strong>之前</strong>，而 e2e 正是拿这行当&quot;点击发生过&quot;的证据——过程日志冒充结果，恰好是本次刚写进 AGENTS.md 的反面教材。且&quot;已发送&quot;对开启了群聊邀请确认的群是错的（点「邀请」并没有发出去，要再点「发送」），故改名为 <code>已点击邀请</code>；<code>进度 确认发送: 已确认</code> 同样移到点击之后。</li><li><strong>e2e 计数用 <code>|| true</code> 而非 <code>|| echo 0</code></strong>：<code>grep -c</code> 数到 0 时会<strong>同时</strong>打印 <code>0</code> 并以失败退出，<code>|| echo 0</code> 于是又补一个 <code>0</code>，变量变成两行的 <code>&quot;0\n0&quot;</code>，随后 <code>[[ -ge ]]</code> 抛 bash 语法错误——偏偏就发生在本该打印失败原因的地方。四处已修正。</li><li><code>invite_wecom_largegroup_test.csv</code> 增加第二个群（<code>企微自动拉群测试</code> / autohighlight），延迟「邀请」检测断言由&quot;存在即通过&quot;改为<strong>按次计数 2/2</strong>——原来的 <code>grep -q</code> 只要任一个群命中就算过，新群完全检测不到也照样 PASS。超时改为按群数推导，避免加群后静默超时。</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.12.5</span><span class="date">2026-07-17</span></div>
+      <div class="body">
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>键盘选人：回车后拍&quot;确认&quot;截图前的等待从 0.4s 提到 1.0s，减少有效联系人被误判&quot;已在群内&quot;（issue #165 的 hotfix）</strong>——为什么这么改：<code>selectRecipientByKeyboard</code>（invite + forward 共用的逐人选人 + suspect 检测）靠对 picker 弹窗连拍截图、比对 MD5 判断有没有选中。判据里 <code>down == confirmed</code>（回车前后两帧相同）被解释为&quot;回车是空操作 = 该联系人已在群内&quot;。但回车后弹窗<strong>右侧&quot;即将添加&quot;人员列表</strong>的刷新在慢机器 / 高负载 / Chromium 渲染卡顿时可能<strong>晚于 0.4s</strong> 才画出来，于是&quot;confirmed&quot;帧仍停在&quot;down&quot;帧 → 两帧指纹相同 → 一个<strong>已成功选中</strong>的联系人被误标 <code>[suspect] 该联系人可能已在群内</code>。生产上真机复现：报告写&quot;可能已在群内&quot;，但 <code>确定</code> 仍把该联系人一并邀请了（selectRecipientByKeyboard 返回 suspect 不会撤销已按下的选择），即误报状态、非漏邀请。修复：把两处固定等待都从 <code>0.4s</code> 提到 <code>1.0s</code>（<code>randomDelay(1.0, 0.1)</code>）——① 回车后、拍&quot;confirmed&quot;前（治 <code>down==confirmed</code> 误判&quot;已在群内&quot;）；② 按 Down 后、拍&quot;down&quot;前（治同源的 <code>searched==down</code> 误判&quot;未搜到/无高亮&quot;，慢机器上 Down 高亮渲染晚于 0.4s 时有效结果被误标）。给 UI 足够渲染时间。这是&quot;固定延时 + 单次采样&quot;竞态的<strong>治标 hotfix</strong>（WeChat <code>evalHash2Point</code> + WeCom <code>evalInviteHashUpDown</code> 两条 invite 路径 + forward <code>evalHash2Point3</code> 共享 confirmed 帧均受益）；<strong>根治方案是 poll-until-stable</strong>（轮询到连续两帧相同=UI 稳定再判），另行跟踪。检测路径变更，PR 合入前需按 PR Creation Gate 跑 <code>make test-invite-e2e</code> + <code>make test-forward-e2e</code>。</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.12.4</span><span class="date">2026-07-06</span></div>
+      <div class="body">
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>企业微信转发 marquee 起点上移，避开聊天头部band</strong>——把 <code>config.example.json</code> 里 <code>apps.com.tencent.WeWorkMac.forward.select_drag_region</code> 两个 fingerprint 桶（<code>1710x1107@2x</code>、<code>1440x900@2x</code>）的 <code>start</code> y 都改为 100（原 115 / 194），x 不变。框选起点更靠上，减少拖拽落到会话头部导致误移动窗口的风险。仅调整发布模板预设坐标，代码逻辑不变。</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.12.3</span><span class="date">2026-07-06</span></div>
+      <div class="body">
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>企业微信 <code>.cloneN</code> 多开 bundleId 现在按 WeCom 家族处理，并共享 canonical <code>apps.com.tencent.WeWorkMac</code> 配置</strong>——生产机上的克隆工具会生成 <code>com.tencent.WeWorkMac.clone1</code> 这类 bundleId，旧逻辑只认 <code>com.tencent.WeWorkMac1</code> 数字后缀，导致 <code>.clone1</code> 被当成微信家族：企业微信邀请会走错确认流程，forward/invite 几何也会去查不存在的 <code>apps.com.tencent.WeWorkMac.clone1</code>。现在 Python 编排器与 AppleScript 引擎同步接受 <code>.cloneN</code>，配置读取按 exact bundleId → canonical family key 回退；<code>accounts</code> 仍精确选择账号实例，<code>apps</code> 只需保留 <code>com.tencent.WeWorkMac</code> / <code>com.tencent.xinWeChat</code>。<code>--reset-drag</code> 对 WeCom clone 也写回 canonical WeCom key，避免重新生成实例级配置块。</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.12.2</span><span class="date">2026-07-01</span></div>
+      <div class="body">
+<h3 class="sec">性能 ⚡</h3>
+<ul><li><strong>企业微信转发逐人校验改用截图哈希,每人省 ~19 秒</strong>——为什么这么改:转发选中每个收件人后要判断&quot;到底选上没有&quot;,原来走 AX <code>--picker-state</code> 读选中计数。它<strong>正确但慢</strong>:企微是 Chromium,&quot;发送给&quot;选择器挂着整个通讯录、AX 树约 1200 个节点,每节点跨进程读 ~7ms → 单次遍历 ~9s,每人两次(选前基线 + 选后)≈ <strong>19 秒</strong>。而 3 点截图哈希(粘贴前/搜索后/回车后三张图比对)只需 ~65ms。用 <code>WCA_VERIFY_AB</code> 诊断模式做了 A/B 对比:AX 与哈希在 3 个收件人(含 1 个故意的无效 id <code>WRONG_ID</code>)上<strong>判定 100% 一致</strong>——正常选中两者都 success,无效 id 两者都靠&quot;回车后无变化&quot;判 suspect。故转发采用 3 点哈希、去掉慢的 AX 读(<code>verify_strategies</code> 从 <code>[&quot;ax_selected_count&quot;,&quot;ax_row_checked&quot;,&quot;hash_2point&quot;,&quot;ocr_label&quot;]</code> 改为 <code>[&quot;hash_2point&quot;]</code>,WeCom <code>common</code> 默认 + <code>config.example.json</code>;仍 config 可覆盖)。另外把 WeCom「发送/分别发送」确认按钮的定位也从 AX(<code>readForwardPickerState</code> <code>--picker-state</code>)改为 <strong>OCR</strong>(<code>wca-ax --find-text</code> 识别 分别发送/发送/Send To/Send 文字位置,与 WeChat forward 一致,固定偏移回退)——这是转发流程里<strong>最后一处 AX 树深读</strong>,去掉后<strong>默认转发不再做任何深 AX 遍历</strong>。让 AX 读本身变快(只读顶部&quot;已选N个&quot;计数、跳过联系人列表子树)作为 follow-up 追踪。<strong>同时把 3 点哈希(<code>evalHash2Point3</code>)改为 fail-closed</strong>:AX 去掉后它是 WeCom 转发<strong>唯一</strong>的逐人校验,若截图不可用(屏幕录制被拒 / <code>screencapture</code> 失败 → 文件缺失)原来会<strong>静默判 success</strong>——那会把没确认选中的收件人当成功转发出去;现改为判 <code>suspect</code>(与 <code>evalInviteHashUpDown</code> 一致),截图缺失即人工复核,不再兜底放行。<code>make test-forward-wecom-e2e</code> 通过。</li></ul>
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>企业微信转发：底部「逐条转发」肉眼可见却报&quot;未找到&quot;、整批失败（阈值改为 config 可调）</strong>——为什么这么改：企微的「逐条转发」按钮在一条<strong>半透明浮动操作栏</strong>上、是<strong>小号灰字</strong>，Apple Vision 对它的识别<strong>置信度会随身后聊天内容深浅在 ~0.3–1.0 之间浮动</strong>；卡片背景稍复杂时掉到 0.30，被原来写死的 <code>forwardToolbarMinConfidence=0.5</code> 阈值挡掉，于是明明在屏幕上的按钮报 <code>OCR-MISS</code>、整批 <code>failed</code>（生产日志 <code>forward_test_20260701_172745</code> 复现：OCR 实际已把它识别成「逐条转发」，仅置信度 0.30）。修复两点：① 命中判据真正的判别力是<strong>标签文本精确匹配</strong>（<code>ocrLabelMatches</code> 要求识别文字等于按钮标签），置信度只用于多候选排序、不该做硬门槛——Vision 把噪声恰好读成「逐条转发」的概率极低，故把默认下限降到 <code>0.15</code>；② 把该阈值做成 <strong><code>config.json</code> 可调</strong>（<code>forward.toolbar_min_confidence</code>，<code>loadForwardToolbarMinConfidence</code> 读取，范围 <code>0&lt;v≤1</code>，缺省即编译默认 0.15）——不同机器/渲染的最佳值可能不同，运营可在生产机现场改 config 重跑、无需重新打包。用生产失败原图复现：0.5→<code>FOUND=false</code>，0.15→<code>FOUND=true</code>（命中坐标正确）。<code>make test-forward-wecom-e2e</code> 通过。</li></ul>
+<h3 class="sec">新增 ✨</h3>
+<ul><li><strong>运行时终端逐条打印每个收件人的成败</strong>——为什么这么改：之前终端只打印批次级进度（<code>进度 1/3 · 群名</code>），每个收件人的 <code>成功/可疑/失败</code> 只写进了 <code>wechat_auto.log</code> 和结果 CSV，操作员盯着终端只看到批次在走、看不到谁成谁败，出问题要另外翻日志。现在每批结束后在终端逐行回显每个收件人的判定，例如 <code>autohighlight → 失败：[suspect] 该联系人可能已在群内</code> / <code>xingzhe1478 → 成功</code>。invite/send/forward 三个工作流都受益（编排器统一处理），可疑/阻塞子归因（<code>[suspect]</code>/<code>[blocked]</code>）直接可见，<code>ok</code> 的成功不赘述。</li></ul>
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>企业微信转发：底部「逐条转发」按钮可见却被判定为找不到，整批失败</strong>——为什么这么改：底部多选操作栏的几个按钮（逐条转发 / 合并转发 / 收藏 …）紧挨成一排，Apple Vision OCR 有时会把它们识别成<strong>一整条文字</strong> <code>逐条转发 合并转发 收藏</code>。旧的标签匹配有个长度护栏（识别文字最多比标签长 4 个字），这条 12 个字的合并行超长被拒，于是明明在屏幕上的「逐条转发」报 <code>FOUND=false</code>、整批 <code>failed</code>（该护栏原是为 invite 孤立按钮 <code>添加(3)</code> 设计的）。修复：标签匹配改为<strong>按空格切 token 逐个比对</strong>，合并行里的 <code>逐条转发</code> 也能命中；并且点击坐标取<strong>命中 token 自己的包围盒中心</strong>（<code>VNRecognizedText.boundingBox(for:)</code>），而非整条合并行的中心——否则坐标会落在中间的「合并转发」上、点错按钮。<code>成员</code>/<code>群成员</code>/<code>Member</code> 排除改为逐 token 生效（防 <code>添加群成员</code> 标题误命中，同时不误伤合并行里的其它有效 token）。新增一张固定的截图样本 <code>formC_forward_toolbar_merged.png</code> + 用例把这个场景钉死，防止以后再退回。<code>make test-forward-wecom-e2e</code> 通过。</li><li><strong>OCR 未命中时把识别到的候选文字写进日志，便于事后定位</strong>——<code>wca-ax --find-text</code> 未命中时输出底部区域的候选（置信度、位置），<code>findPopupButtonPoint</code> 写入会话日志，&quot;OCR 找不到按钮&quot;不再需要重跑原图才能查因。安全起见：全窗口扫描（如邀请 addButton 的整窗 OCR）只记候选<strong>数量</strong>、不记文字，避免把群成员名字泄露进会话日志。</li><li><strong>英文界面下的多词工具栏标签（如「One-by-One Forward」）永远匹配不上</strong>——为什么这么改：上一条把标签匹配改成「按空格把识别到的文字切成一个个词、逐个和标签比对」，但企业微信英文界面的转发按钮标签本身就带空格（<code>One-by-One Forward</code>）。切开后每个词（<code>One-by-One</code>、<code>Forward</code>）都不等于整条标签，于是英文界面的「逐条转发」永远 <code>FOUND=false</code>、整批在打开选择器之前就失败了（中文 <code>逐条转发</code> 本身不含空格、是一个词，不受影响）。修复：匹配前先把<strong>带空格的多词标签</strong>当成一整段、在识别到的整行文字里找它是否<strong>原样连续出现</strong>（取最靠左的那一处，合并行里后面重复出现的 <code>Forward</code> 抢不到），找不到再走原来按空格逐词比对的老路；命中位置照旧用来算点击坐标。验证：拿一张真实的转发工具栏截图跑了一遍——带空格的多词标签能命中、原来逐词匹配的行为没变、英文标签也不会错误命中中文那一行。</li><li><strong>屏幕录制被拒时承诺「跳过所有截图」但 OCR 抓图仍在跑</strong>——为什么这么改：拒权提示原文说「本次运行将跳过<strong>所有</strong>截图」，但 Python 预检只打了条 <code>[WARN]</code>、并未真的关截图；OCR 定位按钮那条抓图路径（<code>findPopupButtonPoint</code>）没走屏幕录制门，拒权后仍 <code>screencapture</code> 抓一张无内容的图再 OCR（必然未命中→回退 plist），与「跳过所有截图」的承诺不符。修复两处：① <code>findPopupButtonPoint</code> 抓图前加屏幕录制门 <code>ensureScreenRecordingOrDisable</code>，拒权即跳过这次抓图、直接走 plist 回退（拒权时本就抓不到内容，等价但不浪费）；② 预检提示改为<strong>如实</strong>措辞——不再写「跳过所有截图」，改为「人工复核截图与基于截图的可疑判定本次不可用；收件人有效性检测不依赖截图，照常进行」（微信 hash-only 邀请检测按 D-3 仍会抓检测图，故不能承诺「全部」跳过）。</li></ul>
+<h3 class="sec">变更 🔧</h3>
+<ul><li><strong>屏幕录制权限改用系统 API 判定，不再靠截图大小猜测</strong>——为什么这么改：之前判断「有没有给屏幕录制权限」是看首张截图的字节数（&gt;1MB 即认为「截到整个桌面 = 没授权」）。但转发截的是整个归一化窗口（内容丰富的会话窗口），合法 PNG 轻松超过 1MB → <strong>误判没授权</strong> → 弹出阻塞式对话框，操作员点「退出」后整轮运行被取消（实为权限正常、截图也都正确保存）。改为调用确定性系统 API <code>CGPreflightScreenCaptureAccess()</code>（新增 <code>wca-ax --check-screen-recording</code> 子命令），即便窗口全屏也不会误判。权限缺失时<strong>优雅降级</strong>：记一条可恢复的提示、跳过本次所有截图、继续运行（收件人有效性检测靠窗口计数、不依赖截图）——不再弹阻塞框、不再因此取消整轮。Python 预检在批次开始前对所有工作流统一做一次提示（stderr），让操作员事先知道「复核截图与基于截图的可疑判定本次不可用」。</li></ul>
+<h3 class="sec">测试 🧪</h3>
+<ul><li><strong><code>test-invite-e2e</code> 超时报错说人话 + 调大预算</strong>——多实例 3 批（含 D6 跨实例切换）本就 &gt;120s，原 <code>TIMEOUT_SEC=120</code> 会把第 3 批中途 <code>SIGTERM</code> 杀掉，终端只剩一句吓人的 <code>Terminated: 15</code>，真实原因（超时）被误导性地写成「check WeChat is on the main screen」。改为 <code>TIMEOUT_SEC=240</code>，并把超时报错改成点明「运行未在预算内跑完、上面的 Terminated 就是这次超时 kill、可调大 TIMEOUT_SEC 或缩减 test.csv」。</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.11.0</span><span class="date">2026-06-25</span></div>
+      <div class="body">
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>企业微信转发：窗口超出屏幕右缘导致框选落空</strong>——企业微信有最小窗口宽度，<code>normalizeWindow</code> 设的 <code>window_rect</code>（旧 920 宽）会被它顶到 ≥960（实测一次到 1060）；当窗口放在 x=700 时右缘 1760 &gt; 屏宽 1710，窗口右侧跑到屏幕外，窗口相对的框选矩形映射到不可见区域 → 选不中卡片 → 操作栏「逐条转发」不出现，整批失败。修复两处：① <code>normalizeWindow</code> 调整尺寸后重新读实际 frame，若超出屏幕右/下缘则左移/上移使窗口完整可见（尺寸交给企业微信，自身管最小宽度）；② 校正 1710x1107@2x 的企业微信 <code>window_rect</code> 为 <code>{x:300,w:900,h:900}</code>（x 左移留足余量，即便渲染到 1060 宽仍在屏内）与框选 <code>start</code> 改到 <code>[500,115]</code>（落在会话区而非会话列表）。<code>make test-forward-wecom-e2e</code> 通过。</li><li><strong>忽略某一边 &lt;100px 的退化窗口（幽灵窗口）</strong>——微信偶尔会冒出一个无标题、约 183×50 的小窗口，既不能操作也无法用 AX 关闭。原先的过滤只认 200–260 × 40–70 的窄区间，183×50 漏过去被算作有效窗口，导致 <code>RELEVANT_WINDOW_COUNT</code> 虚高，误触发进群校验/坏联系人守卫（本该正常的批次被跳过），还可能被当成主窗口用于坐标锚定（&quot;+&quot; 点击落在 50px 高的窗口外）。改为：任一边 ≤100px 的窗口一律视为幽灵窗口忽略（保留 <code>!hasSheet</code> 保护）。<code>--list-windows</code> / <code>closeExtraWindows</code> 的窗口枚举与计数都走过滤后列表，一处改动同时修正计数、<code>WINDOW_0</code> 锚定与清理门的逐窗口计数；清理门对&quot;存活窗口&quot;的 fail-closed 计数保持不变。</li></ul>
+<h3 class="sec">新增 ✨</h3>
+<ul><li><strong>邀请流程 addButton &quot;+&quot; 改为 OCR 定位</strong>——原来依赖 <code>button_cache.plist</code> 硬编码偏移量（相对窗口右上角），因群成员数量不同会导致 &quot;+&quot; 按钮 Y 轴位置漂移，现有 <code>[-23,-46,23,46]</code> Y 轴自愈探针只是补丁。改为：点击 chatInfo 后对 WeChat 主窗口全区域做 Apple Vision OCR 定位 &quot;添加&quot; 文字标签（置信度 1.00，两个真机测试群均命中），再向上偏移 25pt（文字标签中心到 &quot;+&quot; 虚线框中心的固定距离，探针验证）即为点击目标。OCR 未命中时无缝回退 plist 偏移路径，不降级。整个 Y 轴自愈循环（<code>addButtonHealingOffsets</code>）已从 WeChat 邀请流程移除。新增 <code>resolveAddButtonPointOCR</code> 引擎处理器；新增 config 键 <code>invite_ocr.labels.addButton</code> 与 <code>invite_ocr.addButton_y_offset</code>（向上偏移量，配置驱动的 UI 几何，默认 -25，可按 WeChat 版面调整，启动时打印生效值与覆盖键）。OCR 定位处理器全程 fail-soft（任何异常返回 miss 哨兵 → 必走 plist 回退）。探针记录见 <code>dev_docs/grills/invite-button-verify/findings.md</code>。</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.10.2</span><span class="date">2026-06-25</span></div>
+      <div class="body">
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>企业微信批量拉群：「已在群内」成员偶发被误判为「搜索无结果」</strong>——为什么这么改：每个收件人的 success/suspect 判定靠逐人三张截图（searched / down / confirmed）的 hash 对比，其中区分「已在群」与「搜不到」靠的是 <code>searched != down</code>：企业微信邀请路径粘贴 id 后先按 <strong>Up</strong> 再按 <strong>Down</strong>，Up 的作用是把搜索结果首行的自动高亮顶掉、Down 再把它送回，从而让已在群成员的 searched 帧（无高亮）与 down 帧（有高亮）不同。根因（已 spike 实测，见下）：企业微信「添加群成员」搜索是一次网络往返，而引擎在 paste 之后只等 ~0.3s 就按 Up——<strong>Up 抢在搜索结果渲染之前按下，成了空操作</strong>（settle=0 时 paste 后与 Up 后两帧逐字节相同，实锤 Up 没碰到任何东西）；自动高亮在 Up 之后才落到行上并冻结，于是 searched 与 down 拍到同一张冻结帧（<code>searched==down==confirmed</code>），「已在群」便塌缩成「搜不到」。注意：最终 status（suspect）一直没错（靠 <code>down != confirmed</code> 这层鲁棒信号），错的只是 suspect 的子归因。修复：在 paste 之后、Up 之前补回一段 settle 等待（语义常量 <code>inviteSearchSettleSec</code>，默认 0.5s），确保结果渲染完 Up 才按、才能顶掉高亮——这正是已验证 spike 当年用的 <code>PASTE_SETTLE=0.9</code> 那段等待，引擎此前砍到 0.3 是回归点。<strong>仅在企业微信邀请路径生效</strong>（gated on <code>activePreSearchKeys</code> 非空）——微信、转发路径预搜索键为空，行为冻结不变（D-3）。证据与时间线见 <code>dev_docs/grills/wecom-invite-hash-highlight/findings.md</code>；<code>make test-invite-wecom-largegroup-e2e</code> 连跑 3 次稳定。</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.10.1</span><span class="date">2026-06-25</span></div>
+      <div class="body">
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>dry-run 现在可以演练企业微信「大群」拉群的「确定」点击</strong>——为什么这么改：之前 dry-run 对企业微信 (WeCom) 拉群的「确定」按钮一律只移动鼠标不点击，导致大群路径（点「确定」后才弹出的二次「邀请」弹窗）在 dry-run 下完全演练不到。改动让 dry-run 也识别既有环境变量 <code>WCA_SUPPRESS_INVITE_FINAL_CLICK=1</code>：设了它即表示「本次确为大群」，dry-run 会真实点击「确定」、弹出二次「邀请」，再对最终「邀请」只移动不点击——全程零真实邀请。未设该变量时行为不变（「确定」仍只移动不点击），<strong>安全默认（safe-by-default）不变</strong>。实现上只把环境变量读取上提到 <code>isDryRunMode</code> 判断之前，并把 dry-run 守卫从 <code>if isDryRunMode</code> 改为 <code>if isDryRunMode and not suppressFinalInviteClick</code>，复用既有大群真机路径（<code>InviteWorkflow.applescript</code>）。注意：小群的「确定」即真实拉人，故该变量是「本次是大群」的人工断言，仅在确为大群时设置。</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.10.0</span><span class="date">2026-06-17</span></div>
+      <div class="body">
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>微信「逐条转发」按钮改为 OCR 定位（原固定窗口比例点会漂移点不中）</strong>——真机实测发现：同尺寸窗口(920x996)上微信多选操作栏的竖直位置跨次运行会漂移（OCR 实测「逐条转发」文字中心一次在 y≈876、一次在 y≈1000，差 ~124px），任何单一窗口比例点都点不稳，导致 <code>make test-forward-e2e</code> 两行都因「发送给弹窗未出现」失败。改为微信也走 OCR 定位「逐条转发」（置信度实测 1.0，复用 WeCom 已有的 <code>findPopupButtonPoint</code>/<code>appProfileForwardToolbarLabels</code>），并<strong>删除不可靠的窗口比例兜底</strong>：OCR 未命中即整批 fail-closed（绝不点猜测坐标，免得误转发），同时存现场图 + 记录搜索区域/labels/阈值供排查。<code>forwardToolbarBottomFraction</code> 0.18→0.3（操作栏会漂移，0.18 太窄会把略靠上的操作栏过滤掉）。修复后 e2e 两行 <code>success</code>、四步信号齐全（连跑稳定）。WeCom 路径本就走 OCR，行为不变。</li><li><strong><code>--reset-drag</code> 之前无法对「已有预设」重新校准</strong>：<code>force_recapture</code> 是 JSON 布尔，经 <code>wca-json</code> 读出会变成 <code>&quot;1&quot;</code>（<code>NSNumber.stringValue</code>），而 <code>BatchExecutor</code> 拿它和 <code>&quot;true&quot;</code> 比，永远为假——于是 <code>--reset-drag</code> 只在「本机还没有任何预设」时碰巧生效，真正的重新校准用例被静默跳过。改为和 <code>&quot;1&quot;</code> 比较。</li></ul>
+<h3 class="sec">变更 🔧</h3>
+<ul><li><strong>转发（forward）默认改为人工框选 + 捕捉/重放</strong>——为什么这么改：之前框选哪些卡片完全靠 <code>config.json</code> 的 <code>select_drag_region</code> 预设几何全自动框选，但每次想转发的消息条数不同、预设区域不可靠。现交互式运行（默认）会暂停，提示操作员在中转会话里<strong>手动拖拽框选一次</strong>；<code>wca-monitor</code> 捕捉这次拖拽的矩形（窗口相对），后续批次自动重放同一矩形——全程只提示一次，且所有收件人收到同一批卡片。<ul><li>无人值守（<code>--yes</code> / e2e）路径<strong>不变</strong>：仍走 <code>select_drag_region</code> 预设，<code>make test-forward-e2e</code> 仍能无人跑通；<code>select_drag_region</code> 旋钮保留。</li><li><code>wca-monitor</code>（<code>escape_monitor.swift</code>）新增拖拽捕捉：监听 <code>leftMouseUp</code> + 新增 IPC <code>/tmp/auto_invite_manual_drag_recording</code>（武装）与 <code>/tmp/auto_invite_manual_drag</code>（输出 <code>x1,y1,x2,y2</code>）；与单击捕捉互斥、未武装 no-op、被动监听（拖拽仍真实选中）。引擎新增 <code>armManualDragCapture</code> / <code>clearManualDragCapture</code> / <code>readManualDrag</code> / <code>waitForManualDrag</code>（120 秒超时）。</li><li>已知约束：多批一致性要求中转会话静默——批间若有新消息落入，重放的屏幕矩形可能框到不同卡片（见 <code>dev_docs/plans/20260612-forward-manual-drag-select.md</code> F2）。框选超时或 Shift+ESC 会中止整个 run。</li></ul></li></ul>
+<h3 class="sec">新增 ✨</h3>
+<ul><li><strong><code>--reset-drag</code>（forward 专属）</strong>：显式校准命令（ADR-004），运行一次即把操作员拖拽的框选矩形持久化到 <code>config.json</code> 的 <code>forward.select_drag_region.&lt;fingerprint&gt;</code> 键——之后无论交互式还是无人值守（<code>--yes</code>）均直接复用，无需再次拖拽。为什么这么改：手动框选矩形原本只能在当次 run 内跨批复用，会话结束后丢失，下次运行再提示；<code>--reset-drag</code> 让操作员一次标定、长期沿用，同时满足 ADR-003 D4&quot;不自动写回&quot;的约束（必须人工传入 flag + 完成一次真实拖拽才触发）。<ul><li>交互式默认路径（无 <code>--yes</code>，无 <code>--reset-drag</code>）新增三级查找：① config.json 有预设 → 直接用；② session rect 文件存在（本次 run 首批已捕捉）→ 重放；③ 两者均无 → 提示拖拽。<code>--reset-drag</code> 在此基础上强制执行 ③ 并在 batch 1 完成后原子写回 config.json。</li><li><code>--yes</code> 路径不变：始终读 config.json，缺则整批 fail-closed。</li><li><code>make test-forward-e2e</code> / <code>make test-forward-wecom-e2e</code> 均无人值守通过（<code>--yes</code> 路径），不受影响。</li></ul></li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.9.0</span><span class="date">2026-06-16</span></div>
+      <div class="body">
+<h3 class="sec">变更 ♻️</h3>
+<ul><li><strong>企业微信 (WeCom) 拉群的每人校验改为完全不读 AX（AX-free）</strong>，把每人耗时从 ~44–52s 降到 ~20s，同时缩小自动化对企业微信的可观测面（风控面，issue #140）。背景：v3.8.0 的企业微信 invite 每人要做 2 次 <code>wca-ax --picker-state</code>（粘贴前基线 + 回车后增量），加上循环后定位「确定」再 1 次——每次都对<strong>整棵成员列表 AX 树</strong>做一遍遍历，大群（数百人）单次 ~15–20s。两处改动去掉这 3 次 AX 读：<ul><li><strong>选中校验：AX → UP→DOWN 截图哈希。</strong> 粘贴 id 后按 <code>Up</code>（拍 <code>searched</code>）→ <code>Down</code>（拍 <code>down</code>）→ 回车（拍 <code>confirmed</code>），用 <code>evalInviteHashUpDown</code> 按 <strong>Enter-toggle 优先</strong> 判定（<code>down≠confirmed</code>→选中成功，<strong>先于</strong> <code>searched==down</code> 判断——单条结果时 Up→Down 可能不移动高亮，但回车确实勾选了，所以&quot;回车有没有改变画面&quot;才是决定信号）。真机 spike（<code>dev_docs/grills/wecom-invite-ocr-hash/findings.md</code>）四例全中（可选/已在群/搜不到）。</li><li><strong>「确定」按钮：AX → OCR。</strong> 复用 WeChat 邀请弹窗按钮同款 <code>resolvePopupButtonClickPoint</code>（<code>wca-ax --find-text</code> 找「确定/Confirm」→ <code>button_cache.plist</code> <code>inviteConfirm</code> 预设兜底），spike 实测置信度 1.0、坐标与 AX 一致。</li></ul></li><li><strong>作用域隔离</strong>：上述只改企业微信 <strong>invite</strong>。<code>verify_strategies</code>/<code>select_keys</code> 原是 app 级、invite/forward 共用（spike §G3），故新增 invite 作用域配置 <code>apps.&lt;bundleId&gt;.invite.{verify_strategies,select_keys,pre_search_keys}</code> + <code>appProfileInvite*</code> 属性；企业微信 <strong>forward</strong> 与微信全部行为逐字节不变（D-3）。删除已无调用方的 <code>readInvitePickerState</code>。</li><li><strong>防回退</strong>：新增 hermetic 单元测 <code>test_invite_hash_eval.sh</code>（<code>make test-invite-hash-eval</code>，无需微信，进 <code>make ci</code>）确定性锁住判定优先级；大群 e2e <code>test_invite_wecom_largegroup_e2e.sh</code> 扩展为三类判定（可选/已在群/搜不到）真机回归；小群 e2e 默认停用（大群已覆盖，<code>WCA_RUN_WECOM_SMALLGROUP=1</code> 重启）。</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.8.0</span><span class="date">2026-06-15</span></div>
+      <div class="body">
+<h3 class="sec">新增 ✨</h3>
+<ul><li><strong>invite（批量拉群）现在支持企业微信 (WeCom)</strong>，跑法与 forward 一致：通过应用档案（app profile, <code>apps.&lt;bundleId&gt;.invite</code>）按 bundle id 驱动企业微信的「添加群成员」弹窗。为什么这么改：此前 invite 工作流是纯微信、零 app-profile 感知（弹窗标题、选人标题提示、step-6 确认按钮全是微信硬编码），无法在企业微信上拉群。现把 invite 也接入 forward 已落地的 app-profile 模型，微信路径逐字节冻结（D-3：没有 <code>apps</code> 块时微信行为不变）。真机 spike 验证（<code>dev_docs/grills/wecom-invite-picker/findings.md</code>，2026-06-12）发现企业微信拉群与微信有三处不同，均在企业微信分支处理：<ul><li><strong>入口</strong>：企业微信是窗口右上角<strong>单个</strong>「添加成员」按钮直接打开弹窗（不走微信的 群信息→「+」 两步）。按钮坐标是相对主窗口右上角的窗口偏移 <code>{dx,dy}</code>，按屏幕指纹分桶存 <code>config.json apps.&lt;bundleId&gt;.invite.add_button_offset.&lt;fingerprint&gt;</code>（几何永远走配置，绝不硬编码；缺桶则该批次失败并提示要补的 key）。</li><li><strong>确认</strong>：企业微信是<strong>条件式两步</strong>——小群点「确定」即完成；大群 / 需审批入群（管理员拉 &gt;40 人群）点「确定」后会再弹出一个独立「邀请」弹窗，必须点「邀请」才真正发出（issue #186，真机实测 <code>企微自动拉群测试</code>：该「邀请」弹窗是子 AXSheet、<code>确定</code> 后约 140ms 出现、AX 可读，见 findings.md Q6b）。实现：点「确定」后用 <code>pollForDelayedInviteConfirm</code> 限时轮询（最长 5s，子 sheet 关闭后 1.5s 自适应早退）找带「邀请」按钮的新 sheet——找到才点（小群超时即跳过，绝不盲点），坐标全程 AX <code>wca-ax --picker-state</code> 实时读 + 弹窗边界校验，无需 OCR、无需 per-machine plist 偏移；dry-run 对「确定」仅移动不点击，「邀请」不可逆故即使真机 e2e 也仅移动不点击（<code>WCA_SUPPRESS_INVITE_FINAL_CLICK</code>，安全默认）。「邀请」弹窗层叠在「确定」弹窗之上：生产真点「邀请」后弹窗会自关、残留由每批干净基线门（#180 的 <code>recoverCleanBaseline</code>）兜底；仅测试 suppress 模式（move-only 故意留开弹窗）用 <code>dismissPopupsUntilClean</code> 逐层 ESC 收尾。clean-state 沿用 #180 的统一每批门，不再单设开跑前 preflight。</li><li><strong>选人</strong>：复用共享键盘驱动 <code>selectRecipientByKeyboard</code>（已按 app 走 <code>select_keys</code>/<code>verify_strategies</code>）；企业微信 <code>select_keys=[]</code>（粘贴后直接回车选中自动高亮的首行，与 forward 一致），校验优先 AX（<code>ax_selected_count</code>/<code>ax_row_checked</code>）。</li><li>引擎：<code>loadAppProfile</code> 新增 <code>$p-&gt;{invite}</code> 解析臂 + <code>appProfileInvite*</code> 属性；新增 <code>readInvitePickerState</code>（按 invite 档案标签读 <code>--picker-state</code>）、<code>loadInviteAddButtonOffset</code>（读 add-button 偏移）；<code>invitePickerTitleMatches</code> 改为档案驱动（微信默认 <code>{添加群成员, Add Members}</code>，匹配结果逐字节不变）。</li><li>多实例：复用现有 <code>inviter</code>→<code>accounts</code> bundle id 路由（数字后缀多开 <code>WeWorkMac</code> + <code>WeWorkMac1..N</code>，真机确认两实例均被家族正则识别）；本次不纳入第三方克隆工具（非数字后缀 <code>.clone1</code>）识别（属另一分支工作）。</li><li>真机验证：spike 落地（弹窗为子 AXSheet <code>添加群成员</code>、<code>确定</code>/<code>取消</code> 可 AX 读出）；企业微信 invite <strong>整链路 <code>--dry-run</code> 跑通</strong>（点右上角添加按钮→<code>添加群成员</code> 弹窗打开→<code>ax_row_checked 1→2</code> 有效 id 选中 success、坏 id <code>[suspect]</code>→<code>确定</code> 仅移动不点击）；微信 invite dry-run 回归走 <code>family=wechat</code>/两步确认/不崩（D-3）。该真机 dry-run 还抓出两个编译/评审都没发现的 bug 并修复：(1) <code>loadAppProfile</code> 配置 overlay 的内嵌 perl 注释里有撇号 <code>&#x27;</code>，会提前终止 shell <code>-e &#x27;...&#x27;</code> 单引号（其中一处是 forward 既有遗留，故 <code>apps.&lt;bundleId&gt;</code> 字符串 overlay 一直静默回退内置值）；(2) 企业微信入口在 <code>tell System Events</code> 块内读 <code>value of offRes</code> 与 AX 的 <code>value</code> 属性冲突（«class valL»），改为扁平 <code>{status,dx,dy}</code> 直接读。</li></ul></li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.7.0</span><span class="date">2026-06-14</span></div>
+      <div class="body">
+<h3 class="sec">修复 / 变更 🐛</h3>
+<ul><li><strong>统一干净基线门 + size-aware 检测 + 真 modal 有界自愈（issue #180）</strong>。为什么这么改：干净基线检查原本有两道门——开跑前的一次性 preflight 门 和 每批门——只有每批门（PR #177）会自愈「无弹窗且窗口数&gt;1」，开跑前 preflight 门遇到脏窗口直接整轮中止，且 <code>hasSheet=true</code>（含 0×0 幽灵 sheet）会让批次假阳性跳过，现场看起来只是“软件不动了”。<ul><li><strong>方案 D：降级 preflight 门为只查辅助功能权限</strong>（删除其冗余的 clean-state 检查 / <code>--preflight</code> 分支 / <code>check_clean_state</code>）。干净基线只剩<strong>唯一一道每批门</strong>——它在第 1 批之前也会跑，并自愈，所以开跑前的脏状态同样被覆盖。</li><li><strong>size-aware 检测</strong>：<code>inspectWeChatCleanState</code> 只把宽高都大于阈值的窗口/sheet 当作真实阻塞状态，低于阈值的退化窗口 / 0×0 幽灵 sheet 不再卡死流程。</li><li><strong>真 modal 有界自愈（反转旧安全条款）</strong>：<code>recoverCleanBaseline</code>（原 <code>recoverBaselineExtraWindows</code>）去掉「见 sheet 立刻停」，对真 modal 也跑最多 N 轮 <code>close-extra-windows</code> + <code>Escape</code> + 重测，<strong>只用取消方向动作（不按 Enter、不点确认）——Escape 不会触发转账/接受</strong>；恢复干净才继续输入，N 轮仍脏则 fail-closed 跳过，避免误发。</li><li><strong>阈值/轮数可配</strong>：新增 <code>config.json</code> <code>clean_state.{min_window_dimension,min_sheet_dimension,recovery_max_rounds}</code>（默认 100/100/3，fail-soft；见 config.example.json）。</li><li>AppleScript 内部 Perl helper 显式使用 <code>LC_ALL=C LANG=C</code>，避免 macOS 上 <code>LANG=C.UTF-8</code> 触发 Perl locale panic 把流程误判成失败。</li><li>回归：<code>make lint build</code>、<code>make test-wca</code>、<code>make test-e2e-all</code> 通过；真机手动复现 form-1 多余窗口自愈 / 幽灵 sheet 放行 / 真 modal ESC 清除（人工核对未转账未接受）。</li></ul></li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.6.1</span><span class="date">2026-06-13</span></div>
+      <div class="body">
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>拉群批量运行时，一个「不在最近会话」的群把后续每一批都拖垮的问题（基线连环失败）</strong>。为什么这么改：批前的干净基线门 (clean-state gate) 已经会调 <code>closeExtraWindows</code>，但它只会按窗口的关闭按钮 / 发 <code>AXCancel</code>；微信「搜不到的群」留下的搜索结果浮层 / 全局搜索窗两者都没有，关不掉——于是窗口数卡在 &gt;1，<strong>后面每一批都过不了基线被跳过</strong>（一个坏群污染整轮）。<ul><li>新增引擎处理器 <code>recoverBaselineExtraWindows</code>：在「<strong>无弹窗且窗口数&gt;1</strong>」时跑有界恢复循环（最多 3 轮）——<code>close-extra-windows</code>（关有关闭按钮的窗）<strong>＋ 发 Escape</strong>（关搜索浮层，这正是之前缺的一步）＋ 重测。<strong>有弹窗（真 modal：转账/好友确认/继续）绝不自动 ESC</strong>，保持「交给人工」的安全语义不变；恢复失败时基线仍 <code>≠1</code>，门照旧 fail-closed 跳过本批，<strong>不会误发</strong>（最坏退化到改前行为）。</li><li>诊断日志：每轮打 <code>[GATE-RECOVER]</code>（窗口列表＋close 诊断）、恢复后打 <code>[GATE] 恢复后窗口数=…</code>、仍失败时打 <code>[GATE-DIRTY]</code> 窗口列表 dump。<code>[GATE-DIRTY]</code> 与检测到弹窗停止恢复时，额外打<strong>弹窗自身尺寸</strong>（<code>弹窗尺寸=WxH</code>，经 <code>wca-ax --get-sheet-size</code>）——因为 gate 的 hasSheet 标志不看尺寸，一个 0×0 幽灵 sheet 和真 modal 都报 hasSheet=true，记下尺寸是为后续「按尺寸精确判定弹窗」收集真实数据。这样无需复现环境，仅凭操作员回传的 <code>wechat_auto.log</code> 即可确认修复是否生效。</li></ul></li><li><strong><code>loadAppProfile</code> 每批刷 <code>parse failed ... sh: line 42: is: command not found</code> 的问题</strong>。为什么这么改：嵌入的 Perl 脚本以 shell 单引号包裹（<code>perl -e &#x27;…&#x27;</code>），注释里一个撇号 (<code>joinWithPipe&#x27;d</code>) 提前闭合了单引号，导致 Perl 源码被截断、报错刷屏，并<strong>静默丢弃 <code>config.json</code> 的 <code>apps.&lt;bundleId&gt;</code> 覆盖</strong>（对 WeChat 克隆无功能影响，仅日志噪音；但会坑依赖 apps 覆盖的 WeCom / 非默认 UI 场景）。改法：去掉该撇号。</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.6.0</span><span class="date">2026-06-12</span></div>
+      <div class="body">
+<h3 class="sec">新增 ✨</h3>
+<ul><li><strong>拉群（invite）每批人数上限从写死的 9 改成默认 20，并支持配置 / 命令行调整</strong>。为什么这么改：之前单批最多 9 人是 <code>wca/batching.py</code> 里写死的常量，要改就得改代码重新打包；客户的微信邀请窗口实际能一次选更多人，9 人一批拖慢了大批量拉群。<ul><li>新增 config 开关 <code>config.json</code> 的 <code>invite.max_batch_size</code>（默认 20，整数 1..100；缺失/越界/非整数都回退到 20 并打印一行 <code>[CONFIG] invite.max_batch_size=... source=...</code> 日志，不会让本次运行失败）。</li><li>新增单次运行覆盖参数 <code>wechat_auto.sh invite --invite-batch-size N</code>；优先级 命令行 &gt; config &gt; 默认。</li><li><strong>forward / send 不受影响</strong>：forward 的「发送给」选人框是微信硬限制（一次最多 9 个），仍写死 9；为此把 invite 与 forward 之前共用的常量拆开（<code>DEFAULT_INVITE_BATCH=20</code> / <code>MAX_FORWARD_BATCH=9</code>）。send 本来就不按人数分批。</li><li>实现：新增 <code>wca/tuning.py</code>（数据层运行期只读加载，ADR-003）；<code>batch_invite</code> / <code>batch_tasks</code> / <code>orchestrator.run</code> 接受批量大小参数；删除 <code>InviteWorkflow.applescript</code> 里早已废弃的 <code>property maxBatchSize : 9</code>（分批逻辑 ADR-001 起已搬到 Python，该属性无人读取）。</li><li>回归：<code>tests/wca/test_batching.py</code> 扩充自定义批量大小用例 + 新增 <code>tests/wca/test_tuning.py</code>（config 加载 / 越界回退 / 默认）。不涉及检测路径，门禁为 <code>make test-wca</code> + <code>make lint build</code>，无需 e2e。</li></ul></li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.5.0</span><span class="date">2026-06-12</span></div>
+      <div class="body">
+<h3 class="sec">新增 ✨</h3>
+<ul><li><strong>公开报告站 (<code>wechat-automation-report</code>) 现在会按版本时间线自动展示 <code>CHANGELOG.md</code></strong> — 为什么这么改：之前更新日志只在私有源码仓库里，客户看不到版本演进。现 <code>scripts/publish_report.sh</code> 在每次发布时多生成一个 <code>changelog.html</code>（时间线版式：左侧竖轴 + 圆点节点，每个版本一段），与 <code>index.html</code>/<code>archive.html</code> 交叉链接；<code>make publish</code> 时零手工维护自动同步。<ul><li>新增 <code>scripts/changelog_to_html.py</code>：纯标准库（不引第三方，符合干净机器无 pip 约束）把 <code>CHANGELOG.md</code> 的 <code>## [版本] - 日期</code> 标题、<code>### 小节</code>、<code>- </code> 列表（含一层嵌套）、行内 <code><strong>加粗</strong></code>/`<code> </code>代码<code> </code><code> 渲染成静态 HTML。可单独运行 </code>python3 scripts/changelog_to_html.py CHANGELOG.md -o out.html`。</li><li><code>publish_report.sh</code> 的两处泄露守卫 (leakage guard) 正则放行 <code>changelog.html</code>；<code>archive.html</code> 顶部加更新日志入口。</li><li>注意：当前为<strong>原文发布</strong>，CHANGELOG 内的内部细节（bundle id、屏幕指纹、issue 编号等）会逐字暴露在公开站点上。如需脱敏可在解析器里加过滤（见 issue）。</li></ul></li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.4.0</span><span class="date">2026-06-11</span></div>
+      <div class="body">
+<h3 class="sec">新增 ✨</h3>
+<ul><li><strong>forward 现在支持企业微信 (WeCom) 多开</strong>（多个 app 实例、各自不同 bundle id：<code>com.tencent.WeWorkMac</code> + <code>WeWorkMac2..N</code>），与微信多开（<code>xinWeChat2..N</code>）对等（issue #155）。为什么这么改：之前引擎用<strong>精确字符串</strong>判 app 家族（<code>if bundleId is &quot;com.tencent.WeWorkMac&quot;</code>），所以第二个企业微信 bundle 会被误判成微信家族——错误的窗口标题/按钮标签/<code>--keep-window-by</code> 策略，且 <code>config.json</code> 也补救不了（overlay 只读不写家族判定）。现改为<strong>家族正则</strong>（<code>^com\.tencent\.WeWorkMac[0-9]*$</code>），所有命中的 bundle 都走企业微信档案；几何仍按字面 bundle id 分桶（R-3 已就绪，未改）。按 <code>inviter</code>→<code>accounts</code> 或 <code>--wechat-bundle-id</code> 切实例的用法不变。<ul><li>引擎：<code>WeChatEngine.loadAppProfile</code> 家族路由 + 内置 <code>instance_pattern</code> 升级为家族正则；新增 <code>isWeComFamily</code> 纯字符串判定（无 regex shell-out，无依赖）。</li><li>Python：<code>wca/app_profile.family_for_bundle</code> 同步改为家族正则，使多开企业微信被 orchestrator 的「单 app per run」守卫视作<strong>同一 profile</strong>（不再误判为混 profile 而拒绝）。</li><li>回归：新增 <code>make test-app-profile-routing</code>（加载已编译引擎，断言 <code>WeWorkMac2</code> → 企业微信家族、微信克隆仍走冻结的微信默认；不驱动任何客户端）+ 扩充 <code>tests/wca/test_app_profile.py</code>；<code>config.example.json</code> 加 <code>com.tencent.WeWorkMac2</code> 多实例示例。这是真·多开企业微信 e2e 的替身——真机多开 e2e 延后（见 <code>dev_docs/plans/20260611-wecom-multi-instance.md</code> §4）。微信路径行为不变（D-3 冻结）。</li></ul></li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.3.2</span><span class="date">2026-06-11</span></div>
+      <div class="body">
+<h3 class="sec">优化 ⚡</h3>
+<ul><li><strong>缩短企业微信 (WeCom) 多收件人转发时两个收件人之间的间隔</strong>。为什么这么改：共享键盘选人驱动 <code>selectRecipientByKeyboard</code> 每个收件人都会拍 3 张检测截图（empty/searched/confirmed，给截图哈希用），但企业微信的主校验是 AX（系统辅助功能接口）读取「已选择N个聊天」计数，哈希只是 AX 读不到时的兜底——这 3 张截图（每张都要起一个 <code>screencapture</code> 子进程）对企业微信几乎是白做的，逐个收件人累加成肉眼可见的卡顿。<ul><li>给三处检测截图加门控 <code>captureDetectShots = screenshotEnabled OR (not axActive)</code>：<strong>微信</strong>（无 AX，哈希是唯一检测器，<code>axActive=false</code>）→ 永远截图，行为逐字节不变，连 <code>--no-screenshot</code> 也照常截（否则会静默关掉它唯一的 suspect 检测）；<strong>企业微信</strong>（AX 为主，<code>axActive=true</code>）→ 仅在开启截图时才截，跑 <code>--no-screenshot</code> 时每个收件人省下 3 个 <code>screencapture</code> 子进程，AX 检测完全不受影响。</li><li>同步下调两处选人等待：Delete 清空搜索框后 <code>0.5s→0.2s</code>、Cmd+V 粘贴后 <code>0.6s→0.3s</code>（每收件人再省约 0.6s）。</li><li>真机验证：<code>make test-forward-wecom-e2e</code> 通过（检测标记 <code>ax readable</code> / <code>row0_checked=true</code> 齐全）；另跑一遍 <code>--no-screenshot</code> 真实转发确认 <strong>0 张 detect 截图</strong> 且 AX 仍判定 <code>ax_selected_count 0→1 → success</code>。</li></ul></li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.3.1</span><span class="date">2026-06-11</span></div>
+      <div class="body">
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>企业微信 (WeCom) 选人去掉有害的 <code>Down</code>：避免把消息转发给同名的错误联系人</strong>。为什么这么改：共享键盘选人驱动 <code>selectRecipientByKeyboard</code> 对每个收件人固定走「粘贴 → <code>Down</code> → 回车」，<code>Down</code> 是为<strong>微信</strong>设计的（搜出结果后第一行不自动高亮，需 <code>Down</code> 预选）；但<strong>企业微信粘贴后第一条自动高亮</strong>，多按的 <code>Down</code> 会把选择移到第二个匹配，通讯录里有<strong>同名不同人</strong>时会<strong>静默确认错误的收件人</strong>，而 AX（系统辅助功能接口）校验只验「选中数 0→1」看不出选错人。修法：把「粘贴与回车之间按哪些键」做成 <strong>per-app 配置</strong> <code>appProfileSelectKeys</code>（沿用 app 档案模式）——微信保留 <code>[&quot;down&quot;]</code>（行为逐字节不变），企业微信设为 <code>[]</code>（不按预选键，让自动高亮的 row0 保持选中）。<ul><li>新增 app 档案字段 <code>apps.&lt;bundleId&gt;.forward.select_keys</code>（<code>config.json</code> 覆盖，空数组 <code>[]</code> 合法且会覆盖内置默认；仅识别 <code>&quot;down&quot;</code>，未知键名忽略 + log）。</li><li>无 <code>Down</code> 相位时检测从 4 点截图哈希降级为 3 点变体 <code>evalHash2Point3</code>（企业微信主校验是 AX，哈希仅兜底）。</li><li>回归守卫：<code>make test-forward-wecom-e2e</code> 现断言 <code>row0_checked=true</code>（去掉 <code>Down</code> 后选中的是 row0 而非 row1），未来若有人把 <code>Down</code> 加回来会被挡下。</li><li>残余风险（不在本次修复范围）：同名联系人里 row0 本身就是「错的那个」——纯键盘无法区分，需 VL/二次确认，单独记 issue 跟踪。</li></ul></li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.3.0</span><span class="date">2026-06-11</span></div>
+      <div class="body">
+<h3 class="sec">新增 ✨</h3>
+<ul><li><strong>forward 工作流现在可以跑在企业微信 (WeCom, <code>com.tencent.WeWorkMac</code>) 上</strong>（Phase 2，微信路径行为完全不变）。用法：<code>./wechat_auto.sh forward --wechat-bundle-id com.tencent.WeWorkMac forward.csv</code>（先填好 <code>config.json</code> 的 <code>apps.com.tencent.WeWorkMac.forward</code> 几何配置，见 <code>config.example.json</code>）。为什么这么做：企业微信和微信交互模型一致（中转会话 → 框选 → 逐条转发 → 发送给弹窗 → 键盘选人），但企业微信暴露<strong>完整 AX 树</strong>，所以选中校验改用确定性 AX 读取，比微信被迫用的截图哈希更可靠。<ul><li><code>wca-ax</code> 新增 <code>--picker-state</code> 子命令：通过 AX 读「发送给」弹窗，输出 <code>PICKER</code>/<code>SELECTED_COUNT</code>/<code>ROW_&lt;i&gt;_CHECKED</code>/<code>BUTTON_发送/取消</code> 坐标。弹窗双形态 fail-closed（先子 AXSheet，再标题匹配的独立窗口，否则 <code>none</code>）。所有字符串由引擎按 app 档案传入，二进制不读配置文件。</li><li>选人校验改为按档案的 <code>verify_strategies</code> 有序回退（first-success-wins）：企业微信优先 <code>ax_selected_count</code>（粘贴+回车后「已选择N个聊天」计数 0→1 即确认选中）/ <code>ax_row_checked</code>，再回退 <code>hash_2point</code>；微信仍只用 <code>hash_2point</code>（截图哈希原样保留，逐字节不变）。</li><li>企业微信路径的「逐条转发」用 OCR 按档案标签定位、「发送」用 AX 暴露的按钮坐标（带弹窗范围越界保护）；框选策略与微信完全相同（同一套 <code>performDrag</code> + 按 fingerprint 的 <code>select_drag_region</code>），走同一个 <code>processTaskBatch</code>，复核报告 (review.html) 一致。</li><li>真机验证：企业微信「文件传输助手」真实转发成功（<code>make test-forward-wecom-e2e</code>）；微信三件 e2e（invite/send/forward）全绿，行为不变。</li></ul></li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.2.0</span><span class="date">2026-06-11</span></div>
+      <div class="body">
+<h3 class="sec">新增 ✨</h3>
+<ul><li><strong>批量任务运行时打印人读的逐批进度行（不再静默跑完才出摘要）</strong> — 为什么这么改：长批量任务原本运行中只产 <code>METRIC:</code> 机器行（给 <code>analyze_logs.py</code> 用），操作员在 <code>SESSION_START</code> 和 <code>SESSION_END</code> 之间看到的是一片静默，无法判断跑到第几批、是否卡死（违反可用性原则 A「系统状态可见」）。现 <code>wca/orchestrator.py</code> 的批次循环在每批开始时额外打印一行 <code>进度 N/M · &lt;目标&gt;</code>（invite 显示群名、send 显示联系人、forward 回退到账号），与 METRIC 行并存。新增 <code>make test-uiux-interaction</code> 做产物级 grep 回归（无需 WeChat，用桩 executor 驱动 <code>orchestrator.run</code>），守住「进度可见」与「dry-run 安全默认」两条交互规则。</li><li><strong>新增 <code>uiux-reviewer</code> 顾问型子 agent + <code>coding-style.md</code> 交互设计硬规则</strong> — 把 6 个用户接触面（CLI 文案、对话框、进度、review.html、CSV 状态、文档）的 UX 审查从散落自觉变成 <code>/feature-workflow</code> Step 6 的并行审查关口；<code>coding-style.md</code> 新增「User-facing interaction（进度可见 · 跨流程对称 · 安全默认）」一节。仅 Claude Code 侧能力（Codex 无 subagent 层，照常走 AGENTS.md 的 PR Creation Gate 手动审查）。</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.1.0</span><span class="date">2026-06-10</span></div>
+      <div class="body">
+<h3 class="sec">新增 ✨</h3>
+<ul><li><strong>应用档案 (app profile) 管道：把所有&quot;标识 app 的字面量&quot;（窗口标题、弹窗标题、按钮文字、实例正则、中转会话名）抽成按 bundle id 索引的 <code>config.json</code> <code>apps.&lt;bundleId&gt;</code> 配置，为 forward 跑在企业微信 (WeCom, <code>com.tencent.WeWorkMac</code>) 上做准备</strong>（Phase 1，微信路径行为不变）。为什么这么改：这些字面量原本硬编码为微信，导致 forward 无法换到另一个 app；现在引擎 <code>loadAppProfile(bundleId)</code> 先按内置 family（微信 / 企业微信）选字符串默认值，再叠加 <code>config.json</code> 的 <code>apps.&lt;bundleId&gt;</code> 覆盖。微信 bundle 解析到与今天完全一致的字面量（逐字节不变），所以没有 <code>apps</code> 配置时行为不变。<ul><li><code>wca-ax</code> 新增 <code>--main-titles</code> / <code>--pattern</code> / <code>--keep-window-by axmain</code> 三个尾部参数（缺省即今天的微信行为）；<code>closeExtraWindows</code> 的 <code>axmain</code> 判别器用 <code>kAXMainAttribute</code> 而非标题选主窗口（企业微信全局搜索窗会&quot;偷走&quot;标题）。</li><li>forward 几何加载器（<code>window_rect</code> / <code>select_drag_region</code>）改为按 <code>apps.&lt;bundleId&gt;.forward.*</code> 优先读取、结构化返回；非微信 app 缺本机几何配置时整批失败并提示要填的 key，绝不&quot;继承&quot;微信几何。</li><li>单 app 单次运行（各跑各的）：forward 一次运行解析到多个 app 档案会提前中止并提示分开跑；多实例微信（多个 <code>xinWeChat*</code>）仍允许，clean-state 按每个实例分别检查。</li><li>预检（preflight）/报错文案按目标 app 显示名（微信 / 企业微信），企业微信运行不再提示&quot;打开微信&quot;。</li></ul></li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.0.4</span><span class="date">2026-06-10</span></div>
+      <div class="body">
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>多微信实例同时在线时 invite/forward 选人整批 <code>failed</code> 的根因是「前台检测用错 API」，改用 NSWorkspace 判前台</strong> — 为什么这么改：守卫 <code>assertFrontmostBundleId</code> 原本用 System Events 的 <code>first process whose frontmost is true</code> + <code>bundle identifier</code> 判断&quot;目标微信实例是否在前台&quot;。但 5 个微信克隆实例共用进程名「微信」，System Events <strong>分不清它们</strong>——诊断日志显示它把 5 个实例全报成同一个 <code>com.tencent.xinWeChat4/pid=408</code>，且 <code>first frontmost</code> 查询时灵时不灵，于是守卫<strong>误判</strong>前台不是目标 → 整批 <code>failed</code>。交叉验证证明真实前台一直是对的（NSWorkspace 的 <code>NSRunningApplication.isActive</code> 每批都与目标一致，绕过守卫后字也确实进了正确实例），只是 System Events 的*检测*在骗人。现 <code>assertFrontmostBundleId</code> 改用 <code>frontmostBundleIdViaWorkspace()</code>（解析 <code>wca-ax --detect-instances</code> 的 <code>FRONTMOST=true</code>，即 NSWorkspace 语义，能正确区分克隆），守卫拦截保留作 fail-safe。</li><li>选人步骤<strong>保持纯键盘</strong>（zero-mouse）：上面的检测修复已让真实前台判定正确，无需再加鼠标动作。目标实例由批次里点 chatInfo / <code>+</code> 的坐标点击顶到前台，弹窗打开时即为前台；person 2+ 由驱动的非鼠标 <code>AXRaise</code> 重新聚焦。（多人批次下 <code>AXRaise</code> 对克隆实例的可靠性待真机验证，见 issue #148。）</li><li>invite 选人前新增弹窗 frame 命中日志（<code>添加群成员弹窗 frame=(...)</code> / <code>未检测到</code>），去掉无弹窗也移动光标的 fallback（有弹窗才粘贴）；守卫失败日志记录实际前台实例。</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.0.3</span><span class="date">2026-06-09</span></div>
+      <div class="body">
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>结果 CSV <code>message</code> 列文案改为&quot;说清发生了什么 + 怎么办、只说状态不指责用户（不再用裸 <code>无效</code>）、不泄露内部机制&quot;</strong> — 为什么这么改：审计发现多处 <code>message</code> 文案违反 <code>.claude/rules/common/coding-style.md</code> 的 User-facing 规则。具体修正：<ul><li>forward 中转会话打不开的判定原本错用 <code>[suspect]</code> 前缀（该前缀只能用于 per-recipient 选人那条路径），且把内部配置键 <code>config.forward.staging_chat</code> 直接写进了用户可见消息——改为批次级的 <code>failed</code>，消息只说「未能打开中转会话「X」，请确认该会话存在且名称正确」，配置键移进日志。</li><li>send 序列级联跳过原本写内部 token <code>prior_seq_failed</code>——改为人读「因前一条消息发送失败，本条暂未发送；修复后用 --retry-failed 整组重发」。</li><li>invite / send / forward 三个工作流的异常兜底原本把引擎原始报错串（可能含 <code>bundleId</code>、屏幕指纹、<code>button_cache.plist</code> 等内部诊断）写进 <code>message</code>——改为统一的恢复提示，原始 <code>errMsg</code>+<code>(代码 errNum)</code> 只进日志。同样修正 <code>BatchExecutor</code> 的 <code>dirty_window_baseline_count=...</code> 英文诊断串。</li><li>per-recipient <code>[suspect]</code> 文案补齐恢复步骤（<code>请核对后重试</code>），措辞改为只描述状态、不指责用户（不再用裸 <code>无效</code>）。</li><li>公开报告 <code>quality_oneliner</code> 与 forward-prep <code>空微信号</code> 占位也改为结果导向/更中性的措辞。</li><li>行为不变（<code>status</code> 4 态、检测逻辑、resume/retry 过滤均未动），仅改用户可见文案；机制细节一律留在 <code>wechat_auto.log</code>。</li></ul></li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.0.2</span><span class="date">2026-06-09</span></div>
+      <div class="body">
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>Intel 机器启动时的报错从 <code>arch?: unbound variable</code> 崩溃改为可读的中文/英文提示</strong> — 为什么这么改：<code>bootstrap.sh</code> 的架构检查里 <code>检测到 $arch。</code> 让裸 <code>$arch</code> 紧贴中文全角句号 <code>。</code>。macOS 自带的 <code>/bin/bash</code>（3.2.57，<code>wechat_auto.sh</code> 正是用 PATH 上的 bash 调它）在 UTF-8 locale 下多字节解析有缺陷，会把 <code>。</code> 的首字节并进变量名，去展开不存在的 <code>arch。</code>，配合 <code>set -u</code> 直接以 <code>unbound variable</code> 崩溃，而不是打印本应给用户看的「仅支持 Apple Silicon」提示。改成 <code>${arch}</code> 用花括号界定变量名边界即可（在 bash 3.2.57 + <code>LC_ALL=en_US.UTF-8</code> 下实测恢复正常输出并 <code>exit 1</code>）。只影响 Intel 用户——arm64 机器走不进这个分支，所以此前从未暴露。</li></ul>
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>发版包内 <code>forward_template.csv</code> 表头补齐为 <code>inviter,recipient,wechat_name</code></strong> — 为什么这么改：v3.0.0 把 forward CSV 收敛后，发给用户的模板只剩 2 列 <code>inviter,recipient</code>，缺了 <code>wechat_name</code> 列。虽然 2 列能被 <code>csv_adapter</code> 正常解析（向后兼容），但它与 <code>docs/forward-usage.md</code> §2 的推荐格式、<code>forward_test.csv</code> fixture、<code>wca forward-prep</code> 的输出都不一致，且 <code>wechat_name</code> 正是 <code>review.html</code> 人工核对&quot;微信名 ↔ 微信号&quot;所需的列。补齐后用户照模板填即得到与文档一致、可直接人工复核的起点。占位符与 <code>invite_template.csv</code> / <code>send_template.csv</code> 风格统一。</li></ul>
+<h3 class="sec">文档 📖</h3>
+<ul><li><strong>README 面向零基础用户重构为&quot;演练 → 正式&quot;编号操作指南</strong>：invite / send / forward 三个工作流统一成「填 CSV → <code>--dry-run</code> 先演练（零风险）→ 改成 <code>--yes</code> 正式运行 → 核对结果/review.html」的编号步骤；「打开终端 / 授予权限」抽成三流通用的前两步。<ul><li>新增 <code>## 查看 review.html 人工验收</code>（怎么打开、forward/send 各验收什么、python3 缺失时的退化行为）；forward 章节补「卡片必须先预置到中转会话、框选范围别混入其它消息」关键前置。</li><li>用词改通俗：<code>缺省</code> → <code>默认</code>；功能说明补 <code>forward</code> 条目；新增&quot;把文件夹拖到终端自动补全路径&quot;提示。</li><li>修正过时内容：删除&quot;首次运行新群聊会进入按钮录制流程&quot;（ADR-003 v2 运行期 plist 只读、不再录制）；修复重复/错位的小节编号；同步 forward 命令注释表头为 3 列。</li></ul></li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">3.0.0</span><span class="date">2026-06-06</span></div>
+      <div class="body">
+<h3 class="sec">破坏性变更 💥 (BREAKING)</h3>
+<ul><li><strong>forward CSV 收敛为 <code>inviter,recipient</code>：去掉 <code>source_chat</code> / <code>card_selector</code> 两列</strong> — 为什么这么改：<code>card_selector</code> 唯一合法值就是 <code>manual</code>（恒为常量列），而 <code>source_chat</code>（中转会话名）每行都重复填同一个值、是纯配置而非每行数据。把中转会话名搬到 <code>config.json</code> <code>forward.staging_chat</code>（缺省 <code>文件传输助手</code>），CSV 只留真正逐行变化的 <code>inviter</code> + <code>recipient</code>，更短也更难填错；符合 ADR-003 配置驱动（预填、运行期只读）。<ul><li>新 CSV 表头 <strong><code>inviter,recipient</code></strong>（+ 可选 <code>status,dry_run,message</code>）。旧 4 列 <code>inviter,source_chat,card_selector,recipient</code> <strong>不再兼容</strong>：<code>csv_adapter.detect_schema</code> 直接抛 <code>CsvSchemaError</code> 并提示迁移（去掉中间两列 + 在 config 里设 <code>forward.staging_chat</code>）。</li><li>引擎新增 <code>loadForwardStagingChat</code>（读 <code>config.json</code> <code>forward.staging_chat</code>，缺省退回 <code>文件传输助手</code> 并打印 <code>source=config|default</code> 日志）；<code>ForwardMessageWorkflow</code> 改从它取中转会话名，不再用 <code>batch.groupName</code>；<code>bridge</code> / <code>BatchExecutor</code> 移除 <code>source_chat</code> / <code>card_selector</code> 字段；forward 分批由 <code>(inviter,source_chat,card_selector)</code> 改为按 <code>inviter</code>。</li><li>迁移：把现有 forward CSV 删掉 <code>source_chat</code>、<code>card_selector</code> 两列；若中转会话不是 <code>文件传输助手</code>，在 <code>config.json</code> 的 <code>forward.staging_chat</code> 填上会话名。</li><li>数据层回归 <code>make test-wca</code> 全绿；<code>make lint build</code> 通过。</li></ul></li></ul>
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>离线 wheel vendoring 改用 vendored python 的 pip</strong>（<code>scripts/vendor_python.sh</code>）——为什么这么改：加了 <code>openpyxl</code> 依赖后 <code>download_wheels</code> 进入非空依赖分支执行 <code>uv pip download</code>，但 <code>download</code> 并不是 <code>uv pip</code> 的子命令（实测 uv 0.7/0.11 均报 <code>unrecognized subcommand &#x27;download&#x27;</code>），dev 机 vendoring 直接失败、<code>vendor/wheels</code> 为空；而 target 机的 <code>bootstrap.sh</code> 只从 <code>vendor/wheels</code> 离线装依赖，于是 v3 release 在干净机器上不可用。改为用刚 vendored 的 PBS python 自带 pip（<code>python3 -m pip download</code>，与 <code>bootstrap.sh</code> 安装时同一 pip，wheel ABI 必然匹配），依赖列表用 stdlib <code>tomllib</code> 从 <code>pyproject.toml</code> 读取（空列表即 stdlib-only no-op）。<code>openpyxl</code> + <code>et_xmlfile</code> 均 <code>py3-none-any</code>，无需平台参数。</li></ul>
+<h3 class="sec">新增 ✨</h3>
+<ul><li><strong>启动自检：运行前显式检查辅助功能权限 + 微信状态（Part A，面向小白用户）</strong> — 为什么这么改：本工具面向不会自查前置条件的新手用户，而辅助功能 (Accessibility) 权限缺失此前只在第一次 <code>wca-ax</code> 调用时表现为不透明的 exit-64，用户看不懂、也不知道去哪开。现在 <code>wca</code> 在跑任何 batch 之前显式自检：① 调 <code>bin/wca-preflight</code>（AXIsProcessTrusted）检查辅助功能权限，缺失即给中文指引「请到 系统设置 → 隐私与安全性 → 辅助功能，勾选 WeChat 后重试」并零 batch 中止；② 既有 clean-state 检查（窗口数==1、无弹窗）保留，且把报错按窗口数区分「微信未运行/无主窗口」(数=0) 与「有多余弹窗/窗口」(数≥2)，指引更准。<code>make_preflight</code> 先查权限再查 clean-state，对外 <code>(ok, message)</code> 契约不变，orchestrator 主循环零改。回归：<code>make test-wca</code>（新增 <code>tests/wca/test_preflight.py</code>，无需微信）。设计见 <code>dev_docs/plans/20260606-forward-preflight-preview-confirm.md</code>（Part B 转发前截图预览待后续）。</li><li><strong><code>wca forward-prep</code>：从 CRM xlsx 离线生成 forward CSV（逐行 1:1，可把结果粘回源表）</strong> — 为什么这么改：收件人来自一张人工维护的 CRM Excel 导出（约 44 列），手工挑列/筛行/填 CSV 易错；且运营要把跑完的结果状态<strong>整列粘回</strong>这张源表，所以输出必须和 Excel 数据行<strong>逐行对齐、不丢行</strong>。新增离线子命令 <code>python3 -m wca forward-prep &lt;in.xlsx&gt; &lt;out.csv&gt; [--account 名字]</code>：按<strong>表头名</strong>映射（<code>用户微信名</code>→<code>wechat_name</code>、<code>微信号</code>→<code>recipient</code>、<code>已加小助手</code>→<code>inviter</code>），缺必需列大声报错。<ul><li><strong>逐行 1:1</strong>：导出<strong>每一条 xlsx 数据行</strong>、保持原序、<strong>绝不丢行</strong>。不该转发的行不是被删掉，而是写成 <code>canceled</code> + <code>[skip] &lt;原因&gt;</code>（<code>未参与本期</code> / <code>空微信号</code> / <code>非本账号</code>）。这样结果 CSV 的 <code>status</code> 列与 Excel 数据行严格逐行对齐，可整列粘回。</li><li><strong><code>[skip]</code> 是终态</strong>（新增的 message 子类，叠在 4 态 <code>canceled</code> 上、非第 5 态）：<code>filter_records_for_processing</code> 在 resume/retry/dry-run 三条路径都不入队（故也不进分批、不碰微信）；<code>send_review_report.py</code> 以独立「跳过」facet 计数、<code>analyze_logs.py</code> 客户报告里整体排除，均不混进成功/失败/取消。</li><li><strong>输出 6 列</strong> <code>inviter,recipient,wechat_name,status,dry_run,message</code>（active 行 status 留空＝pending）。<code>csv_adapter</code> 既有 forward schema 兼容多余 trailing 列，手写的 2/3 列旧 CSV 仍可跑。空 <code>微信号</code> 的 skip 行解析层会丢（<code>_build_task</code> 对空 forward recipient 返回 None），属<strong>有意</strong>——它只为 1:1 粘回保留在 CSV 里，不计数/不显示。</li><li><strong><code>--account NAME</code>（取代初版 <code>--helper</code>）</strong>：只决定哪些行 active，其余账号的行标 <code>[skip] 非本账号</code> 而非删除；<strong>真正切哪个微信实例仍由 <code>inviter</code>→<code>config.json</code> <code>accounts</code> 决定</strong>（与 invite/send 一致），<code>--account</code> 不是实例开关。<code>--helper</code> 仅存在于未发布的本分支，直接改名、无废弃别名。</li><li><strong>只读 xlsx、只写 CSV、绝不碰微信</strong>，<code>openpyxl</code> 懒加载、不进 WeChat 执行路径；生成的 CSV 是 operator 逐行核对微信名↔微信号的闸口。新增依赖 <code>openpyxl</code>（+ 纯 Python 的 <code>et_xmlfile</code>，均 <code>py3-none-any</code>、随 vendor 离线打包）。设计见 <code>dev_docs/plans/20260607-forward-prep-1to1-and-account.md</code>。</li></ul></li><li><strong>forward 工作流：主窗口归一化 rect 改为 config 可覆盖 + 右侧高窗默认</strong> — 为什么这么改：转发前 <code>normalizeWindow</code> 把微信主窗口设到固定 <code>(200,100)/920×667</code> 是写死在 AppleScript 里的，换机器/分辨率出错时只能改代码重新打包（框选偏移锚在这个窗口上，窗口一错全错）。现在它成了 operator quick-edit 旋钮，且默认改成「右侧靠边 + 高×0.75 + 上下居中」让一次能显示/框选更多卡片。与 ADR-003（预设坐标只读、随 release 走、手改而非运行期录制）一致——<strong>运行期只读不写回</strong>，不引入录制流程。<ul><li>新增 <code>config.json</code> → <code>forward.window_rect.&lt;fingerprint&gt;={x,y,w,h}</code>（绝对屏幕 points，按指纹分桶，无全局兜底），引擎 <code>loadForwardWindowRect</code> 读取，并随 <code>config.example.json</code> <strong>预填</strong>一条示例（bootstrap 带进 config，始终有可编辑条目）。缺该键时由 <code>normalizeWindow</code> 按 <code>screenSize</code> 计算右侧默认（宽 920 / 高=屏幕高×0.75 / 右留白 40pt / 上下居中），<code>screenSize</code> 取不到再退回 legacy <code>(200,100)/920×667</code>。</li><li><code>normalizeWindow</code> 现在打印 <code>归一化窗口 rect=(…) source=config|computed-right|legacy-default fingerprint=…（手改：config.json forward.window_rect.&quot;…&quot;）</code> —— 出错时日志直接给出该填哪个指纹键 + 当前值，照抄进 config 即可。</li><li>框选偏移 <code>forward.select_drag_region</code>（窗口相对）语义不变；改了 <code>window_rect</code> 尺寸需相应重调 select region。</li><li>真机已验：本机指纹 <code>1710x1107@2x</code> computed 默认落 <code>(750,138,920×830)</code>、config 覆盖落配置值，两条路径端到端生效。</li><li><strong>配套 harness 规则</strong>：新增 <code>.claude/rules/common/coding-style.md</code> →「Config-driven UI geometry」+ AGENTS.md Code Style 引用，约束今后所有「按机器/屏幕/微信布局变化、operator 需调」的几何值必须做成指纹分桶的 config 旋钮（预填 + 只读 + 计算兜底 + 日志给 key），防止再出现写死坐标的同类问题。其余待修的同类项（<code>分别发送</code> picker 偏移等）见 #115。</li></ul></li></ul>
+<h3 class="sec">重构 ♻️</h3>
+<ul><li><strong>选人交互改为纯键盘：统一 invite / forward 的逐人选择，删除鼠标坐标点击</strong> — 为什么这么改：原 invite / forward 各自用「屏幕坐标鼠标点击」加 ≤9 人（点搜索框右侧 X 清除、点第一条搜索结果行、第 2+ 人鼠标回点搜索框重新聚焦），坐标对人手碰鼠标 / 窗口位移敏感，且要维护两套近似逻辑；根因（issue #106）是点结果行会把 app 内焦点移出搜索框，而 AX 无法重设焦点。改为一条<strong>引擎层共享的纯键盘例程</strong> <code>selectRecipientByKeyboard</code>（invite + forward 共用）：靠弹窗 autofocus 粘贴 wechat_id（Cmd+V）→ <code>Down</code>（key code 125）预选 → <code>Enter</code>（key code 36）确认；第 2+ 人用<strong>非鼠标</strong> <code>AXRaise</code> 重新聚焦 + <code>Cmd+A</code> + 粘贴覆盖，逐人循环<strong>零鼠标</strong>。<ul><li><strong>检测合进动作</strong>：<code>Down</code> 前后哈希不变 ⇒ 搜索无结果（wechat_id 无效）⇒ suspect；<code>Enter</code> 前后哈希不变 ⇒ 已在群内 ⇒ suspect；四张哈希两两不同 ⇒ success。这条 Down/Enter 2 点哈希取代旧的每流程 3 截图 A/B/C 检测（截图仅留作人工复核）。哈希截区锚定弹窗 frame（<code>getInvitePickerRect</code> / <code>getForwardPickerRect</code>），不再用易抖动的 <code>getSheetRect</code>；循环前一次性把光标停到弹窗外，避免悬停高亮污染哈希。</li><li><strong>删除</strong>：invite / forward 的鼠标 X 清除、搜索框点击、硬编码结果行点击、第 2+ 人鼠标回点；随之失效的搜索框偏移属性（Form A <code>(100,33)</code> / Form B <code>(200,55)</code>）、forward 的 <code>pickerClear</code> / <code>pickerResult</code> 偏移与 <code>capturePickerHash</code>、<code>selectUser</code> 模板 plist 项（引擎迁移列表保留 <code>selectUser</code> 名仅供老 plist 兼容迁移，已不再点击）。最终「添加 / 邀请」「分别发送」按钮点击不在本次范围（属另一 OCR 计划）。</li><li><strong>真机验收门</strong>：共享引擎改动 → <code>make test-invite-e2e</code> + <code>make test-send-e2e</code>；forward 无 e2e 目标，靠 <code>dev_docs/grills/keyboard-picker-refocus/probe_keyboard.sh</code> + 测试账号真机转发一次覆盖。Phase-0 spike（<code>dev_docs/grills/keyboard-picker-refocus/findings.md</code>）在 Form B 真机 P0/P1 通过。设计见 <code>dev_docs/decisions/keyboard-picker-interaction.md</code> 与 <code>dev_docs/plans/20260605-keyboard-picker-interaction.md</code>。</li></ul></li></ul>
+<h3 class="sec">新增 ✨</h3>
+<ul><li><strong>invite：用 OCR 文本定位弹窗「添加 / 邀请」确认按钮（Part A，续 issue #106）</strong> — 为什么这么改：选人弹窗 (添加群成员) 的两次确认点击原先靠「锚点 + plist 偏移」，有三个实际故障点——(1) 偏移是按 Form A 子 sheet frame 录的，对 Form B 独立窗口 frame（原点含标题栏、内容下移 ~22pt）不可迁移；(2) 新机器/新屏幕 fingerprint/plist 缺失时要弹框让用户手点录制，<code>--yes</code> 模式直接报错；(3) 弹窗探测失败时锚点退到主窗口中心，偏移叠上去静默点进聊天区。改成 OCR 直接从像素读按钮位置，零录制、双形态同源、无偏移漂移。<ul><li><strong>Swift</strong>：<code>wca-ax</code> 新增 <code>--find-text</code> 子命令——用系统 Apple Vision (<code>VNRecognizeTextRequest</code>，macOS 10.15+ 自带，非第三方依赖) 对一张 PNG 做 OCR，按 <code>--labels</code> 白名单 + <code>--bottom-fraction</code>（只搜弹窗底部，排除「添加群成员」标题）+ <code>--min-confidence</code> 选出底部确认按钮，把归一化框映射回屏幕点（<code>CENTER_X/Y</code>）。该子命令只读 PNG、不碰 AX，故在 <code>AXIsProcessTrusted</code> 守卫前 dispatch，可无微信跑 fixture 回归。</li><li><strong>引擎</strong>：<code>findPopupButtonPoint</code>（按 <code>getInvitePickerRect</code> 的弹窗 frame 截图不裁顶 → 调 <code>--find-text</code> → 映射屏幕点）+ <code>resolvePopupButtonClickPoint</code>（OCR 优先，任何 miss 都<strong>无缝回退</strong>现有 <code>resolveButtonClickPoint</code> plist/录制路径，行为不退化）+ <code>loadInviteOcrConfig</code>（<code>config.json</code> <code>invite_ocr</code> 块，缺省即开，可调 <code>enabled</code>/<code>min_confidence</code>/<code>bottom_fraction</code>/<code>labels</code>）。</li><li><strong>工作流</strong>：<code>InviteWorkflow</code> Step 6 两处取点改 <code>resolvePopupButtonClickPoint</code> + 点击改 <code>performDirectClick</code>（OCR 可落在主窗口范围外的 Form B 窗口，避开 <code>performClick</code> 的边界确认框），两次点击控制流不变。</li><li><strong>dry-run 行为</strong>：dry-run 模式<strong>点击「添加 / Add」主确认</strong>（这正是 OCR 取点要验证的动作，必须真点才算验证到 OCR 命中），但<strong>最后的「邀请 / Invite」二次确认只移动鼠标 + 截图、不点击</strong>（dry-run 不真正发出邀请）。<code>make test-invite-e2e</code> 即 <code>--dry-run --yes</code>。</li><li><strong>中英文客户端</strong>：Vision 识别 <code>zh-Hans</code> + <code>en-US</code>，按钮白名单默认 <code>添加/邀请/Add/Invite</code>（按群权限只会是「添加」或「邀请」，不含完成/确定）；英文客户端开箱即用，<code>config.json</code> 可覆盖。</li><li><strong>英文客户端弹窗检测修复（i18n）</strong>：<code>getInvitePickerRect</code> 此前只按中文标题子串「添加群成员」匹配 Form B 独立窗口；<strong>英文客户端</strong>该窗口标题是 <code>WeixinAdd Members</code>（实测 WeChat 4.1.31 / <code>lang=en</code>），匹配失败 → <code>checkInvitePickerOpened</code> 误判「未打开」→ addButton auto-heal 空转 → 批次在跑到选人/OCR 前就失败。改为新引擎 helper <code>invitePickerTitleMatches</code> 同时认「添加群成员」与「Add Members」，英文客户端整条 invite 流程（含本次 OCR Step 6）才跑得通。（forward 的 <code>getForwardPickerRect</code> 仍只认中文「发送给」，留作后续 i18n。）</li><li><strong>回归</strong>：<code>make test-ocr-findtext</code>（<code>scripts/test_ocr_findtext.sh</code>）对 Form A / Form B fixture 断言 <code>--find-text</code> 命中正确按钮文字 + 中心落在标注框内（macOS-only，进本地 <code>make ci</code>）。真机门：<code>make test-invite-e2e</code> + <code>make test-send-e2e</code>（共享 <code>wca-ax</code> 回归）。设计与 spike 见 <code>dev_docs/plans/20260605-ocr-invite-popup-clicks.md</code> 与 <code>dev_docs/grills/ocr-invite-clicks/findings.md</code>。</li></ul></li><li><strong>forward 工作流：把公众号文章卡片以卡片形态批量转发给联系人（issue #83）</strong> — 为什么这么做：公众号文章无法用「粘贴链接」构造出卡片，卡片只能从已有卡片消息「转发」产生；微信主聊天区与发送给弹窗都是 Chromium 渲染（无 AX 子节点），所以全程用「像素/键盘动作 + 确定性窗口/sheet 信号」驱动，不依赖视觉识别。Phase 0 spike 已在真机（WeChat 4.1.26）跑通整条链路并真实送达。<ul><li><strong>用法</strong>：<code>./wechat_auto.sh forward forward_details.csv</code>。CSV schema：<code>inviter,recipient</code>（<strong>本版起</strong>——见上方「破坏性变更」；初版曾是 <code>inviter,source_chat,card_selector,recipient</code>，现已去掉 <code>source_chat</code>/<code>card_selector</code>，中转会话名移至 <code>config.json</code> <code>forward.staging_chat</code>）。同一 <code>inviter</code> 的多行按 ≤9 收件人分批，一批一次「分别发送」。</li><li><strong>约定</strong>：用户先把要群发的卡片发到一个<strong>中转会话</strong>（如 <code>文件传输助手</code>），该会话<strong>只放待转发的卡片</strong>（框选会扫中所有可见消息）。</li><li><strong>7 步流程 + 逐步确定性验收</strong>：开会话(<code>count==1</code>) → 归一化窗口(不最大化) → 拖拽框选(<code>wca-input --drag</code>) → 点「逐条转发」→ 发送给弹窗出现(<code>getForwardPickerRect</code>) → 逐个加 ≤9 收件人(invite selectUser 模式 + 3 截图 suspect 哈希) → 点「分别发送」→ 弹窗关闭(<code>count→1</code>) 确认送达。</li><li><strong>复用</strong>：Python 编排（CSV/分批/四态回写/多实例）、JSON 桥、invite 的搜索+选人+3 截图、send 的截图与 <code>review.html</code>。新增 Swift 原语 <code>wca-input --drag</code> / <code>--double-click</code>；引擎新增 <code>performDrag</code> / <code>performDirectClick</code> / <code>getForwardPickerRect</code>。</li><li>真机验收门：<code>make test-forward-e2e</code>（REAL forward，需 WeChat + 预置卡片，不能在 CI 跑）。设计与 spike 记录见 <code>dev_docs/plans/20260604-forward-workflow.md</code> 与 <code>dev_docs/grills/forward-workflow/findings.md</code>。</li></ul></li></ul>
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>forward 复核报告不显示截图修复 (issue #126)</strong> — 为什么这么改：<code>forward</code> 的 <code>review.html</code> 里所有 <code>&lt;img&gt;</code> 都空，但截图文件其实存在。根因是 <code>forward</code> 复用 send 的报告生成器 <code>send_review_report.py</code>，而它只按 send 专属文件名 glob（<code>send_b*_s*_L&lt;line&gt;.png</code>）；forward/invite 的逐人选人检测截图走共享驱动 <code>selectRecipientByKeyboard</code>，命名里没有 <code>L&lt;行号&gt;</code> 键，故永不匹配。<ul><li>把结果 CSV 行号 <code>L&lt;line&gt;</code> 穿透进共享的 <code>selectRecipientByKeyboard</code>，逐人检测截图改名为 <code>detect_b&lt;N&gt;_p&lt;i&gt;_L&lt;line&gt;_&lt;phase&gt;.png</code>（<code>phase</code> ∈ empty/searched/down/confirmed），与 send 的 <code>send_*_L&lt;line&gt;.png</code> 共用同一行号连接键，去掉文件名里冗余的 wechat_id（省掉 <code>sed</code> 子进程 + 中文 id mangling 风险）。</li><li><code>send_review_report.py</code> 泛化为按 <code>L&lt;line&gt;</code> 跨工作流关联，支持一行渲染多张阶段截图（forward 每收件人 4 张、send 每行 1 张），并按是否存在 <code>detect_*</code> 自动把标题/列头切换为「选人检测」/「发送后截图」。</li><li>检测哈希逻辑零改动（截图仅供人工复核，检测不依赖截图）。旧 session 的旧命名不再被匹配（早于本修复，可接受）。</li></ul></li><li><strong>invite：修复 dry-run/真机最后「邀请」确认按钮 OCR 定位失败、鼠标落到弹窗外</strong> — 为什么这么改：<code>make test-invite-e2e</code>（及真机）在点完「添加」后，移动到「邀请」按钮时光标并不在按钮上。根因有两层：(1) <strong>时序</strong>——「添加」之后微信会在 <strong>~2-3 秒后</strong>才弹出二次确认框「当前群聊人数较多……现在邀请？」(取消/邀请)，而原 Step 6 的等待循环在 <code>getInvitePickerRect</code> 首次返回非空（~0.4s，那时只是「添加群成员」选人弹窗在关闭）就退出，紧接着只做<strong>一次</strong> OCR，确认框还没出现 → 找不到「邀请」；(2) <strong>过滤带 + 双形态</strong>——确认框和选人弹窗一样是<strong>双形态</strong>（issue #106）：可能是主窗口子 AXSheet（<code>HAS_SHEET=true</code>/<code>COUNT=1</code>），也可能是独立窗口（<code>COUNT=2</code>，标题非「添加群成员」故 <code>getInvitePickerRect</code> 标题分支认不出）。probe 实测子 sheet 形态下 <code>getInvitePickerRect</code> <strong>确实</strong>返回了确认框 frame <code>~(1070,469,280,167)</code>，而「邀请」按钮 OCR 在 <code>(1271,589)</code>、落在该 frame 内约 72% 高度——真正漏判的是 picker 的 <code>bottom-fraction=0.25</code>（只保留 <code>topFromTop ≥ 0.75</code>）把这个<strong>位于 frame 中部</strong>的按钮（确认框版式是标题+两行正文+按钮行，按钮不贴底）过滤掉了。回退到陈旧的 <code>sheet中心+plist偏移</code> → 落在聊天区。<ul><li>引擎新增 <code>resolvePopupButtonClickPointPolling</code>：每 ~0.5s（最多 6s）<strong>轮询</strong>两类区域、<strong>均用更宽松的 <code>inviteConfirmBottomFraction=0.5</code></strong> 并取首个命中——A. <code>getInvitePickerRect</code>（子 sheet 形态 COUNT=1 的 frame）；B. <strong>主窗口居中裁剪区</strong>（<code>inviteConfirmCrop*Fraction</code>，窗口比例、scale 无关）覆盖独立窗口形态 COUNT=2，并作为 A 的兜底（确认框总居中）。<code>0.5</code> 保留底部「取消/邀请」行、排除正文里多处「邀请」（如「对方同意邀请后…」「现在邀请？」）。<code>InviteWorkflow</code> Step 6 的 inviteButton 改用此解析器，删除原 3s sheet 等待循环。</li><li>OCR 全程失败才回退原 <code>resolveButtonClickPoint</code> plist 路径（行为不变）；<code>invite_ocr.enabled=false</code> 仍可整体回退纯 plist。真机 <code>make test-invite-e2e</code> PASS：日志 <code>已解析按钮坐标(OCR/sheet): 邀请 text=邀请 abs=(1271,589)</code>，子 sheet 形态下 region A（放宽到 0.5）直接命中，坐标落在绿色「邀请」按钮上。</li><li><strong>可调试性</strong>：<code>findPopupButtonPoint</code> 新增 <code>cropLabel</code> 参数——开启截图时把 OCR <strong>实际吃的那张 crop</strong>（原先 OCR 完即删的临时 PNG）另存到 <code>outputs/&lt;session&gt;/screenshots/</code>：invite 存 <code>batchN_ocr_invite_sheet.png</code> / <code>batchN_ocr_invite_modal.png</code>，forward「分别发送」存 <code>batchN_ocr_forward_send.png</code>。便于事后核对&quot;OCR 到底截了哪块、看到了什么&quot;，不影响 OCR 逻辑本身（失败软处理）。</li></ul></li><li><strong>invite：选人键盘重聚焦的弹窗标题提示改双语，修复英文客户端多人批次（续 issue #106）</strong> — 为什么这么改：<code>getInvitePickerRect</code> 已用 <code>invitePickerTitleMatches</code> 同时认中文「添加群成员」与英文「Add Members」来定位 Form B 独立窗口，但 <code>InviteWorkflow</code> 调 <code>selectRecipientByKeyboard</code> 时只硬编码了中文提示「添加群成员」。第 2+ 人的非鼠标 <code>AXRaise</code> 用 <code>first window whose title contains &quot;添加群成员&quot;</code> 重聚焦——英文客户端该窗口标题是 <code>WeixinAdd Members</code>，子串不命中 → <code>AXRaise</code> 空转 → 焦点未回到搜索框 → 后续 <code>Cmd+A</code>/粘贴可能搜错文本或把收件人误判 suspect。改为把提示参数 <code>pickerTitleHint</code> 升级成<strong>子串列表</strong> <code>pickerTitleHints</code>，按顺序尝试、命中任一即 raise：invite 传 <code>{&quot;添加群成员&quot;, &quot;Add Members&quot;}</code>，forward 传 <code>{&quot;发送给&quot;}</code>（<code>getForwardPickerRect</code> 仍只认中文，故无英文转发窗口可 raise）。对已验证的中文路径行为不变（中文子串仍先命中；Form A 子 sheet 两者都不中、<code>AXRaise</code> 仍是无害空转），故零回归。英文客户端无真机，未跑 e2e 验证。</li><li><strong>发布包漏打包 <code>bin/wca-json</code>，导致部署包所有工作流全挂</strong> — 为什么这么改：<code>build_helpers.sh</code> 会编译出 5 个 Swift helper，但 <code>release.sh</code> 只 <code>cp</code> 了 4 个，漏了 <code>wca-json</code>（Python↔AppleScript 的 JSON 桥接二进制）。<code>BatchExecutor</code> 每个 batch 都要 shell 调用它读 <code>in.json</code>／写 <code>out.json</code>，文件不在包里 → osascript 报 <code>127 No such file or directory</code> → Python 端 <code>CalledProcessError</code> → 所有 batch <code>bridge_failures</code> fail-closed，invite／send／forward 在部署包里全部跑不了（开发仓库因为 <code>bin/wca-json</code> 在场而正常，所以一直没被发现）。<ul><li><code>release.sh</code>：补 <code>require_exec bin/wca-json</code>（打包前预检）、<code>cp bin/wca-json</code>（实际拷贝）、并把它加入打包后 zip 校验清单——以后再漏会让 <code>release.sh</code> 直接失败，不再产出坏包。</li><li>顺带：新增脱敏的 <code>send_template.csv</code> / <code>forward_template.csv</code> 并打包（此前只有 invite 有起步模板）；测试夹具（<code>test.csv</code>/<code>*_test.csv</code>/<code>demo.csv</code>）继续排除在发布包外。</li><li>可诊断性：<code>wca/orchestrator.py</code> 在 executor 失败时输出 osascript stderr 尾巴，而非只留无信息量的 <code>calledprocesserror</code>（正是本次排查费劲的原因）。</li></ul></li><li><strong>invite：适配「添加群成员」选人弹窗的两种形态（issue #106）</strong> — 为什么这么改：同一台机器、同一 WeChat 版本下，点 addButton 后的选人弹窗会<strong>非确定性</strong>地以两种形态出现——子 AXSheet（<code>HAS_SHEET=true</code>，Form A）或独立顶层窗口（<code>微信添加群成员</code>，<code>HAS_SHEET=false</code>，Form B）；不是版本切换。原 invite 只认子 sheet，独立窗口形态下会：漏判开窗（auto-heal → <code>-1003</code>）、搜索框/选人定位错位、第 2+ 人焦点泄漏误判「搜索无结果」suspect、以及邀请后失败检测漏判把失败误记成 success 污染结果 CSV。修复（<strong>不发只补开窗检测的半截修复</strong>，那会把 invite 从 fail-closed 退化为不安全的误检测）：<ul><li>引擎新增 <code>getInvitePickerRect</code>（子 sheet 或按标题匹配的独立窗口，返回统一 frame）+ <code>checkInvitePickerOpened</code>（基于前者的布尔开窗判据，fail-closed）+ <code>captureInvitePickerScreenshot</code>（按 frame <code>screencapture -R</code> + 顶部裁剪，替代会回退截主窗口的 <code>captureSheetScreenshot</code>）；<code>sheetAnchorPoint</code> 在 <code>getSheetRect</code> 为空时回退 <code>getInvitePickerRect</code>，使 selectUser/addMember/inviteButton 在 Form B 锚到弹窗而非静默退化为主窗口中心。</li><li>InviteWorkflow：开窗检测、<strong>邀请后失败检测</strong>（原 sheet-only 的 <code>checkInviteWindowOpened</code> 在 Form B 漏判 → 改双形态 <code>checkInvitePickerOpened</code>，fail-closed）、inviteButton 就绪轮询，全切到双形态判据；picker 相对点击统一 <code>performDirectClick</code>；第 2+ 人键盘清空前显式 <code>set frontmost to true</code> + <code>AXRaise</code>（<code>Cmd+A</code>/<code>Delete</code> 即便在 <code>tell (process)</code> 内仍按前台 app 投递，须前台化避免漏键到主窗口）。</li><li><strong>搜索框偏移按形态分开（关键修正）</strong>：两种 frame 原点不同——Form A 子 sheet 原点即弹窗内容顶；Form B 独立窗口原点是<strong>窗口标题栏顶</strong>，内容（含搜索框）整体下移 ~22pt。单一 frame 偏移点不中两者（Form A 的 <code>+33</code> 在 Form B 落到搜索框上沿/标题栏）。故 Form A 用 <code>(100,33)</code>、Form B 用 <code>(200,55)</code>。第 2+ 人清空上一个人的搜索串：<code>AXRaise</code> 弹窗 → 点搜索框（大目标，顺带聚焦输入框）→ <code>Cmd+A</code> 全选 + <code>Delete</code> 清空 → 粘贴新 id 替换。</li><li><strong>真机验收</strong>：<code>make test-invite-e2e</code> 在 <strong>Form B（独立窗口）连续 12/12 通过</strong>——第 2 个联系人 <code>xingzhe1478</code> 每次正确选中成功、不再误判 suspect，两批（两个目标群）都跑完，每人 3 截图 suspect 哈希保持有效。设计与 spike 见 <code>dev_docs/plans/20260604-invite-dual-form-picker.md</code> 与 <code>dev_docs/grills/invite-dual-form-picker/findings.md</code>。</li></ul></li><li><strong>invite：盲发 Enter 进群防护在 wca 架构上重新落地（issue #64）</strong> — <code>main</code> 上的 #64（commit <code>a14863d</code>）是针对<strong>迁移前</strong>的 AppleScript invite 流程写的；<code>feat/python-orchestrator-p1</code> 在 #64 之前 fork 并重写了 invite 路径，<code>git merge</code> 会把 #64 的旧流程代码<strong>无冲突地</strong>拼进新流程（已验证会注入 8 处过期 handler 引用）。本次按 wca 架构重新实现，而非让合并去解：<ul><li><strong>Layer A（进群前 clean state）折入 <code>BatchExecutor</code> 的逐批 gate</strong>（不再是独立 <code>ensureNoForeignPopupBeforeOpen</code> handler）：每批 dispatch <code>processTaskBatch</code> 前用 <code>inspectWeChatCleanState</code> 要求 <code>windowCount==1 &amp;&amp; hasSheet==false</code>。一次性 preflight 只在 run 开始查一次，抓不到<strong>运行中途</strong>冒出的弹窗（单窗口上有 sheet 时 count 仍为 1）；逐批 gate 才能。异常即 fail-closed 跳过本批不输入，且不自动关弹窗（真模态留给用户）。invite + send 共用此 gate。</li><li><strong>Layer B（进群后校验）<code>verifyGroupChatOpenedOrSkip</code></strong>（engine handler，<code>InviteWorkflow.processTaskBatch</code> 在 Enter 后、点 chatInfo 前调用）：群真打开 ⇒ <code>RELEVANT_WINDOW_COUNT==1</code> 且无弹窗；否则群没开（搜不到/改名/不在最近会话）→ <code>closeExtraWindows</code> 清理 → raise <code>-1006</code>（被 <code>processTaskBatch</code> 顶层 handler 捕获 → 整批标 <code>failed</code>、run 继续）。</li><li>搜索粘贴前加 <strong><code>Cmd+A</code> 覆盖</strong>（<code>handleManualGroupSelection</code> 的 <code>--yes</code> 与交互两分支），避免残留文本拼进顽固的 &quot;WeChat (Window)&quot; 全局搜索窗。</li><li><strong>护栏（无需真机 WeChat）</strong>：<code>tests/wca/test_invite_open_guard.py</code> 钉死两层 guard 的落点（结构性断言）+ guard-skip fail-closed-and-continue（行为断言），防止将来合并/编辑把 guard 静默改掉。计划见 <code>dev_docs/plans/20260603-blind-enter-guard-on-wca.md</code>。</li></ul></li><li><strong>send：发送后会话弹成独立窗口被漏检（假 success）— issue #101</strong> — 发送偶发把当前会话弹成独立聊天窗口、消息其实没发出去，旧逻辑只在「开会话后」快照一次窗口数、发送后无条件写 <code>success</code>，导致收件人没收到却记成功（数据完整性问题）。<ul><li><strong>检测</strong>：<code>SendMessageWorkflow.processTaskBatch</code> 在每条真实发送 + settle 后复查 <code>relevantWindowCount()</code>。detach 后的独立聊天窗为正常尺寸，逃过 <code>isIgnorableAuxiliaryWindow</code> 过滤，使窗口数由 1 变 2（spike 实测为确定性信号）；<code>≠1</code> 时短延迟后再确认一次以规避瞬时面板误判。</li><li><strong>标记</strong>：检测到 detach 不写 <code>success</code>，改走 <code>suspect</code> 通道 → out.json → <code>wca/result_io.py</code> 映射为 CSV <code>failed</code> + <code>message=&quot;[suspect] 会话弹成独立窗口，未确认送达&quot;</code>，<code>--retry-failed</code> 会重排；同一 recipient 的后续 seq 级联标 <code>[blocked]</code>。Python 编排层无需改动（沿用既有 suspect 通道）。</li><li><strong>清理</strong>：返回前循环 <code>closeExtraWindows()</code> 直到窗口数回到 1，保证下一个 wechat-id 从干净状态开始。</li><li><strong>dry-run</strong> 不实发故跳过复查。</li><li><strong>Spike（已排除的假设）</strong>：<code>dev_docs/grills/issue-101-enter-paste-timing/</code> — 105 次真实发送统计对比，openDelay 0.2–2.0s 全程 0 次 detach（合并 95% CI &lt; 3.5%），证明「开会话 Enter→粘贴间隔太短」不是成因、增大间隔解决不了；故采用「发送后检测 + 清理」而非加长延迟。</li></ul></li><li><strong>发版打包不可运行（迁移后既存缺口）</strong> — ADR-001 把入口切到 <code>python3 -m wca</code> 后，<code>release.sh</code> 仍按迁移前清单打包，<strong>漏掉 <code>wca/</code> / <code>bootstrap.sh</code> / <code>vendor/python/</code>（离线 PBS 运行时）/ <code>scripts/</code></strong>，发出的 zip 一启动即崩。修复： <code>release.sh</code> 新增打包与 zip 校验上述内容（清理 wca/scripts 的 <code>__pycache__</code>）， 并修一个既存脆弱写法（校验循环 <code>echo|grep -q</code> 在 pipefail+大清单下 SIGPIPE 误报， 改 here-string）；<code>release.yml</code> 在 <code>release.sh</code> 前新增 <code>scripts/vendor_python.sh</code> 构建 PBS 运行时（stdlib-only，无 wheel/uv 需求；需 arm64 runner）。验证：解压 zip 后 <code>vendor/python/bin/python3 -m wca invite</code> 正常、全部 <code>wca</code> 模块可导入。</li></ul>
+<h3 class="sec">变更 🔁</h3>
+<ul><li><strong>分发改为纯 CLI（移除双击 <code>WeChatAutoInvite.app</code>）</strong> — ADR-001 迁移后入口 <code>wechat_auto.sh</code> 调 <code>python3 -m wca &lt;workflow&gt; &lt;csv&gt;</code>，要求显式传 CSV；旧的双击 <code>.app</code> 执行 <code>wechat_auto.sh invite</code>（无 CSV），在迁移后必然报错退出，已是断路。 现统一为纯命令行分发：<code>release.sh</code> 不再打包 <code>.app</code>，<code>wca/cli.py</code> 无 CSV 时给出 明确的 CLI 用法提示（不再提&quot;interactive chooser not yet ported&quot;），README 移除 双击启动说明与相关 <code>.app</code> FAQ。⚠️ 终端用户不再能双击启动，需在终端运行。 交互式选文件 / 续跑对话框明确放弃移植。计划见 <code>dev_docs/plans/20260602-pure-cli-distribution.md</code>。</li><li><strong><code>cleanupOldSessions</code> 确认弃用</strong> — 旧 AppleScript &quot;保留最新 5 个 session 目录&quot; 在 strangler 切换中移除、Python 未重实现，owner 确认有意弃用；<code>outputs/</code> 旧 session 目录不再自动修剪，需手动清理。同步修正 <code>AGENTS.md</code> 过时描述。</li></ul>
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>invite <code>--yes</code> 真机邀请未发出 — inviteButton 点击过早</strong> — 点完&quot;添加(addMember)&quot;后， 原代码只用固定 ~0.25s 延时探测一次 AXSheet 就去点邀请按钮；UI 尚未 settle 时点击不生效、 弹窗滞留，被 <code>checkInviteWindowOpened</code> 误判为&quot;邀请失败弹窗&quot;→ ESC，结果群邀请消息根本没发出。 改为点完 addMember 后<strong>轮询 AXSheet 最多 3s</strong>（每 ~0.4s 探一次，sheet 一就绪即点），并记录等待 时长。真机验证：两批均 <code>AXSheet ready after ~0.8s</code> 后成功发出邀请、无失败弹窗。根因是<strong>时机</strong> 而非坐标（失败/成功两次点的是同一坐标）；<code>--no-screenshot</code> 会缩短间隔、使竞态更易触发，轮询消除了 对偶发延时的依赖。详见 <code>bugs/invite-axsheet-not-detected-at-invite-button.md</code>。</li><li><strong>Python orchestrator P1 编排层回归修复（B1–B7）</strong> — 修复 strangler 切换后相对 AppleScript 编排丢失/写错的 6 个阻塞行为（缺陷报告 <code>bugs/python-orchestrator-p1-regressions.md</code>，计划 <code>dev_docs/plans/20260601-python-orchestrator-p1-regressions.md</code>）：<ul><li><strong>B1 — Shift+ESC 取消失效</strong>：<code>wechat_auto.sh</code> 从未启动 <code>wca-monitor</code>（写 <code>/tmp/auto_invite_cancel</code> 的进程），用户无法中止运行。现在在交给 <code>python -m wca</code> 前后台启动 monitor，并用 <code>EXIT</code> trap 回收 + 清理信号；同时去掉末行 <code>exec</code>（否则 trap 不触发、monitor 泄漏、stale 信号污染下次运行的基线）。</li><li><strong>B2 — <code>SESSION_END</code> 误报 cancelled</strong>：正常完成时不再 emit <code>cancelled=false</code>（<code>analyze_logs.py</code> 会把字符串 <code>&quot;false&quot;</code> 读成 truthy，把每个正常会话记成已取消）；仅真正取消时 emit <code>cancelled=true</code>，对齐 AppleScript 契约。</li><li><strong>B3 — ROI 字段丢失</strong>：<code>SESSION_END</code> 重新带上 <code>duration_ms</code> / <code>auto_ms</code> / <code>manual_ms</code> / <code>manual_count</code> / <code>unique_groups</code>，时间节省 dashboard 不再归零（P1 近似：manual 计时未移植，<code>auto_ms==duration_ms</code>、<code>manual_*=0</code>）。</li><li><strong>B5 — <code>--no-screenshot</code> 未生效</strong>：该 flag 之前只解析不透传，截图（含 recipient/消息 PII）照拍。现在透传到执行器并省略 <code>--session-dir</code>，<code>BatchExecutor</code> 据此跳过截图初始化。</li><li><strong>B6 — <code>--yes</code> 不重置</strong>：<code>--yes</code> 无 <code>--resume</code> 现在从头开始（重置 result CSV 后全量重跑），不再静默 resume 跳过已成功行；接上此前的死代码 <code>reset_all_status_to_pending</code>。</li><li><strong>B7 — 源文件变更未处理</strong>：源 CSV 变更后，<code>--yes</code>（无 <code>--resume</code>）基于新文件重置、<code>--resume</code> 保留旧结果（交互式三选一对话框延后到 AppleScript UI-helper 端口，仅实现非交互语义）。</li><li>说明：缺陷报告中的 <strong>B4（<code>[AUDIT]</code> 缺失）经复核不成立</strong> —— send 工作流仍经 <code>SendMessageWorkflow.writeBatchAudit</code> 正常 emit <code>[AUDIT]</code>；仅 invite 缺审计，且 D6 audit archive 契约本为 send-only，故 invite 缺口延后（非本次范围）。</li></ul></li></ul>
+<h3 class="sec">新功能 ✨</h3>
+<ul><li><strong>Python orchestrator P1 垂直切片（ADR-001 D1+D5）完成</strong> — 编排层（CSV 解析、<code>Task</code> 模型、批次分组、result 写回、resume/retry 过滤、account config、session/metric/review）已全部迁到 <code>wca</code> Python 包；AppleScript 退为批次执行器（<code>BatchExecutor.applescript</code> 经 JSON-over-tempfile 桥 + <code>wca-json</code> helper 驱动各 workflow 的 <code>processTaskBatch</code>）。<code>wechat_auto.sh</code> 入口改调 <code>python3 -m wca</code>（经 <code>bootstrap.sh</code> 启动离线 vendored python-build-standalone，arm64/macOS 11+）。<code>WorkflowRunner.applescript</code> 退役为 stub。真机验证：invite e2e（含关键步骤断言）、send 真实发送 + 坏号检测全绿。计划见 <code>dev_docs/plans/20260529-python-orchestrator-p1.md</code>。<ul><li><strong>关 #38/#2</strong>（CSV 引号/逗号不再错列，stdlib <code>csv</code>）、<strong>#32/#77</strong>（resume/retry filter 显式状态机）。</li><li><strong>send 安全闸（#86 类）</strong>：per-batch 独立进程模型会让多余窗口（count&gt;1）漂移，导致 recipient id 被误输进上一个聊天窗并发送。修复：每批 dispatch 前 <code>closeExtraWindows()</code> + <strong>强制窗口数==1 才允许输入</strong>，否则整批 fail-closed 不输入任何字符。真机验证脏状态不再误发、干净状态正常发。</li><li><strong>e2e 硬化</strong>：<code>test_invite_e2e.sh</code> / <code>test_send_e2e.sh</code> 新增 Check 6 关键步骤断言（每个 id 确实被搜索、检测器逐联系人运行、批次计数、实际发送条数），不再只验最终 CSV 状态。</li><li><strong>系统要求</strong>：macOS 11.0+ / Apple Silicon (arm64)；release zip 内置 PBS + wheels（<code>vendor/</code> build 期生成、gitignored）。</li><li>后续（非本切片阻塞）：count==0 主窗恢复（<code>open -b &lt;bundle&gt;</code>）、per-batch vs 连续进程 send 模型权衡、clean-Mac Gatekeeper 端到端 + <code>release.sh</code> ad-hoc codesign。</li><li>本次落地 P1 基础三件（纯数据层，stdlib-only，无 WeChat/网络依赖）：</li><li><strong>WI-1.1</strong>：<code>wca</code> 包骨架 + <code>wca/cli.py</code>（<code>wca invite|send</code>，全量复刻现有 CLI flag：<code>--dry-run</code>/<code>--resume</code>/<code>--retry-failed</code>/<code>--yes</code>/<code>--no-screenshot</code>/<code>--wechat-bundle-id</code>/<code>--root</code>）+ <code>pyproject.toml</code>（声明零第三方依赖）+ <code>make test-wca</code> / <code>test_wca.sh</code>。</li><li><strong>WI-1.4</strong>：<code>wca/csv_adapter.py</code> —— stdlib <code>csv</code> 模块解析四种 schema（invite 长/legacy、send 长/legacy），<strong>修复 #38 / #2</strong>（message/content 含逗号、<code>&quot;&quot;</code> 转义引号不再错位）；含 BOM 剥离、CRLF、legacy-send <code>message</code> 列名冲突的位置式解析。</li><li><strong>WI-1.5</strong>：<code>wca/task.py</code>（frozen <code>Task</code> dataclass + 4 状态机 + <code>line_number</code> 主键 + <code>content</code> fingerprint 守卫 + 不可变 history，per plan §6 D-1）+ <code>wca/legacy_status.py</code>（<code>suspect</code>/<code>blocked</code> → <code>failed</code> 静默映射 + <code>[STATUS_MIGRATION]</code> 日志 + <code>[legacy:*]</code> message 前缀）。</li><li><strong>WI-1.0</strong>（docs）：调和 <code>20260527-productization.md</code> 与 ADR-001 D1 冲突——其 Swift-daemon 编排方向被 D1 (Python) supersede，相关段落加标注。</li><li>测试：<code>tests/wca/</code>（31 个 unittest，覆盖 schema 检测 / 引号逗号 / 跨运行身份 / 状态机 / legacy 迁移）。</li><li><code>.gitignore</code> 增 <code>vendor/python/</code> <code>vendor/wheels/</code>（离线 PBS + wheels 为 build 期生成，不进 git）。</li><li>弱 breaking 说明（待 WI-1.9/1.10 落地后生效）：内部编排重构，CLI flag 与 result-CSV 列布局对用户不变；系统要求将升至 macOS 11.0+ / Apple Silicon (arm64)。</li></ul></li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.25.0</span><span class="date">2026-06-06</span></div>
+      <div class="body">
+<h3 class="sec">变更 🔧</h3>
+<ul><li><strong>预设坐标 + <code>config.json</code> 改为只从 release/仓库根目录读取、运行期只读（ADR-003 v2）</strong> — 为什么这么改：原来 <code>config.json</code> 与 <code>button_cache.plist</code> 存在 <code>~/Library/Application Support/wechat_automation/</code>，由首次启动 bootstrap 从模板生成，并在运行期录制/写回坐标；这条路径让「部署机器上跑哪份坐标」难以审计，也无法随 release zip 一起版本化分发。现在两份文件只从 release/仓库根目录（与 <code>wechat_auto.sh</code> 同级的 <code>$PROJECT_ROOT</code>）读取，<code>WCA_USER_DATA_DIR</code> 仅供测试覆盖读取目录。<ul><li><strong>停止一切运行期 plist 写回</strong>：plist 只读。缺 plist 直接 hard-fail <code>-1010</code>；非 v3 结构（无顶层 <code>defaults</code> dict）<code>-1011</code>；解析槽位里缺某个按钮偏移 <code>-1012</code>，并提示「修正 release 根目录 <code>button_cache.plist</code> 后重新打包（delta 方法）」。<strong>不再弹任何录制对话框</strong>，<code>--yes</code> 与交互模式行为完全一致。</li><li><strong>F1</strong>：v3 结构判定放宽——只要有顶层 <code>defaults</code> dict 即接受，<strong>不再要求</strong> <code>meta.schemaVersion</code> 键。</li><li><strong>保留</strong>：按屏幕指纹分桶（只读选桶）；addButton auto-heal 的 Y 偏移<strong>探测</strong>保留（仅 in-batch 重试，绝不写回）；探测全部失败则该批 hard-fail（不再手动重录）。</li><li><strong>配置加载补线</strong>：<code>click_jitter</code> / <code>button_healing</code> 现在真正在 BatchExecutor 路径上加载（此前在该路径零调用 → 退回硬编码默认）。<code>button_healing.persist_add_button_override</code> 已移除（它所控制的写回已不存在）。</li><li><strong>delta 方法</strong>（修正错误偏移，无需工具，anchor 抵消）：<code>resolveButtonClickPoint</code> 日志打印 <code>offset=(…) abs=(X,Y)</code>；用 Cmd+Shift+4 读到目标像素后，<code>新 offset = 旧 offset + (目标像素 − abs)</code>，改 <code>defaults.&lt;fingerprint&gt;.&lt;button&gt;</code>（或 <code>overrides</code> 条目）后重新打包。</li><li><strong>打包</strong>：<code>release.sh</code> 现在把真实的 <code>config.json</code> + <code>button_cache.plist</code>（每客户构建时放到根目录的 gitignored 文件）打进 zip；<code>config.example.json</code> / <code>button_cache.template.plist</code> 仅作参考模板，不再被 seed 到任何用户目录。</li><li><strong>录制/点击捕获暂留为 dormant dead-code</strong>（D6 延后）：调用点已删除、handler 函数体保留；<code>src/escape_monitor.swift</code> 未改（仍含 Shift+ESC / Enter / 点击捕获）。待 OCR 覆盖 addButton 后随 D6 删除。</li><li><strong>版本号说明</strong>：用户目录→根目录这条来源契约变更虽影响部署契约，但 owner 按 ADR-003 §4b 定为 <strong>minor</strong> bump（<code>2.24.0 → 2.25.0</code>），breaking 性通过下面的 <strong>Migration</strong> 行传达，而非靠 major 号。</li><li><strong>Migration（迁移，必读）</strong>：已有部署须把 <code>~/Library/Application Support/wechat_automation/{config.json,button_cache.plist}</code> <strong>移到 release/仓库根目录</strong>（与 <code>wechat_auto.sh</code> 同级），或用每客户构建把这两份文件放在根目录重新打包——<code>~/Library</code> 不再被读取。</li></ul></li><li><strong>forward：「分别发送」确认键改用 OCR 定位（issue #115）</strong> — 为什么这么改：forward 主窗口归一化改成右侧高窗后，「分别发送」绿按钮的固定 picker 偏移（<code>pickerSendDX/DY</code>）会打偏（真机实测固定偏移点 <code>(1491,802)</code> 未命中、弹窗不关 → 整批判失败）。改为复用引擎 <code>findPopupButtonPoint</code>（与 invite「添加/邀请」同一条 <code>wca-ax --find-text</code> 路径）：按标签 <code>{分别发送, Send Separately}</code> 从弹窗底部像素读按钮位置（真机命中 <code>(1468,780)</code>），命中即点、任何 miss 回退固定偏移。验收信号不变（点完看「发送给」弹窗是否消失）。<code>make test-forward-e2e</code> success=2 / failed=0。</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.18.0</span><span class="date">2026-05-29</span></div>
+      <div class="body">
+<h3 class="sec">重构 ♻️</h3>
+<ul><li><strong>状态枚举 6 → 4 收敛（ADR-001 v4 D5 + D2 落地）</strong> — result CSV 的 <code>status</code> 列从 6 个值收敛到 4 个，原 <code>suspect</code> 与 <code>blocked</code> 合并入 <code>failed</code>；子类信息迁到新增的 <code>message</code> 列，以 <code>[suspect] &lt;reason&gt;</code> / <code>[blocked] &lt;reason&gt;</code> / <code>[legacy:suspect|blocked] &lt;orig&gt;</code> 前缀承载。<code>--retry-failed</code> CLI 字面行为不变（重跑集合自然吸收原 suspect/blocked，等价性由 Phase 0 spike 证明）。<ul><li><strong>CSV schema 弱 breaking</strong>：result CSV 追加 <code>message</code> 列（与 <code>dry_run</code> 列追加策略一致）。<code>ensureResultCsv</code> / <code>migrateResultCsvSchema</code> 幂等补列；老 result CSV（无 <code>message</code>）读取时填空字符串，下次写入即为新格式。</li><li><strong>engine</strong>：新增 <code>parseStatusValue</code> / <code>migrateLegacyStatus</code> helper（<code>WeChatEngine.applescript</code>）。前者在 CSV 读入时静默归一化 legacy 值并写 <code>[STATUS_MIGRATION]</code> 日志行；后者把 <code>message</code> 列前缀加 <code>[legacy:*]</code>。<code>updateCsvStatus</code> / <code>updateCsvStatusBatch</code> 签名扩展接收 <code>newMessage</code> 字段（batch 版本中可选，缺省视为空串以保持向后兼容）。<code>filterRecordsForProcessing</code> 文档化收敛后的 <code>{failed}</code> retry 集合（仍接受 <code>suspect</code>/<code>blocked</code> 作 belt-and-suspenders 防御）。</li><li><strong>workflows</strong>：<code>InviteWorkflow.parseCsvRow</code> / <code>SendMessageWorkflow.parseCsvRow</code> 改为透传 <code>parseStatusValue</code> 规整后的状态，接受 legacy 输入。</li><li><strong>WorkflowRunner</strong>：batch 结果 dispatch 循环改写——<code>status:&quot;suspect&quot;</code> → <code>newStatus:&quot;failed&quot;, newMessage:&quot;[suspect] &lt;orig&gt;&quot;</code>；<code>status:&quot;blocked&quot;</code> → <code>newStatus:&quot;failed&quot;, newMessage:&quot;[blocked] &lt;orig&gt;&quot;</code>。<code>suspectCount</code>/<code>blockedCount</code> 显示计数器保留（继续做 dialog/log/metric 子类分类）。</li><li><strong>e2e</strong>：<code>test_invite_e2e.sh</code> / <code>test_send_e2e.sh</code> 断言从 <code>suspect</code> 改为 <code>failed</code>，并在头部注释解释 legacy 映射；不验 message 列内容（属 workflow→report 内部契约，由 P2 报表自测覆盖）。</li><li><strong>Phase 0 spike</strong>：<code>dev_docs/grills/status-enum-unification/{simulate_filter.py, findings.md}</code> — 纯 Python 数据层等价性证明，覆盖 10 行混合 fixture × <code>retry_failed ∈ {False, True}</code>。</li><li><strong>后续</strong>：P2（<code>scripts/send_review_report.py</code> / <code>scripts/analyze_logs.py</code> 按 message 前缀做 facet）和 AGENTS.md Status values 段同步、AutomatorRunner.applescript 不动（deprecated per AGENTS.md don&#x27;t-touch 列表）。</li></ul></li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.17.0</span><span class="date">2026-05-29</span></div>
+      <div class="body">
+<h3 class="sec">新增 ✨</h3>
+<ul><li><strong>D6 账号身份层 — 4 道非 VL 防线</strong> — 多实例 send 工作流加上&quot;账号声明&quot;vs&quot;实际发送目标&quot;的核查链，直接回应 issue #86（&quot;发给 xingzhe1478 的消息进了 autohighlight 聊天窗&quot;）。<ul><li><strong>Batch-level preview</strong>（启动门）：<code>SendMessageWorkflow.batchSummaryText</code> 改为账号视角分组渲染（<code>将用【zhiwei】(com.tencent.xinWeChat) 发送: alice (1条), bob (2条)</code>），并附 inviter 切换次数预告。已有&quot;任务分组&quot;dialog 文案直接消费新摘要；<code>--yes</code> 跳过 dialog 时仍把摘要落到 <code>[D6] preview skipped via --yes: &lt;summary&gt;</code> log 行，事后可审计。</li><li><strong>Per-inviter-switch confirm</strong>（中途门）：<code>WorkflowRunner</code> 批次循环里加 <code>lastBundleId</code> 跟踪；当 batch 解析后的 bundleId 实际变化（且非首批）触发 dialog 显示 from/to + 显示名。取消 = 整 session abort（与 Shift+ESC 一致）。<code>--yes</code> 跳过时写 <code>[D6] inviter-switch from=... to=... skipped via --yes</code>。</li><li><strong>Frontmost bundleId freeze</strong>（已有，显式归入 D6）：<code>assertFrontmostBundleId(expectedBundleId)</code> 仍在每条 Enter 前判定；本次只在 AGENTS.md 显式归到 D6 责任段。</li><li><strong>Audit 归档</strong>：新增 <code>WeChatEngine.appendAuditRecord</code> 写每个 batch 终态到现有 <code>wechat_auto.log</code>（不新建文件），格式 <code>[AUDIT] batch=N|inviter=...|display=...|bundle=...|recipient=...|focus=&lt;ok|mismatch|n/a&gt;|status=...</code>；pipe / equals / 换行经 <code>sanitizeAuditField</code> 转义，防止 CSV 中的 recipient 字符串伪造审计行。<code>scripts/analyze_logs.py</code> 加 <code>AUDIT_RE</code> + <code>parse_audit_payload</code> + <code>audit_totals</code> aggregation（per-status counts + focus mismatch count）。</li><li><strong>新引擎 helper</strong>：<code>displayNameForInviter(inviter)</code> 解析 <code>config.json</code> accounts 的 key 作为用户可读名，未命中时退化为 <code>inviter(bundleId)</code> 兜底；<code>accountConfig</code> 缺失（单实例模式）时返回 inviter 原文。</li><li><strong>决策与计划</strong>：ADR-001 v4 §2 D6 + <code>dev_docs/plans/20260528-d6-account-safety.md</code>，spike 文档 <code>dev_docs/grills/d6-account-safety/control-flow.md</code> 记录 4 道防线的精确插入点 + <code>--yes</code> 传递路径。VL 自动账号识别仍推迟到 D2 + <code>VLDetector</code> 落地后再做。</li><li><strong>验证</strong>：<code>make test-send-e2e</code>（真发到 send_test.csv）+ <code>make test-invite-e2e</code>（dry-run）全绿；audit / D6 log 行经实测确认（autohighlight + xingzhe1478 → <code>focus=ok status=success</code>；TeresaXDD111_WRONG_ID → <code>focus=n/a status=suspect</code>）。</li></ul></li></ul>
+<h3 class="sec">流程 / Governance 🧭</h3>
+<ul><li><strong>chore: 新增 <code>/feature-workflow</code> slash command</strong> — 将 AGENTS.md + <code>.claude/rules/common/*.md</code> + ai-governance.md 的规则机器化成一条 6 步串行流水线（Plan → Spec Check → Impact → Implement → Test → Audit + Verify/Release finalize）。<strong>新增产物</strong>：1 个 command 文件（<code>feature-workflow.md</code>）+ 3 个 read-only subagent（<code>spec-guardian</code> / <code>impact-analyst</code> / <code>release-steward</code>，后者无 Bash 工具、commit 命令仅作为提议字符串输出，主 Claude 等用户显式 &quot;commit&quot; 才执行）。<strong><code>.gitignore</code> 同时解除</strong> <code>.claude/agents/</code> 与 <code>.claude/commands/</code> 下 <code>*.md</code> 的忽略，把先前未追踪但已使用的 4 个 agent（<code>planner</code> / <code>code-reviewer</code> / <code>security-reviewer</code> / <code>build-error-resolver</code>）+ 4 个 command（<code>code-review</code> / <code>issue-workflow</code> / <code>plan</code> / <code>verify</code>）一并入库（合计入库 7 agent + 5 command）。<code>build-error-resolver</code> 同步从 JS/Node 模板改写为本仓的 AppleScript + Swift 实际栈。纯流程/文档变更，不影响 release zip，不 bump VERSION。计划：<code>dev_docs/plans/20260527-feature-workflow-port.md</code>。</li><li><strong>引入 AI governance 规则</strong> — 新增 <code>.claude/rules/common/ai-governance.md</code>（长任务 plan / WI linkage / phase gate / spike / 不绕过 gate 等约束），配套 <code>dev_docs/plans/</code> 与 <code>dev_docs/grills/</code> 目录说明，以及 <code>scripts/check-wi-linkage.sh</code> + <code>make check-wi</code> 校验 WI 是否在 feature 分支 commit message 中被引用。<code>make lint</code> 扩展到 <code>scripts/*.sh</code> 与 <code>.githooks/*</code>。纯流程文档/工具变更，不影响 release zip，不 bump VERSION。</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.16.0</span><span class="date">2026-05-27</span></div>
+      <div class="body">
+<h3 class="sec">重构 ♻️</h3>
+<ul><li><strong>统一截图采集到 <code>screencapture -R</code></strong> — <code>wechat_ui_inspector.swift</code> 里 3 处截图函数（<code>captureWeChatWindow</code> / <code>captureSheetRegion</code> / <code>captureAndAnnotateScreenshot</code>）全部改用系统 <code>screencapture -R &lt;region&gt;</code>，删除 5 处 <code>CGWindowListCreateImage</code> 调用。文件 1372 → 1297 LOC（-75）。<ul><li><strong>背景</strong>：<code>CGWindowListCreateImage</code> 在 macOS 15 SDK 已被标 obsoleted，仓库当前仅靠 <code>build_helpers.sh</code> 的 <code>-target macosx10.15</code> 兜底符号才能编译；这是 SDK 升级时的时间炸弹。本次拆除。</li><li><strong>依据</strong>：通过 <code>dev_docs/grills/ui-observation-contract/</code> spike 实测验证——<code>screencapture -R</code> 在 WeChat 4.x 主聊天窗（Metal/GPU 面）和 AXSheet 浮层上均能产出真实像素（实测色彩多样性 ≥ CG），开销差 ~50ms/张可忽略。</li><li><strong>验证</strong>：<code>make test-invite-e2e</code> + <code>make test-send-e2e</code> 全绿（送给 autohighlight + xingzhe1478 + bad-id detection 全部正确）；3-截图哈希在新采集路径下确定性保持。</li><li><strong>副产物</strong>：<code>AGENTS.md</code> 同步声明支持 WeChat v3.x + v4.x（之前仅写 v3.x，代码早已通过 <code>isMainWeChatWindow</code> 兼容 <code>Weixin</code>/<code>微信</code> 两个标题）。</li></ul></li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.15.0</span><span class="date">2026-05-21</span></div>
+      <div class="body">
+<h3 class="sec">新增 ✨</h3>
+<ul><li><strong>send 工作流支持多 inviter + 单人多条消息</strong> — CSV 新增长表格式 <code>inviter,recipient,seq,content,status</code>：同一 <code>recipient</code> 可有多行（按 <code>seq</code> 升序逐条发送），<code>inviter</code> 列用于按 <code>config.json</code> 映射切换微信实例（与 invite 工作流一致）。旧短表 <code>recipient,message,status</code> 仍可运行（自动映射为 <code>seq=1</code>、<code>inviter=&quot;&quot;</code>），无需迁移。</li><li><strong>send 人工复核报告</strong> — 每条消息发送后截一张主窗口图，存到 session 目录 <code>screenshots/</code>；session 结束自动生成 <code>review.html</code>（一行一条消息：inviter / recipient / seq / content / 状态 / 截图，支持状态过滤、缩略图点击放大、缺图占位）。也可手动 <code>make send-review SESSION=&lt;dir&gt;</code>（加 <code>EMBED=1</code> 内嵌 base64 图便于分享）。</li><li><strong>send 发送前焦点断言</strong> — 每条消息按 Enter 前确认前台进程是目标微信实例，否则标记 <code>failed</code>，避免把消息发到错误的窗口/应用。</li><li><strong>send 坏 recipient 检测（窗口数护栏）</strong> — 搜索 recipient 前先清空搜索框（避免上一个残留拼接触发顽固的全局搜索窗），回车后读窗口数：==1 表示已打开 1:1 会话 → 发送；≠1 表示搜不到/未打开 → <strong>自动标 <code>suspect</code>、记日志、Escape 关闭搜索面板、跳过不发、继续下一个</strong>（无弹窗、不让用户选——无法确认是否真正送达，强发只会发错）。交互与 <code>--yes</code> 行为一致；中止整个任务用 Shift+ESC。无需截图/AX/VL。</li><li><strong><code>wechat_auto.sh</code> 源码改动后自动重编译</strong> — 之前只在 <code>.scpt</code> 缺失时才编译，改了 <code>.applescript</code> 源码却直接运行会静默跑旧编译产物；现在任一源码比其 <code>.scpt</code> 新就自动重 <code>build</code>（排除从不编译的 legacy <code>AutomatorRunner.applescript</code>）。</li><li><strong>send 主窗口截图改用 <code>screencapture</code></strong> — WeChat 主聊天视图是 GPU 合成面，<code>CGWindowListCreateImage</code> 返回纯白（invite 截的是 AppKit sheet 浮层故正常）；改用系统 <code>screencapture -R</code> 读取真实像素（WeChat 在最前且未遮挡时有效）。截图仅供人工/VL 复核，检测本身不依赖它。</li></ul>
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>CSV 解析支持带引号字段</strong> — 新增 quote-aware 解析器 <code>parseCsvLine</code>（RFC4180 语义：双引号包裹字段内的逗号、<code>&quot;&quot;</code> 转义引号、CRLF/BOM 处理）。result CSV 的状态读写（<code>updateCsvStatus</code> / <code>updateCsvStatusBatch</code>）改用该解析器，因此 <code>content</code> 等字段内含逗号（如 <code>&quot;今天, 明天&quot;</code>）不再错位。invite 解析路径保持不变。<code>make test-send-parse</code> 覆盖回归。</li></ul>
+<h3 class="sec">变更 🔁</h3>
+<ul><li><strong>新增 <code>blocked</code> 状态</strong> — send 同一 recipient 内某条消息失败后，后续未发的消息标记为 <code>blocked</code>（而非 canceled），默认 <code>--resume</code> 跳过，仅 <code>--retry-failed</code> 时与失败消息一起按 <code>seq</code> 顺序原子重放，保证消息不乱序、不漏发。</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.14.0</span><span class="date">2026-05-11</span></div>
+      <div class="body">
+<h3 class="sec">新增 ✨</h3>
+<ul><li><strong>addButton auto-heal 参数化</strong> — <code>config.json</code> 新增可选 <code>button_healing</code> 段，可配置 addButton auto-heal 的 Y 偏移序列 <code>addButton_y_offsets</code>，默认 <code>[-23, -46, 23, 46]</code>。</li><li><strong>auto-heal 持久化改为可配置</strong> — <code>button_healing.persist_add_button_override</code> 控制 addButton auto-heal 命中后是否写回 <code>overrides.&lt;bundleId&gt;.&lt;group&gt;.addButton</code>；默认值为 <code>false</code>，即默认只临时 heal，不自动持久化 group override。</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.13.6</span><span class="date">2026-05-11</span></div>
+      <div class="body">
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong><code>make release</code> 恢复兼容 CRLF 测试 CSV</strong> — <code>test_invite_flow.sh</code> 现在会在解析 <code>target_group</code> 和结果 CSV 的 <code>status</code> 列时去掉行尾 <code>\r</code>，因此 Windows/Excel 风格的 CRLF CSV 不会再让发布链路误报 “target_group column not found”。</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.13.5</span><span class="date">2026-05-11</span></div>
+      <div class="body">
+<h3 class="sec">优化 ⚡</h3>
+<ul><li><strong>邀请批次切换提速</strong> — 移除每个批次完成后回到 <code>WorkflowRunner</code> 的固定约 2 秒等待，群聊之间可以更快进入下一批处理。</li><li><strong>addButton auto-heal 偏移更新</strong> — 保持同一个 X 坐标，Y 方向依次尝试 <code>{-23, -46, 23, 46}</code>，并同步更新相关代码注释和内部日志分析文案。</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.13.4</span><span class="date">2026-05-10</span></div>
+      <div class="body">
+<h3 class="sec">优化 ⚡</h3>
+<ul><li><strong>邀请流程减少等待时间</strong> — 输入 <code>wechat_id</code> 后、点击“选择用户”后、点击“添加成员”后、点击“邀请”前的等待时间减半，并移除取消 hover 高亮后的额外等待；点击“邀请”后的失败弹窗检测等待保持不变。</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.13.3</span><span class="date">2026-05-10</span></div>
+      <div class="body">
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong><code>--yes</code> 模式恢复终端完成报告</strong> — 自动确认模式仍不弹出结束对话框，但运行完成后会把同一份效率统计报告返回给 <code>osascript</code>，终端可直接看到邀请总数、成功率、耗时、日志路径等信息。</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.13.2</span><span class="date">2026-05-10</span></div>
+      <div class="body">
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>初始状态自动清理弹窗/额外窗口</strong> — 初始状态检查和邀请人实例切换时，如果当前 <code>bundleId</code> 的微信存在 AXSheet 或额外 AXWindow，程序会自动发送 ESC / 关闭非主窗口并重试，目标是恢复到“只保留主窗口”后继续执行；失败时日志输出完整窗口诊断。</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.13.1</span><span class="date">2026-05-10</span></div>
+      <div class="body">
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong><code>--yes</code> 初始状态错误显示具体原因</strong> — 微信初始状态自动重试超限后，终端错误现在会带上检测到的失败原因（例如窗口数量不为 1、存在弹窗对话框），不再只显示笼统的“微信初始状态不正确”。</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.13.0</span><span class="date">2026-04-30</span></div>
+      <div class="body">
+<h3 class="sec">优化 ⚡</h3>
+<ul><li><strong>点击抖动改为正态分布</strong> — <code>performClick</code> 抖动从均匀 ±5px 改为 N(0, σ²) Box-Muller 采样，clamp 到 ±max_radius，参数从 <code>config.json</code> 的 <code>click_jitter</code> 段读取（默认 σ=5.0、max_radius=12）。降低自动化指纹：实测均匀分布在窗口内呈 11×11px 均匀框，正态分布更接近人类瞄准（中心高、尾部低）。缺失配置或字段无效时退回内置默认（仍是正态分布，不退回均匀） (#57)</li></ul>
+<h3 class="sec">备注</h3>
+<ul><li><code>validateClickCoordinates</code> 的 20px 偏差告警阈值改为 <code>clickJitterMaxRadius + 5</code>，自动随配置调整</li><li><code>performMove</code> 暂未加抖动（followup）；<code>config.example.json</code> 已添加 <code>click_jitter</code> 示例</li><li><code>sigma</code>/<code>max_radius</code> 通过 argv（而非字符串拼接）传给 perl，杜绝 shell 注入；范围校验 <code>0 &lt; sigma ≤ 50</code>、<code>0 &lt; max_radius ≤ 100</code></li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.12.0</span><span class="date">2026-04-30</span></div>
+      <div class="body">
+<h3 class="sec">优化 ⚡</h3>
+<ul><li><strong>addButton auto-heal 持久化</strong> — auto-heal <code>{-25, 25, 50}</code> 命中后将偏移写入 <code>overrides.&lt;bundleId&gt;.&lt;group&gt;.addButton</code>，下次同群直接命中，不再每次重付 heal 成本 (#56)</li><li><strong>移除群公告对话框</strong> — auto-heal 失败后不再弹出&quot;请关闭群公告再重试&quot;对话框（重复了 auto-heal 自身的 Y 搜索且失去意义——持久化后群公告引起的偏移会被永久吸收）；直接进入手动录制流程；<code>--yes</code> 模式行为不变</li></ul>
+<h3 class="sec">备注</h3>
+<ul><li>plist schema 不变（仍为 v3，键路径 <code>overrides.&lt;bundleId&gt;.&lt;group&gt;.&lt;button&gt;</code> 已是 namespaced），无迁移成本</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.11.1</span><span class="date">2026-04-30</span></div>
+      <div class="body">
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong><code>config.json</code> 自动同步到用户数据目录</strong> — 之前 bootstrap 用 <code>mv -n</code> 迁移仓库根 <code>config.json</code>，若用户数据目录已存在（首次启动从 <code>config.example.json</code> 种子出来的空模板）则跳过，导致用户在解压目录里编辑的 <code>config.json</code> 一直不生效，报错 &quot;config.json 中未找到以下邀请人的 bundle ID 映射&quot;。修复：每次启动时若仓库根 <code>config.json</code> 存在则<strong>覆盖</strong>复制到 user data dir。release zip 不打包 <code>config.json</code>，仓库根的副本一定是用户手放，可安全覆盖。<code>button_cache.plist</code> 行为保持不变（仍 <code>mv -n</code>，避免覆盖已录制坐标）</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.10.0</span><span class="date">2026-04-30</span></div>
+      <div class="body">
+<h3 class="sec">重构 🔧</h3>
+<ul><li><strong>用户状态文件迁移到 <code>~/Library/Application Support/wechat_automation/</code></strong> — <code>config.json</code> 与 <code>button_cache.plist</code> 不再放在仓库根目录，改为遵循 macOS 用户数据规范，存放于 <code>~/Library/Application Support/wechat_automation/</code> (#55)<ul><li><strong>自动迁移</strong>：首次运行时若检测到旧位置（仓库根目录）存在 <code>config.json</code> / <code>button_cache.plist</code>，自动迁移到新位置</li><li><strong>模板随发布包提供</strong>：<code>config.example.json</code> 与 <code>button_cache.template.plist</code> 随仓库 / release zip 一起发布；首次启动从模板自动生成用户的 <code>config.json</code></li><li><strong>重新解压 release zip 不再覆盖本地缓存</strong>：用户已录制的按钮坐标安全保留在 <code>~/Library/Application Support/</code>，不会被新版本覆盖</li><li><strong><code>WCA_USER_DATA_DIR</code> 环境变量</strong> — 测试 / 沙箱场景可通过 <code>WCA_USER_DATA_DIR=/some/path</code> 覆盖默认目录</li><li><strong>schemaVersion</strong> — <code>button_cache.plist</code> 增加 <code>meta.schemaVersion=3</code>，<code>config.json</code> 增加 <code>schemaVersion</code> 字段，方便未来格式升级</li><li><strong><code>release.sh</code> 不再要求 <code>button_cache.plist</code></strong> — 改为要求模板文件 <code>config.example.json</code> + <code>button_cache.template.plist</code> 存在；release zip 不再包含真实的用户缓存数据</li><li><strong><code>AutomatorRunner.applescript</code> 标记为 deprecated</strong> — 仍保留作历史参考，但已不再被任何入口调用，schema 仍指向旧路径不再维护</li></ul></li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.8.1</span><span class="date">2026-04-06</span></div>
+      <div class="body">
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>suspect detection 光标误判修复</strong> — <code>CGWindowListCreateImage</code> 截图包含鼠标光标，截图 B/C 之间光标位置不同导致 hashB ≠ hashC，将搜索无结果的用户误判为 success。修复：截图 A/B 前 <code>performMove</code> 到搜索框（85pt 裁剪区域内），确保三张截图光标位置一致</li></ul>
+<h3 class="sec">测试 🧪</h3>
+<ul><li><strong>invite E2E 测试</strong> — 新增 <code>test_invite_e2e.sh</code>，验证 suspect detection 的三种场景（已在群内→suspect、有效且不在群内→success、无效 ID→suspect），包含截图完整性和 hash 日志检查</li><li><strong>Claude Code PR 拦截 hook</strong> — 创建 PR 前自动检测相关文件变更并运行 E2E 测试，阻止回归</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.8.0</span><span class="date">2026-04-06</span></div>
+      <div class="body">
+<h3 class="sec">新功能 ✨</h3>
+<ul><li><strong>群公告重试提醒</strong> — addButton auto-heal 失败时，弹出 dialog 提示用户关闭群公告横幅再重试，避免直接进入手动录制流程 (#41)</li></ul>
+<h3 class="sec">优化 ⚡</h3>
+<ul><li><strong>addButton 偏移调整</strong> — 1440x900@2x 分辨率 addButton Y 偏移从 342 调整为 345</li><li><strong>优化 auto-heal 搜索范围</strong> — yAdjustments 从 <code>{-20, 20}</code> 优化为 <code>{-25, 25, 50}</code>，基于按钮高度 ~36px 和 ±5px jitter 设计间距，三次尝试覆盖 -43~+68px 范围</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.7.1</span><span class="date">2026-04-05</span></div>
+      <div class="body">
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>release zip 兼容性修复</strong> — <code>release.sh</code> 从 <code>ditto -c -k</code> 改为 <code>zip -r -y</code>，修复 macOS Finder (Archive Utility) 解压偶尔丢失文件的问题 (#39)</li><li><strong>打包后验证</strong> — release zip 创建后自动检查 13 个必需文件是否存在，防止发布残缺包</li><li><strong>清理旧二进制</strong> — 从 <code>bin/</code> 和 release 包中移除 v2.6.0 前的旧二进制名 (<code>accessibility_check</code>, <code>clicker</code>, <code>escape_monitor</code>)，改为选择性复制 <code>wca-*</code> 文件</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.11.0</span><span class="date">2026-04-30</span></div>
+      <div class="body">
+<h3 class="sec">新功能 ✨</h3>
+<ul><li><strong>result CSV 新增 <code>dry_run</code> 列</strong> — 区分 dry-run 行和真实执行行。dry-run 模式下写入 <code>dry_run=true</code>，真实模式留空。<code>filterRecordsForProcessing</code> 把 <code>dry_run=true</code> 行视为永远可重跑（无论 status 是什么），所以 dry-run 后再做真实运行不会被旧 success 阻断。<code>analyze_logs.py</code> 自动跳过 dry-run 行，不污染真实统计。已存在的旧 result CSV 会在下次运行时由 <code>migrateResultCsvSchema</code> 自动补列。<code>--dry-run</code> 与 <code>--yes</code> 仍然正交（详见 README）。</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">Unreleased</span><span class="date"></span></div>
+      <div class="body">
+<h3 class="sec">新功能 ✨</h3>
+<ul><li><strong>客户公开报告 + GitHub Pages 发布</strong> — <code>analyze_logs.py</code> 新增 <code>--public</code> / <code>--output</code> CLI，生成面向客户的脱敏 HTML（只保留&quot;客户报告&quot;内容，发起人姓名除最后 2 个字符外打码为 <code>*</code>，不含任何内部指标/截图/会话明细）；配套 <code>scripts/publish_report.sh</code> 自动维护 <code>.publish-repo/</code>（克隆自 public 仓库 <code>pierrelzw/wechat-automation-report</code>），把 <code>index.html</code> + <code>YYYY-MM-DD.html</code> 快照 + <code>archive.html</code> 推送到那边供 GitHub Pages 托管（主仓库保持私有）；支持 <code>REPORT_REMOTE</code> 等环境变量覆盖；带泄漏 guard 限制只能提交白名单 HTML/README/.gitignore</li><li><strong>GitHub Actions 自动发布</strong> — 合并到 main 时如果 VERSION 文件变更，自动构建并创建 GitHub Release (#12)<ul><li>新增 <code>.github/workflows/release.yml</code>，触发条件为 <code>push</code> 到 <code>main</code> 且 <code>VERSION</code> 文件变更</li><li>使用 <code>macos-latest</code> runner 运行 <code>make lint build</code> + <code>./release.sh</code></li><li>通过 <code>softprops/action-gh-release@v2</code> 创建 Release，自动附带 zip 包</li><li><code>release.sh</code> 输出文件名从时间戳格式改为版本格式（<code>WeChatAuto_v&lt;version&gt;.zip</code>）</li></ul></li><li><strong>CI 版本检查</strong> — PR 中包含 feat/fix/refactor/perf 类型的 commit 时，CI 自动检查 VERSION 是否已更新，未更新则阻止合并</li><li><strong>手动触发发布</strong> — release workflow 支持 <code>workflow_dispatch</code>，可在 GitHub Actions 页面手动触发（Actions → Release → Run workflow）</li><li><strong>版本更新规则</strong> — CLAUDE.md 新增 Version Bump Rules，明确各类 commit 对应的版本号变更规则</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.7.0</span><span class="date">2026-04-02</span></div>
+      <div class="body">
+<h3 class="sec">重构 🔧</h3>
+<ul><li><strong>Plist 缓存架构 v3</strong> — 按钮坐标缓存从 <code>machine/&lt;bundleId&gt;</code> 改为 <code>defaults/&lt;fingerprint&gt;</code> + <code>overrides/&lt;bundleId&gt;/&lt;group&gt;</code> 两层结构 (#30)<ul><li><code>defaults/&lt;fingerprint&gt;/</code> 按屏幕分辨率共享，所有 WeChat 实例复用同一份预设坐标</li><li><code>overrides/&lt;bundleId&gt;/&lt;group&gt;/</code> 仅手动重新录制时写入，按 bundleId+群名隔离</li><li>同名群在不同 WeChat 实例上不再冲突</li><li>新增实例（同分辨率）无需重新录制按钮坐标</li><li>屏幕分辨率变化时切换到新指纹组，旧数据保留（不再清除）</li><li>Auto-heal 成功后只记录日志，不写入缓存（减少缓存抖动）</li><li>自动迁移 v1/v2 格式 plist 数据到 v3</li></ul></li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.6.1</span><span class="date">2026-04-01</span></div>
+      <div class="body">
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>suspect 检测截图区域修正</strong> — detect 截图改为捕获 AXSheet（弹窗）区域而非主窗口，crop-top 现相对于弹窗顶部裁剪，修复不同分辨率/macOS 版本下光标闪烁导致 hash 误判的问题 (#24)<ul><li>新增 <code>wca-ax --capture-sheet</code> 命令，基于 <code>getCurrentSheetRect()</code> 截取弹窗区域</li><li>新增 engine handler <code>captureSheetScreenshot</code>，无 AXSheet 时自动回退到主窗口截图</li><li>crop-top 值提取为 <code>screenshotCropTopPoints</code> property（85pt），消除硬编码</li></ul></li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.6.0</span><span class="date">2026-03-31</span></div>
+      <div class="body">
+<h3 class="sec">新功能 ✨</h3>
+<ul><li><strong>机器指纹自动检测</strong> — 屏幕分辨率存为 <code>machineFingerprint</code>（格式 <code>&lt;width&gt;x&lt;height&gt;@&lt;scale&gt;</code>），换机器后自动清除缓存坐标并重新录制，非技术用户无需手动编辑 plist<ul><li><code>wca-ax --screen-fingerprint</code> 返回当前指纹</li><li><code>checkMachineFingerprint()</code> 比较存储值与当前值，不匹配时清除所有 offset</li></ul></li><li><strong>按钮录制交互升级</strong> — 从 Enter 确认改为点击捕获 + 可视化确认<ul><li>用户直接点击微信中的目标按钮，系统自动捕获坐标</li><li><code>wca-ax --confirm-click</code> 截图并标注红圈+十字线，弹出确认窗口</li><li>循环重试直到用户确认或取消</li></ul></li><li><strong>反检测增强</strong> — 模拟更自然的人类操作模式<ul><li><code>CGEventSource(.hidSystemState)</code> 替代 nil，事件更真实</li><li>点击按住时间随机化（60-250ms），点击前加入鼠标趋近动画+微抖</li><li>点击坐标 ±2px 抖动，延迟抖动增加到 10-20%</li><li>10% 概率触发 &quot;走神&quot; 停顿（<code>humanizedDelay</code>）</li></ul></li><li><strong>BundleId 感知的按钮缓存</strong> — plist key 改为 <code>machine:&lt;bundleId&gt;:&lt;button&gt;</code> 格式，多微信实例各自独立缓存坐标 (#21)<ul><li>group 级别 override 支持（group → machine → 触发录制）</li><li>addButton 自动修复：失败时尝试 Y±20px，缓存有效偏移到 group 级别</li></ul></li><li><strong>AXSheet 锚点系统</strong> — 弹窗按钮锚点从窗口中心改为 AXSheet 中心<ul><li><code>addMember</code>、<code>inviteButton</code>、<code>selectUser</code> 使用 sheet 锚点</li><li>无 AXSheet 时自动回退到窗口中心</li></ul></li><li><strong>ROI Dashboard</strong> — <code>./generate_dashboard.sh</code> 生成自包含 HTML 仪表盘，展示自动化收益<ul><li>Hero 卡片：节省操作数、处理人数、节省时间、运行次数</li><li>SVG 折线图：累计节省操作数趋势</li><li>SVG 柱状图：每次运行成功率</li><li>会话历史明细表</li><li><code>make dashboard</code> 快捷命令</li></ul></li><li><strong>多微信实例自动切换</strong> — CSV 新增 <code>inviter</code> 列（第一列），配合 <code>config.json</code> 实现按邀请人自动切换微信实例 (#20)<ul><li><code>config.json</code>: 配置邀请人→bundle ID 映射（gitignored）</li><li>运行时按 inviter 分组，自动切换对应微信实例</li><li>所有映射在首次激活微信前验证，缺失映射立即报错</li><li>完全向后兼容：无 <code>inviter</code> 列的旧 CSV 照常使用</li></ul></li></ul>
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>日志解析修复</strong> — <code>parse_metrics.sh</code> 和 <code>analyze_metrics.sh</code> 现在支持 <code>wechat_auto_*</code> 日志文件名（原来只识别 <code>wechat_invite_*</code>，导致 73 个日志未被解析）</li><li><strong>metrics 新增 workflow 字段</strong> — <code>history.csv</code> 和 session JSON 新增 <code>workflow</code> 列，区分 invite/send 工作流</li><li><strong>inviter 切换时重置已搜索群列表</strong> — 切换 inviter 后 <code>searchedGroups</code> 清空，避免同名群在不同实例中被跳过</li><li><strong>CSV 表头校验前置</strong> — 表头格式校验移到实例检测之前，格式错误时不触发微信弹窗</li><li><strong>python3 依赖移除</strong> — config.json 解析从 python3 改为 perl，目标机器无需安装 Python</li></ul>
+<h3 class="sec">变更 🔧</h3>
+<ul><li><strong>二进制重命名</strong> — <code>clicker</code>→<code>wca-input</code>、<code>escape_monitor</code>→<code>wca-monitor</code>、<code>wechat_ui_inspector</code>→<code>wca-ax</code>、<code>accessibility_check</code>→<code>wca-preflight</code></li><li><code>validateCsvHeaders</code> 返回 <code>hasInviterColumn</code> 标志，<code>dataFieldCount</code> 根据是否有 inviter 列返回 3 或 2</li><li><code>parseCsvRow</code> 支持新旧两种 CSV 格式，返回 record 新增 <code>inviter</code> 字段</li><li><code>groupAndBatchTasks</code> 先按 inviter 分组，再按 target_group 分组</li><li><code>batchSummaryText</code> 支持按 inviter 分组的摘要显示</li><li>新增 engine handlers: <code>loadAccountConfig</code>, <code>bundleIdForInviter</code>, <code>validateInviterMappings</code>, <code>checkMachineFingerprint</code>, <code>waitForManualClick</code>, <code>humanizedDelay</code>, <code>recordButtonOffsetForGroup</code></li><li>WorkflowRunner 批次循环支持 inviter 切换时自动激活对应微信实例</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.5.2</span><span class="date">2026-03-30</span></div>
+      <div class="body">
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>CSV 双重转义 bug</strong> — <code>updateCsvStatus</code> 对含逗号的字段（如 <code>&quot;Zhang, San&quot;</code>）反复写入时会产生 triple quotes <code>&quot;&quot;&quot;</code>，导致数据损坏</li><li><strong>CSV 格式处理消除硬编码分支</strong> — 引入 <code>csvDataFieldCount</code> property + <code>splitCsvFromRight</code> 从右拆分，替代基于逗号计数的脆弱列数推导</li><li><strong>校验顺序修正</strong> — 源 CSV 表头校验移到 <code>ensureResultCsv</code> 之前，格式错误时不会创建损坏的 result CSV</li></ul>
+<h3 class="sec">变更 🔧</h3>
+<ul><li><code>validateCsvHeaders</code> 新增返回 <code>dataFieldCount</code>（invite=2, send=1）</li><li><code>parseCsvRow</code> 签名从 4 参数改为 3 参数（去掉 <code>hasStatusColumn</code>）</li><li>新增 engine handlers: <code>setCsvFormat</code>, <code>csvUnescape</code>, <code>splitCsvFromRight</code></li><li>删除 <code>csvHasStatusColumn</code> property，替换为 <code>csvDataFieldCount</code></li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.5.1</span><span class="date">2026-03-03</span></div>
+      <div class="body">
+<h3 class="sec">变更 🔧</h3>
+<ul><li><strong>截图文件名按执行顺序排序</strong> — 每人的 3 张截图使用连续编号 <code>03-N</code>，在文件浏览器中按实际执行顺序排列 (#5)<ul><li>旧命名: <code>batch1_03_p1_empty → batch1_03_p2_empty → batch1_04_p1_searched → ...</code></li><li>新命名: <code>batch1_03-1_p1_empty → batch1_03-2_p1_searched → batch1_03-3_p1_clicked → batch1_03-4_p2_empty → ...</code></li><li>后续批次级步骤重编号: 06→04, 07→05, 08→06</li><li>detect 截图使用相同命名规则</li></ul></li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.5.0</span><span class="date">2026-03-02</span></div>
+      <div class="body">
+<h3 class="sec">新增 ✨</h3>
+<ul><li><strong>统一 outputs/ 目录结构</strong> — result CSV、日志、截图集中存放<ul><li><code>outputs/&lt;csv_name&gt;_result.csv</code>：活跃 result 文件，resume 读写</li><li><code>outputs/&lt;csv_name&gt;_&lt;timestamp&gt;/</code>：每次 session 的日志、截图、result 副本</li><li>自动清理旧 session 目录（保留最近 5 个）</li></ul></li><li><strong>源文件变更检测</strong> — 修改源 CSV 后重新运行时自动检测<ul><li>非 resume 模式：提示用户选择基于新文件重新开始或继续旧结果</li><li><code>--yes</code> 模式：自动基于新文件重新开始（<code>--resume</code> 时保持旧结果并警告）</li><li>Session 结束时自动归档 result CSV 到 session 目录</li></ul></li></ul>
+<h3 class="sec">变更 🔧</h3>
+<ul><li><code>resultCsvPath</code>、<code>ensureResultCsv</code>、<code>resetAllStatusToPending</code> 增加 <code>automationRoot</code> 参数</li><li>移除独立 <code>backups/</code> 目录，session 归档替代 <code>createCsvBackup</code> 调用</li><li><code>initSessionScreenshotDir</code> 改为接收 <code>sessionDir</code> 参数</li><li>原 <code>logs/</code>、<code>screenshots/</code>、<code>backups/</code> 目录不再使用</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.4.0</span><span class="date">2026-02-27</span></div>
+      <div class="body">
+<h3 class="sec">新增 ✨</h3>
+<ul><li><strong>微信多开实例支持</strong> — 自动检测多个微信进程并让用户选择目标实例<ul><li><code>wechat_ui_inspector --detect-instances</code>：诊断工具，列出所有微信实例及其 bundle ID、PID、前台状态、窗口数</li><li><code>--bundle-id &lt;id&gt;</code> 尾部参数：所有 inspector 子命令支持指定目标实例</li><li><code>--wechat-bundle-id &lt;id&gt;</code> CLI 参数：直接指定目标微信实例，跳过自动检测</li><li>单实例时自动选择，多实例时弹窗提示用户前台化目标微信</li><li><code>--yes</code> 模式下自动选择第一个实例</li></ul></li><li>引擎层所有 <code>tell process &quot;WeChat&quot;</code> 硬编码替换为 bundle ID 动态查找</li><li>inspector 所有子命令自动追加 <code>--bundle-id</code> 参数</li></ul>
+<h3 class="sec">已知限制</h3>
+<ul><li><code>button_cache.plist</code> 坐标缓存不区分实例，切换实例后需重新录制</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.3.0</span><span class="date">2026-02-27</span></div>
+      <div class="body">
+<h3 class="sec">新增 ✨</h3>
+<ul><li><strong>Makefile 构建系统</strong> — <code>make build/test/lint/release/clean/setup</code> 统一入口</li><li><strong>ShellCheck 静态分析</strong> — 所有 <code>*.sh</code> 脚本通过 ShellCheck 检查（<code>.shellcheckrc</code> 配置）</li><li><strong>Git pre-commit hook</strong> — 提交前自动运行 ShellCheck + VERSION/CHANGELOG 同步检查</li><li><strong>GitHub Actions CI</strong> — push/PR 触发 lint + build 自动检查</li><li><strong>步骤截图系统</strong> — 每个关键操作步骤后自动截图，方便结合日志排查 UI 问题<ul><li>截图按数字序号命名（01-08），按文件名排序即可还原操作时序</li><li>detect 截图（裁剪版，用于 hash）与步骤截图（全窗口）并存</li><li>截图目录 <code>screenshots/session_&lt;timestamp&gt;/</code>，与日志使用相同时间戳</li><li>自动清理：每次新会话只保留最近 5 个截图目录</li></ul></li><li><strong><code>--no-screenshot</code> 参数</strong> — 禁用步骤截图（默认开启）</li></ul>
+<h3 class="sec">改进 🔧</h3>
+<ul><li><strong>统一错误处理</strong> — 所有脚本添加 <code>set -euo pipefail</code>（wechat_auto.sh、test_environment.sh、watch_log.sh 新增；parse_metrics.sh、analyze_metrics.sh 升级）</li><li><strong>修复 watch_log.sh 硬编码路径</strong> — 改用 <code>SCRIPT_DIR</code> 相对路径，不再依赖特定用户目录</li><li><strong>补全 .gitignore</strong> — 添加 <code>WeChatAuto_release_*.zip</code>、<code>backups/</code>、<code>*.mov</code>、<code>*.png</code>、<code>.claude/</code></li><li><strong>ShellCheck 修复</strong> — 修复 SC2155（声明与赋值分离）、SC2086（变量引号）、SC2034（未使用变量）、SC2231（glob 引号）等警告</li><li><strong>日志性能优化</strong> — <code>appendLog</code>/<code>appendMetric</code> 改用 AppleScript 原生 <code>current date</code> 获取时间戳，每次调用减少 1 次 shell 调用</li><li>detect 截图路径从 <code>tmp/detect_*</code> 迁移到 <code>screenshots/session_*/</code>，使用统一数字序号（03/04/05）</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.2.1</span><span class="date">2026-02-27</span></div>
+      <div class="body">
+<h3 class="sec">改进 🔧</h3>
+<ul><li><strong>WeChatAutoInvite.app 统一入口</strong> — 双击 .app 现在调用 <code>wechat_auto.sh invite</code> 走新架构（原先直接调用旧的 <code>AutomatorRunner.applescript</code>）</li><li><strong>删除 wechat_auto_invite.sh</strong> — 旧的薄包装入口已移除，统一使用 <code>wechat_auto.sh invite</code></li><li><strong>release.sh 自动签名</strong> — 打包时自动对 WeChatAutoInvite.app 执行 ad-hoc codesign</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.2.0</span><span class="date">2026-02-26</span></div>
+      <div class="body">
+<h3 class="sec">新增 ✨</h3>
+<ul><li><strong><code>--yes</code> 自动确认模式</strong> — 跳过所有交互弹窗，支持全自动测试运行<ul><li><code>./wechat_auto.sh invite --dry-run --yes sample.csv</code> 全程无弹窗</li><li>模式选择、会话冲突、CSV 为空、未完成会话、批次确认、完成摘要等弹窗均自动跳过</li><li><code>--yes</code> 单独使用从头开始；<code>--yes --resume</code> 继续待处理；<code>--yes --resume --retry-failed</code> 重试失败</li><li>首次群聊选择自动使用搜索结果第一项（记 WARN 日志）</li><li><code>ensureWeChatWindowAvailable</code> / <code>ensureWeChatCleanState</code> 自动重试 3 次后报错</li></ul></li><li><strong>Per-user suspect 检测（3-screenshot hash 对比）</strong> — 替代旧的 AXSheet 尺寸检测<ul><li>每用户拍摄 3 张 WeChat 窗口截图（空白、搜索后、点击后），通过 MD5 hash 对比判定状态</li><li>hashA == hashB → <code>suspect</code>（搜索无结果，wechat_id 可能无效）</li><li>hashB == hashC → <code>suspect</code>（搜索有结果但点击无变化，用户可能已在群内）</li><li>截图保存在 <code>tmp/detect_&lt;batch&gt;_&lt;person&gt;_*.png</code> 供人工校验</li></ul></li><li><strong><code>--capture-window</code> UI Inspector 命令</strong> — 使用 CGWindowListCreateImage 捕获 WeChat 窗口内容为 PNG</li><li><strong><code>--dump-sheet-children</code> UI Inspector 命令</strong> — 输出 AXSheet 子元素树（诊断用）</li><li><strong><code>--get-sheet-rect</code> UI Inspector 命令</strong> — 返回 AXSheet 位置+尺寸（X, Y, WIDTH, HEIGHT）</li></ul>
+<h3 class="sec">改进 🔧</h3>
+<ul><li>移除旧的批次级 AXSheet 尺寸 suspect 检测，改为逐人截图检测</li><li>suspect 状态统一简化：<code>suspect_not_found</code>/<code>suspect_in_group</code> 合并为统一的 <code>suspect</code> 状态</li><li>窗口截图多策略回退 + crop-top 裁剪，提升截图稳定性</li><li>窗口计数改用 <code>wechat_ui_inspector --list-windows</code>，替代 AppleScript 原生计数</li><li>屏幕录制权限说明添加至 README FAQ</li><li>默认邀请批次大小从 9 调整为 1</li><li>搜索框截图前先点击搜索框，消除 hover 高亮干扰</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.1.1</span><span class="date">2026-02-24</span></div>
+      <div class="body">
+<h3 class="sec">修复 🐛</h3>
+<ul><li><strong>SendMessageWorkflow <code>items</code> 保留字冲突</strong> — <code>items</code> 改为 <code>taskItems</code>，与 InviteWorkflow 保持一致</li><li><strong>InviteWorkflow summaryText 总耗时为空</strong> — 替换无效的 perl 调用，改用 <code>sessionDurationMs</code> 参数直接计算</li><li><strong>Swift <code>as! AXValue</code> 强制转换</strong> — <code>wechat_ui_inspector.swift</code> 三处改为 <code>CFGetTypeID</code> 安全校验，防止非 AXValue 类型崩溃</li><li><strong>writeCsvToFile heredoc 截断风险</strong> — 改用 AppleScript 原生 <code>writeTextToFile</code>，避免 CSV 数据含 <code>CSVEOF</code> 时截断</li><li><strong>resetAllStatusToPending O(N²) 性能</strong> — 改为一次读取、遍历替换、一次写入</li><li><strong>dry-run 模式误写 CSV status</strong> — dry-run 时跳过 <code>updateCsvStatus</code> 调用，保持 <code>pending</code> 状态</li><li><strong>writeTextToFile 中文乱码</strong> — <code>write</code> 未指定 <code>as «class utf8»</code>，导致 CSV 中文群名被写为 <code>?</code>（同时修复 AutomatorRunner）</li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.1.0</span><span class="date">2026-02-24</span></div>
+      <div class="body">
+<h3 class="sec">新增 ✨</h3>
+<ul><li><strong>Android 群邀请确认工具</strong> (<code>wechat_join_confirmer/</code>)<ul><li>自动处理微信群聊进群申请审批（手机端专用操作）</li><li>AccessibilityService + Assists 库反混淆方案</li><li>协程驱动的多步导航状态机（搜索群 → 群管理 → 进群申请 → 确认）</li><li>支持单次运行和守护模式（定时循环检查）</li><li>Dry-run 模式、节点树调试、SQLite 日志</li><li>高斯分布随机延迟防检测</li></ul></li></ul>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">2.0.0</span><span class="date">2026-02-23</span></div>
+      <div class="body">
+<h3 class="sec">重大新增 ✨</h3>
+<ul><li><strong>通用微信自动化框架</strong><ul><li>从 <code>AutomatorRunner.applescript</code> 提取通用引擎 <code>WeChatEngine.applescript</code></li><li>新增工作流插件架构：<code>WorkflowRunner</code> + <code>*Workflow</code> 模式</li><li>统一入口 <code>wechat_auto.sh &lt;workflow&gt; [options] &lt;csv&gt;</code></li><li>支持多种工作流：<code>invite</code>（邀请）、<code>send</code>（发消息）</li></ul></li><li><strong>同群批量邀请优化</strong><ul><li>同群多人合并为一批（每批最多 9 人），只打开一次邀请窗口</li><li>CSV 预处理：按 <code>target_group</code> 分组 + 自动分批</li><li>启动前展示分组摘要（群名、人数、批次数）</li><li>第 2+ 人搜索：Shift+Tab 回搜索框 → Cmd+A → Delete 清空</li><li>每人独立 suspect 检测，批次内正常用户统一邀请</li></ul></li><li><strong>发消息工作流</strong> (<code>send</code>)<ul><li>CSV 格式：<code>recipient,message,status</code></li><li>搜索联系人 → 打开聊天 → 粘贴消息 → 发送</li><li>支持 dry-run 模式（不实际发送）</li></ul></li><li><strong>UI Inspector 增强</strong><ul><li>新增 <code>--list-windows</code> 列出所有微信窗口信息</li><li>新增 <code>--find-element &lt;role&gt; [title]</code> 按角色/标题查找 UI 元素</li></ul></li></ul>
+<h3 class="sec">架构变更 🏗️</h3>
+<ul><li><code>src/engine/WeChatEngine.applescript</code> - 通用引擎（窗口管理、输入模拟、IPC、日志、配置等）</li><li><code>src/workflows/InviteWorkflow.applescript</code> - 邀请工作流（含批量优化）</li><li><code>src/workflows/SendMessageWorkflow.applescript</code> - 发消息工作流</li><li><code>src/WorkflowRunner.applescript</code> - 通用编排器</li><li><code>wechat_auto.sh</code> - 统一入口脚本</li><li><code>wechat_auto_invite.sh</code> - 改为 thin wrapper（向后兼容，已在 v2.2.1 移除）</li><li><code>src/AutomatorRunner.applescript</code> - 保留作为回退方案</li><li><code>build_helpers.sh</code> 新增 <code>osacompile</code> 步骤编译 AppleScript 模块</li></ul>
+<h3 class="sec">改进 🔧</h3>
+<ul><li><code>updateCsvStatus</code> 支持动态列数（不再硬编码 3 列）</li><li><code>release.sh</code> 包含新目录结构和编译产物</li></ul>
+<p>---</p>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">1.6.2</span><span class="date">2026-01-14</span></div>
+      <div class="body">
+<h3 class="sec">新增 ✨</h3>
+<ul><li><strong>启动时微信初始状态检查</strong><ul><li>检查微信窗口数量是否为 1</li><li>检查是否存在 AXSheet 弹窗</li><li>不符合条件时提示用户关闭多余窗口后重试</li></ul></li></ul>
+<p>---</p>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">1.6.1</span><span class="date">2026-01-13</span></div>
+      <div class="body">
+<h3 class="sec">改进 🔧</h3>
+<ul><li><strong>效率分析报表优化</strong><ul><li>时间单位统一显示在列标题（Duration(s)、AvgTask(s)、平均耗时(s)、总耗时(s)）</li><li>所有时间值统一以秒为单位显示，不再转换为分钟</li><li><code>--last</code> 输出新增 <code>NumGroups</code>（涉及群聊数）和 <code>ManualOps</code>（人工操作次数）列</li><li>Status 列简化为固定宽度（&quot;取消&quot; / &quot;完成&quot;），提升对齐可读性</li><li>数值列右对齐，提升数据对比可读性</li><li><strong>自动解析未处理的日志文件</strong>：运行 <code>analyze_metrics.sh</code> 时自动调用 <code>parse_metrics.sh</code> 处理所有未解析的日志</li></ul></li></ul>
+<h3 class="sec">修复 🐛</h3>
+<ul><li>移除重复的 <code>startPhase/endPhase</code> 调用（click_chat_info 和 click_add 阶段）</li><li>在重试对话框前添加取消检查，确保 Shift+ESC 立即响应</li></ul>
+<p>---</p>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">1.6.0</span><span class="date">2026-01-13</span></div>
+      <div class="body">
+<h3 class="sec">重大新增 ✨</h3>
+<ul><li><strong>Suspect 检测机制</strong><ul><li>点击添加成员后监测 AXSheet 窗口大小变化（3秒）</li><li>窗口大小不变则判定为 suspect（用户可能已在群中或ID无效）</li><li>弹出对话框提示用户，自动标记为 <code>suspect</code> 状态并跳过</li><li>支持 <code>wxid_*</code> 等无法搜索的默认ID检测</li></ul></li><li><strong>断点续传功能</strong><ul><li>CSV 新增 <code>status</code> 列支持：<code>pending</code>、<code>success</code>、<code>failed</code>、<code>canceled</code>、<code>suspect</code></li><li><code>--resume</code> 参数跳过已成功项，继续处理 pending/canceled</li><li><code>--retry-failed</code> 参数重试失败项</li><li>自动备份 CSV 到 <code>backups/*.backup_TIMESTAMP</code></li></ul></li><li><strong>AXSheet 检测与重试机制</strong><ul><li>使用 <code>wechat_ui_inspector</code> 检测邀请窗口出现</li><li>支持重试机制，提高稳定性</li></ul></li></ul>
+<h3 class="sec">改进 🔧</h3>
+<ul><li><strong>用户选择交互优化</strong><ul><li>用坐标点击替代 Enter 键确认用户选择</li><li>提高自动化可靠性</li></ul></li><li><strong>Metrics 系统增强</strong><ul><li>新增 PHASE 级别时间记录</li><li>支持 cancelled 状态和阶段分组统计</li></ul></li></ul>
+<h3 class="sec">技术实现 🔧</h3>
+<ul><li>新增 <code>wechat_ui_inspector.swift</code>：AXSheet 窗口检测工具</li><li>新增 <code>test_window_size.sh</code>：窗口大小测试脚本</li></ul>
+<p>---</p>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">1.5.0</span><span class="date">2026-01-13</span></div>
+      <div class="body">
+<h3 class="sec">重大新增 ✨</h3>
+<ul><li><strong>效率评测体系</strong><ul><li>每次运行结束时显示效率统计（邀请总数、成功率、耗时、人工操作次数）</li><li>日志中新增 <code>METRIC:</code> 行，记录会话/任务/人工操作的详细时间</li><li>新增 <code>parse_metrics.sh</code> 解析日志生成 JSON 和 CSV</li><li>新增 <code>analyze_metrics.sh</code> 分析趋势和版本对比</li><li>新增 <code>VERSION</code> 文件管理版本号</li></ul></li></ul>
+<h3 class="sec">核心指标 📊</h3>
+<ul><li>邀请总数 / 涉及群聊数（unique）</li><li>成功率</li><li>总耗时 / 平均每邀请耗时</li><li>人工操作次数和等待时间</li><li>纯自动耗时（排除人工等待）</li></ul>
+<h3 class="sec">使用方式 🔧</h3>
+<p>```bash</p>
+<p># 查看最近趋势</p>
+<p>./analyze_metrics.sh --last 5</p>
+<p># 版本对比</p>
+<p>./analyze_metrics.sh --compare 1.0.0 1.1.0</p>
+<p>```</p>
+<p>---</p>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">1.4.0</span><span class="date">2025-12-22</span></div>
+      <div class="body">
+<h3 class="sec">重大新增 ✨</h3>
+<ul><li><strong>按钮坐标录制与缓存</strong><ul><li>首次群聊提示录制 ChatInfo / “+” / 添加 / 邀请</li><li>录制结果写入 <code>button_cache.plist</code></li><li>支持 <code>policy.useMachine.*</code> 与 <code>groups.&lt;group&gt;.override.source.*</code></li></ul></li></ul>
+<h3 class="sec">技术实现 🔧</h3>
+<ul><li><strong>点击捕获</strong><ul><li><code>escape_monitor</code> 监听左键点击并写入 <code>/tmp/auto_invite_manual_click</code></li><li>录制时不拦截点击事件（保持 passthrough）</li></ul></li><li><strong>坐标解析逻辑</strong><ul><li>优先级：override → policy.useMachine → group</li><li>缺失时触发录制并写入缓存</li></ul></li><li><strong>前台窗口可用性提示</strong><ul><li>无可用窗口时提示用户打开主界面并重试</li></ul></li></ul>
+<h3 class="sec">开发/测试 🧪</h3>
+<ul><li>新增 <code>--plist-record-self-test</code> / <code>--plist-self-test</code> 参数</li><li>新增测试脚本：<code>test_manual_click.sh</code>、<code>test_invite_flow.sh</code></li></ul>
+<p>---</p>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">1.3.0</span><span class="date">2025-12-18</span></div>
+      <div class="body">
+<h3 class="sec">重大新增 ✨</h3>
+<ul><li><strong>Dry-Run 测试模式</strong><ul><li>🧪 支持 <code>--dry-run</code> 参数启动测试模式</li><li>测试模式使用 ESC 关闭邀请窗口（不点击邀请按钮）</li><li>生产模式点击邀请按钮完成实际邀请</li><li>两种模式共享相同的清理流程</li></ul></li></ul>
+<h3 class="sec">技术实现 🔧</h3>
+<ul><li><strong>Ctrl+C 中断机制</strong><ul><li>监听 Ctrl+C (keycode 8 + Control modifier)</li><li>立即中断自动化流程并清理资源</li><li>放弃 passthrough 机制，简化实现</li></ul></li><li><strong>智能模式检测</strong><ul><li><code>checkDryRunMode(argv)</code> 自动检测命令行参数</li><li><code>isDryRunMode</code> 属性控制执行分支</li><li>Shell 脚本传递所有参数给 AppleScript</li></ul></li><li><strong>邀请按钮坐标</strong><ul><li>生产模式使用精确坐标点击 (centerX+60, centerY+70)</li><li>替代不可靠的 ESC 键盘操作</li></ul></li></ul>
+<h3 class="sec">修复 🐛</h3>
+<ul><li>🔧 将取消键从 Ctrl+C 改回 ESC</li><li>🔧 修复 ESC 在自动化中的冲突问题</li><li>🔧 统一清理流程，避免代码重复</li></ul>
+<h3 class="sec">用户体验改进 🎯</h3>
+<ul><li>清晰的模式提示（生产/测试）</li><li>ESC 始终可用于取消（除临时窗口）</li><li>测试模式更安全，不会实际邀请用户</li></ul>
+<h3 class="sec">文档 📚</h3>
+<ul><li>更新 README 说明 dry-run 模式</li><li>更新命令行使用示例</li><li>说明两种模式的区别</li></ul>
+<p>---</p>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">1.2.0</span><span class="date">2025-12-18</span></div>
+      <div class="body">
+<h3 class="sec">重大新增 ✨</h3>
+<ul><li><strong>ESC 快速退出功能</strong><ul><li>🛑 按 ESC 键立即停止自动化流程</li><li>⚡ 毫秒级响应（&lt; 200ms）</li><li>🔒 全局快捷键，任何界面都能响应</li><li>💾 自动保存已完成任务进度</li><li>🧹 智能资源清理，无进程残留</li></ul></li></ul>
+<h3 class="sec">技术实现 🔧</h3>
+<ul><li><strong>Swift 键盘监控 Helper</strong> (<code>escape_monitor.swift</code>)<ul><li>基于 CGEventTap 的系统级键盘事件捕获</li><li>后台运行，独立进程</li><li>支持信号处理（SIGINT/SIGTERM）</li><li>Enter 键正常放行，不影响输入</li></ul></li><li><strong>AppleScript 集成改进</strong><ul><li>新增 6 个辅助函数管理 escape monitor 生命周期</li><li>改进 <code>randomDelay</code> 函数，支持取消检测（分段延迟）</li><li>主循环增加取消检查点</li><li>优雅的退出处理和统计显示</li></ul></li><li><strong>自动化构建</strong><ul><li>首次运行自动编译 Swift helper</li><li>智能检测 Swift 编译器</li><li>无需手动构建</li></ul></li></ul>
+<h3 class="sec">用户体验改进 🎯</h3>
+<ul><li>取消后显示已完成/跳过任务统计</li><li>清晰的取消原因日志记录</li><li>自动清理临时文件 (<code>/tmp/auto_invite_cancel</code>)</li><li>进程管理更加健壮</li></ul>
+<h3 class="sec">文档 📚</h3>
+<ul><li>新增 <code>ESC_EXIT_FEATURE.md</code> - 完整功能说明</li><li>新增 <code>ESC_QUICK_REFERENCE.md</code> - 快速参考卡</li><li>新增 <code>IMPLEMENTATION_SUMMARY.md</code> - 实现总结</li><li>新增 <code>test_escape_monitor.sh</code> - 独立测试脚本</li><li>更新 README.md 说明 ESC 功能</li></ul>
+<h3 class="sec">兼容性 ✅</h3>
+<ul><li>完全向后兼容 v1.1.0</li><li>不影响现有功能</li><li>可选功能，自动启用</li></ul>
+<p>---</p>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">1.1.0</span><span class="date">2025-12-17</span></div>
+      <div class="body">
+<h3 class="sec">新增功能 ✨</h3>
+<ul><li><strong>运行前环境检查系统</strong><ul><li>自动检测微信是否运行</li><li>自动检测辅助功能权限</li><li>自动验证 CSV 文件格式和完整性</li></ul></li><li><strong>微信窗口状态检测</strong><ul><li>检测微信是否有可用窗口（防止 Command+W 关闭后出错）</li><li>自动尝试激活微信主窗口</li><li>提供清晰的错误提示</li></ul></li><li><strong>增强的日志系统</strong><ul><li>彩色终端输出（成功/失败/警告）</li><li>实时进度显示 <code>[当前/总数]</code></li><li>自动生成带时间戳的日志文件</li><li>失败任务自动记录到 CSV 文件</li></ul></li><li><strong>错误处理机制</strong><ul><li>结构化错误代码和消息</li><li>失败任务自动保存，支持重试</li><li>执行完成后显示成功/失败统计</li></ul></li></ul>
+<h3 class="sec">改进 🔧</h3>
+<ul><li>优化用户交互提示（中文本地化）</li><li>添加详细的错误原因说明</li><li>改进 CSV 文件验证（支持空行、CRLF 格式）</li><li>增加辅助功能权限设置指引</li></ul>
+<h3 class="sec">文档 📚</h3>
+<ul><li>添加 README.md 使用文档</li><li>添加 invite_template.csv 模板文件</li><li>添加常见问题解答</li></ul>
+<h3 class="sec">修复 🐛</h3>
+<ul><li>修复微信窗口关闭后脚本继续执行的问题</li><li>修复 CSV 文件 Windows 换行符导致的解析错误</li><li>改进空行和特殊字符处理</li></ul>
+<p>---</p>
+      </div>
+    </section>
+    <section class="node">
+      <div class="dot"></div>
+      <div class="meta"><span class="ver">1.0.0</span><span class="date">2025-12-16</span></div>
+      <div class="body">
+<h3 class="sec">初始版本</h3>
+<ul><li>基础批量邀请功能</li><li>CSV 文件批量任务支持</li><li>自动编译 Swift 点击工具</li><li>AppleScript UI 自动化</li><li>随机延迟防检测</li></ul>
+      </div>
+    </section>
+  </div>
+</div>
+<footer class="site-foot">微信自动化工具 · 客户交付报告。本页由源仓库脚本自动生成，姓名与微信号已脱敏。</footer>
+</body>
+</html>

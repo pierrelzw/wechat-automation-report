@@ -3,28 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WeChat Automation — Report Archive</title>
+<title>历史报告 / Report Archive — 微信自动化工具</title>
 <style>
-body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #f5f5f7; color: #1d1d1f; max-width: 680px; margin: 40px auto; padding: 0 20px; }
-h1 { font-size: 24px; margin-bottom: 8px; }
-p.sub { color: #86868b; font-size: 14px; margin-bottom: 24px; }
-ul { list-style: none; padding: 0; background: #fff; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
-li { padding: 14px 20px; border-bottom: 1px solid #e5e5e7; }
-li:last-child { border-bottom: 0; }
-a { color: #0071e3; text-decoration: none; font-family: "SF Mono", Menlo, monospace; }
-a:hover { text-decoration: underline; }
+  :root { --bg:#f5f5f7; --card:#fff; --ink:#1d1d1f; --sub:#86868b;
+          --line:#d2d2d7; --accent:#0071e3; --code-bg:#f0f0f2; }
+  * { box-sizing: border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;
+         background:var(--bg); color:var(--ink); margin:0; line-height:1.65;
+         -webkit-font-smoothing:antialiased; }
+  a { color:var(--accent); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  .site-nav { background:rgba(255,255,255,.82); backdrop-filter:saturate(180%) blur(18px);
+              border-bottom:1px solid var(--line); position:sticky; top:0; z-index:10; }
+  .site-nav .inner { max-width:900px; margin:0 auto; padding:0 20px; display:flex;
+                     flex-wrap:wrap; gap:4px; align-items:center; min-height:48px; }
+  .site-nav a { font-size:14px; color:var(--sub); padding:8px 12px; border-radius:8px;
+                white-space:nowrap; }
+  .site-nav a:hover { background:rgba(0,0,0,.04); color:var(--ink); text-decoration:none; }
+  .site-nav a.on { color:var(--ink); font-weight:600; background:rgba(0,0,0,.05); }
+  .wrap { max-width:900px; margin:0 auto; padding:36px 20px 80px; }
+  .page-head h1 { font-size:28px; margin:0 0 6px; letter-spacing:-.01em; }
+  .page-head p.lead { color:var(--sub); font-size:14px; margin:0 0 32px; }
+  .site-foot { max-width:900px; margin:0 auto; padding:28px 20px 60px; color:var(--sub);
+               font-size:13px; border-top:1px solid var(--line); }
+
+  ul.snaps { list-style:none; padding:0; margin:0; background:var(--card);
+             border-radius:14px; box-shadow:0 1px 3px rgba(0,0,0,.08); }
+  ul.snaps li { padding:14px 22px; border-bottom:1px solid var(--line);
+                font-family:"SF Mono",Menlo,monospace; font-size:14px; }
+  ul.snaps li:last-child { border-bottom:0; }
 </style>
 </head>
 <body>
-  <h1>历史报告 / Report Archive</h1>
-  <p class="sub">最新版本请看 <a href="index.html">index.html</a>。以下快照按数据日期排序。</p>
-  <ul>
+<nav class="site-nav"><div class="inner"><a href="index.html">项目总结</a><a href="report.html">生产数据报告</a><a href="manual.html">使用手册</a><a href="changelog.html">更新日志</a><a href="archive.html" class="on">历史报告</a></div></nav>
+<div class="wrap">
+  <div class="page-head">
+    <h1>历史报告</h1>
+    <p class="lead">按数据日期归档的报告快照。最新一版见 <a href="report.html">生产数据报告</a>。</p>
+  </div>
+  <ul class="snaps">
     <li><a href="2026-04-09.html">2026-04-09</a></li>
   </ul>
-  <h1 style="margin-top:32px;">用量报告 / Usage Reports</h1>
-  <p class="sub">Claude Code + Codex 会话的时间 / token / 成本统计（按月）。</p>
-  <ul>
-    <li><a href="usage-2026-05.html">2026-05</a></li>
-  </ul>
+</div>
+<footer class="site-foot">微信自动化工具 · 客户交付报告。本页由源仓库脚本自动生成，姓名与微信号已脱敏。</footer>
 </body>
 </html>

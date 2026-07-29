@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>微信自动化工具 — 早期试运行数据</title>
+<style>
+  :root { --bg:#f5f5f7; --card:#fff; --ink:#1d1d1f; --sub:#86868b;
+          --line:#d2d2d7; --accent:#0071e3; --code-bg:#f0f0f2; }
+  * { box-sizing: border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;
+         background:var(--bg); color:var(--ink); margin:0; line-height:1.65;
+         -webkit-font-smoothing:antialiased; }
+  a { color:var(--accent); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  .site-nav { background:rgba(255,255,255,.82); backdrop-filter:saturate(180%) blur(18px);
+              border-bottom:1px solid var(--line); position:sticky; top:0; z-index:10; }
+  .site-nav .inner { max-width:900px; margin:0 auto; padding:0 20px; display:flex;
+                     flex-wrap:wrap; gap:4px; align-items:center; min-height:48px; }
+  .site-nav a { font-size:14px; color:var(--sub); padding:8px 12px; border-radius:8px;
+                white-space:nowrap; }
+  .site-nav a:hover { background:rgba(0,0,0,.04); color:var(--ink); text-decoration:none; }
+  .site-nav a.on { color:var(--ink); font-weight:600; background:rgba(0,0,0,.05); }
+  .wrap { max-width:900px; margin:0 auto; padding:36px 20px 80px; }
+  .page-head h1 { font-size:28px; margin:0 0 6px; letter-spacing:-.01em; }
+  .page-head p.lead { color:var(--sub); font-size:14px; margin:0 0 32px; }
+  .site-foot { max-width:900px; margin:0 auto; padding:28px 20px 60px; color:var(--sub);
+               font-size:13px; border-top:1px solid var(--line); }
+
+  .hero { padding:52px 0 8px; }
+  .hero .kicker { color:var(--sub); font-size:14px; letter-spacing:.04em; margin:0 0 10px; }
+  .hero h1 { font-size:40px; line-height:1.15; margin:0 0 14px; letter-spacing:-.02em; }
+  .hero p { font-size:17px; color:var(--sub); margin:0; max-width:640px; }
+  .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:38px 0 10px; }
+  .stat { background:var(--card); border-radius:14px; box-shadow:0 1px 3px rgba(0,0,0,.08);
+          padding:20px 22px; }
+  .stat .n { font-size:30px; font-weight:650; letter-spacing:-.02em; line-height:1.1; }
+  .stat .n em { font-style:normal; font-size:16px; font-weight:500; color:var(--sub);
+                margin-left:3px; }
+  .stat .l { font-size:14px; margin-top:5px; }
+  .stat .h { font-size:12.5px; color:var(--sub); margin-top:7px; line-height:1.5; }
+  .note { color:var(--sub); font-size:13px; margin:6px 0 0; }
+  section.blk { margin-top:52px; }
+  section.blk > h2 { font-size:22px; margin:0 0 6px; letter-spacing:-.01em; }
+  section.blk > p.sub { color:var(--sub); font-size:14px; margin:0 0 20px; }
+  .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .card { background:var(--card); border-radius:14px; box-shadow:0 1px 3px rgba(0,0,0,.08);
+          padding:20px 22px; }
+  .card h3 { font-size:16px; margin:0 0 2px; }
+  .card .cmd { font-family:"SF Mono",Menlo,monospace; font-size:12.5px; color:var(--accent);
+               display:block; margin-bottom:9px; }
+  .card p { font-size:14px; color:var(--sub); margin:0; }
+  .rows { background:var(--card); border-radius:14px; box-shadow:0 1px 3px rgba(0,0,0,.08);
+          padding:6px 24px; }
+  .row { display:grid; grid-template-columns:180px 1fr; gap:18px; padding:16px 0;
+         border-bottom:1px solid var(--line); }
+  .row:last-child { border-bottom:0; }
+  .row .t { font-weight:600; font-size:15px; }
+  .row .d { color:var(--sub); font-size:14px; }
+  .links { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  .link { background:var(--card); border-radius:14px; box-shadow:0 1px 3px rgba(0,0,0,.08);
+          padding:18px 22px; display:block; color:inherit; }
+  .link:hover { text-decoration:none; box-shadow:0 3px 12px rgba(0,0,0,.12); }
+  .link strong { display:block; font-size:15px; color:var(--accent); margin-bottom:3px; }
+  .link span { font-size:13.5px; color:var(--sub); }
+  @media (max-width:760px) {
+    .hero h1 { font-size:30px; }
+    .stats, .cards, .links { grid-template-columns:1fr; }
+    .row { grid-template-columns:1fr; gap:4px; }
+  }
+</style>
+</head>
+<body>
+<nav class="site-nav"><div class="inner"><a href="index.html">使用手册</a><a href="changelog.html">更新日志</a><a href="report.html">生产数据报告</a><a href="summary.html" class="on">早期试运行数据</a><a href="archive.html">历史报告</a></div></nav>
+<div class="wrap">
+  <div class="hero">
+    <p class="kicker">早期试运行数据 · 采样自 2026年4月7日–9日 · v1.0.0 → v3.14.2</p>
+    <h1>早期试运行数据</h1>
+    <p>下面的数字来自 2026年4月7日–9日 那几天的集中试运行，是一次
+       <strong>阶段性采样</strong>，不是项目全周期（2025-12-16 → 2026-07-23）的累计统计。
+       后续的日常使用没有再回收日志，所以本页不再更新，仅作为当时效果的存档。
+       想了解怎么用，请看<a href="index.html">使用手册</a>。</p>
+  </div>
+  <section class="blk" style="margin-top:0">
+    <div class="stats"><div class="stat"><div class="n">3,249<em>步</em></div><div class="l">替代的人工操作</div><div class="h">按人工口径折算：每次群聊邀请约 13 步（查表、搜索、进群、开面板、加人、确认），每多拉 1 人再加约 6 步。本批共 213 次群聊邀请、293 人次。</div></div><div class="stat"><div class="n">293<em>人</em></div><div class="l">成功邀请入群</div><div class="h">按「微信号 + 目标群」去重口径，共 308 次群聊邀请，失败 6 人、需人工复核 9 人。</div></div><div class="stat"><div class="n">95.1<em>%</em></div><div class="l">成功率</div><div class="h">分母为 成功 + 失败 + 可疑。可疑指截图检测判断不出结果、需要人工确认的行，统一按未成功计入分母。</div></div><div class="stat"><div class="n">113<em>人/小时</em></div><div class="l">实际吞吐</div><div class="h">平均每人约 32 秒，包含搜索、选中、截图检测与批次确认的全过程。</div></div><div class="stat"><div class="n">2.6<em>小时</em></div><div class="l">累计运行时长</div><div class="h">覆盖 25 次运行、9 位发起人、6 台机器。</div></div><div class="stat"><div class="n">132<em>次</em></div><div class="l">自动纠错挽回</div><div class="h">界面按钮位置漂移时脚本会自动重试：共尝试 343 次，其中 132 次自愈成功，未打断整批运行。</div></div></div>
+    <p class="note">数据来源：2026年4月7日–9日 的生产运行日志
+      （25 次运行 / 342 条运行记录，含重跑）。
+      姓名与微信号已脱敏。明细见<a href="report.html">生产数据报告</a>。</p>
+  </section>
+
+  <section class="blk">
+    <h2>交付了什么</h2>
+    <p class="sub">一套命令行工具，三种批量工作流，覆盖微信与企业微信。</p>
+    <div class="cards"><div class="card"><h3>批量邀请</h3><code class="cmd">invite</code><p>按 CSV 把人拉进指定群聊。同一个群的多个人合并成一批，只打开一次邀请窗口。覆盖微信与企业微信，包括需要群主审批的群。</p></div><div class="card"><h3>批量发消息</h3><code class="cmd">send</code><p>按 CSV 逐个私发消息，同一个人可以按顺序发多条。每条发完自动截图，跑完生成一份可逐条点开核对的 review.html。</p></div><div class="card"><h3>批量转发</h3><code class="cmd">forward</code><p>把公众号文章以卡片形态逐条转发给联系人，保留卡片样式而不是变成纯链接。</p></div></div>
+  </section>
+
+  <section class="blk">
+    <h2>为什么这些数字可信</h2>
+    <p class="sub">自动化最贵的不是慢，是「报告说成功、人其实没收到」。这个项目大部分工程量花在这上面。</p>
+    <div class="rows"><div class="row"><div class="t">先演练，再执行</div><div class="d">每种工作流都有 dry-run 模式：走完整流程但不真正发出，确认 CSV 和目标无误后再正式跑。</div></div><div class="row"><div class="t">随时可中断</div><div class="d">运行中按 SHIFT+ESC 立即停止，已完成的记录自动落盘，修正后可以续跑或只重试失败行。</div></div><div class="row"><div class="t">结果可核对</div><div class="d">每次运行产出结果 CSV 与日志；发消息工作流额外生成带截图的 review.html，逐条人工验收。</div></div><div class="row"><div class="t">不确定就报可疑，不猜成功</div><div class="d">截图检测判断不出结果时标记为可疑交人工复核，而不是默认成功——宁可多一次人工确认，也不让「没发出去」被记成「已发出」。</div></div><div class="row"><div class="t">70 个版本的持续修正</div><div class="d">更新日志逐条记录了每次改动的原因、代价和取舍，包括几次「看起来成功、实际没发出去」的问题是怎么被发现和堵住的。</div></div></div>
+  </section>
+
+  <section class="blk">
+    <h2>报告目录</h2>
+    <p class="sub">以下材料均由源仓库脚本从真实运行日志与项目文档自动生成。</p>
+    <div class="links"><a class="link" href="report.html"><strong>生产数据报告</strong><span>2026年4月7日–9日 那批集中拉群的完整数据：按发起人、按批次的明细与成功率。</span></a><a class="link" href="index.html"><strong>使用手册</strong><span>三种工作流的操作步骤、CSV 格式、权限设置与常见问题。</span></a><a class="link" href="changelog.html"><strong>更新日志</strong><span>70 个版本的完整记录，含客户视角的里程碑摘要。</span></a><a class="link" href="archive.html"><strong>历史报告</strong><span>按数据日期归档的历史快照。</span></a><a class="link" href="usage-2026-05.html"><strong>开发投入记录（2026-05）</strong><span>开发期 AI 辅助编码的工时与用量统计，供了解投入构成。</span></a></div>
+  </section>
+</div>
+<footer class="site-foot">微信自动化工具 · 客户交付报告。本页由源仓库脚本自动生成，姓名与微信号已脱敏。</footer>
+</body>
+</html>

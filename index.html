@@ -44,6 +44,14 @@
   .doc blockquote { margin:12px 0; padding:2px 16px; border-left:3px solid var(--line);
                     color:var(--sub); }
   .doc blockquote p { margin:6px 0; }
+  /* Tables scroll inside their own wrapper so a wide one never makes the whole
+     page scroll sideways on a phone. */
+  .doc .tbl-wrap { overflow-x:auto; margin:14px 0; -webkit-overflow-scrolling:touch; }
+  .doc table { border-collapse:collapse; width:100%; font-size:14px; }
+  .doc th, .doc td { border:1px solid var(--line); padding:8px 12px;
+                     text-align:left; vertical-align:top; }
+  .doc th { background:var(--code-bg); font-weight:600; white-space:nowrap; }
+  .doc td code { white-space:nowrap; }
   .toc { background:var(--card); border-radius:14px; box-shadow:0 1px 3px rgba(0,0,0,.08);
          padding:18px 26px; margin-bottom:22px; }
   .toc strong { font-size:13px; color:var(--sub); font-weight:600; }
@@ -64,7 +72,7 @@
 <ul><li><strong>批量邀请</strong> (<code>invite</code>)：批量邀请联系人进群，同群多人合并为一批（每批人数默认 20，可调：<code>config.json</code> 的 <code>invite.max_batch_size</code>，或单次运行加 <code>--invite-batch-size N</code>）</li><li><strong>批量发消息</strong> (<code>send</code>)：批量发送消息给联系人/群聊</li><li><strong>批量转发</strong> (<code>forward</code>)：把公众号文章卡片以卡片形态批量「逐条转发」给联系人（每批最多 9 人）</li></ul>
 <h3>支持哪些客户端</h3>
 <p>本工具同时支持<strong>微信</strong>和<strong>企业微信 (WeCom)</strong>，但<strong>不是每种工作流都两边都能跑</strong>：</p>
-<p>| 工作流 | 微信 | 企业微信 | 企业微信要做的额外准备 | |--------|------|----------|------------------------| | 批量邀请 <code>invite</code> | ✅ | ✅ | 填 <code>apps.com.tencent.WeWorkMac.invite.add_button_offset</code> 坐标；需开启 OCR。见[「在企业微信上批量拉群」](#在企业微信-wecom-上批量拉群) | | 批量转发 <code>forward</code> | ✅ | ✅ | 填 <code>apps.com.tencent.WeWorkMac.forward</code> 的窗口/框选几何。见[「在企业微信上转发」](#在企业微信-wecom-上转发) | | 批量发消息 <code>send</code> | ✅ | ❌ <strong>未适配</strong> | — |</p>
+<div class="tbl-wrap"><table><thead><tr><th>工作流</th><th>微信</th><th>企业微信</th><th>企业微信要做的额外准备</th></tr></thead><tbody><tr><td>批量邀请 <code>invite</code></td><td>✅</td><td>✅</td><td>填 <code>apps.com.tencent.WeWorkMac.invite.add_button_offset</code> 坐标；需开启 OCR。见<a href="#在企业微信-wecom-上批量拉群">「在企业微信上批量拉群」</a></td></tr><tr><td>批量转发 <code>forward</code></td><td>✅</td><td>✅</td><td>填 <code>apps.com.tencent.WeWorkMac.forward</code> 的窗口/框选几何。见<a href="#在企业微信-wecom-上转发">「在企业微信上转发」</a></td></tr><tr><td>批量发消息 <code>send</code></td><td>✅</td><td>❌ <strong>未适配</strong></td><td>—</td></tr></tbody></table></div>
 <blockquote><p>⚠️ <strong><code>send</code> 请勿在企业微信上运行。</strong> 工具<strong>不会拦截</strong>这个组合：加了 <code>--wechat-bundle-id com.tencent.WeWorkMac</code> 照样会跑，但发送流程用的仍是微信的窗口标题和按钮文案，结果不可预期。</p></blockquote>
 <p>企业微信的多开分身（<code>com.tencent.WeWorkMac1</code>、<code>com.tencent.WeWorkMac.clone1</code> 等）按家族自动识别，与主实例享受同一份配置。</p>
 <h2 id="适用范围">适用范围</h2>
@@ -172,7 +180,7 @@ INSTANCE=com.tencent.xinWeChat2</code></pre>
 <ol><li><strong>准备中转会话</strong>：打开微信里的「文件传输助手」（或你在 <code>config.json</code> 里设的会话），把这次要转发的公众号卡片<strong>按顺序发进去</strong>，并确认里面<strong>只有</strong>这次要发的内容——框选会扫到的都会被转发，别混进别的消息。</li><li><strong>填好 CSV</strong>：按上面的表头把收件人填进 <code>forward_details.csv</code>，存好。</li><li><strong>先演练一遍（零风险）</strong>：在终端运行下面这条命令。它会真正打开「发送给」弹窗、逐人搜索+选中+截图，但<strong>不会真正发出</strong>（最后用 Escape 撤销），完全可逆： ``<code>bash ./wechat_auto.sh forward --dry-run forward_details.csv </code>``</li><li><strong>核对 review.html</strong>：打开生成的报告，逐人确认 微信名 ↔ 微信号 ↔ 选中截图 是否一致（怎么打开见下方「查看 review.html 人工验收」）。</li><li><strong>正式转发</strong>：确认无误后，把上面命令里的 <code>--dry-run</code> 改成 <code>--yes</code> 再跑一次，即开始真正转发： ``<code>bash ./wechat_auto.sh forward --yes forward_details.csv </code>``</li><li><strong>人工确认送达</strong>：回到微信，确认收件人确实收到了卡片。</li></ol>
 <blockquote><p>进阶：收件人来自生产 CRM xlsx 时，可先用离线转换器把 xlsx 转成 CSV 再人工核对，完整教程见 <code>docs/forward-usage.md</code>。</p></blockquote>
 <h2 id="在企业微信-wecom-上转发">在企业微信 (WeCom) 上转发</h2>
-<p>forward 也能跑在<strong>企业微信</strong> macOS 客户端上（<code>invite</code> 同样支持，见[「在企业微信上批量拉群」](#在企业微信-wecom-上批量拉群)；<code>send</code> 未适配，请勿使用）。交互步骤完全一样，只多两点准备：</p>
+<p>forward 也能跑在<strong>企业微信</strong> macOS 客户端上（<code>invite</code> 同样支持，见<a href="#在企业微信-wecom-上批量拉群">「在企业微信上批量拉群」</a>；<code>send</code> 未适配，请勿使用）。交互步骤完全一样，只多两点准备：</p>
 <ol><li><strong>填几何配置</strong>：企业微信的窗口/框选坐标和微信不同，且没有内置默认值。打开 <code>config.example.json</code>，把里面 <code>apps.com.tencent.WeWorkMac.forward</code> 整段（含你这台机器分辨率对应的 <code>window_rect</code> / <code>select_drag_region</code>，键名就是程序日志里打印的屏幕指纹，如 <code>1710x1107@2x</code>）复制到你的 <code>config.json</code>。没填的话整批会失败并提示要补的 key。</li><li><strong>加 <code>--wechat-bundle-id</code> 参数</strong>：演练和正式转发都在命令里加上 <code>--wechat-bundle-id com.tencent.WeWorkMac</code>，例如： ``<code>bash ./wechat_auto.sh forward --dry-run --wechat-bundle-id com.tencent.WeWorkMac forward_details.csv ./wechat_auto.sh forward --yes     --wechat-bundle-id com.tencent.WeWorkMac forward_details.csv </code>``</li></ol>
 <p>中转会话同样默认「文件传输助手」（企业微信里也有）。按钮用 OCR 定位，无需逐机器调参。</p>
 <p>选中校验分两层，<strong>先数字后截图</strong>：优先用 OCR 读弹窗顶部的「已选择 N 个」计数，每加一个人计数必须正好 +1 才算选中成功；读不到计数（光线、缩放、文案差异等）才回退到三点截图哈希比对。两层都判不出来时记为「可疑」交人工复核，不会当成功。</p>

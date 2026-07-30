@@ -67,26 +67,17 @@
     <h1>使用手册</h1>
     <p class="lead">三种批量工作流的操作步骤、CSV 格式与常见问题。对应发布版本 v3.14.2。</p>
   </div>
-<div class="toc"><strong>本页目录</strong><ul><li><a href="#功能说明">功能说明</a></li><li><a href="#为了不触发风控-工具做了什么">为了不触发风控，工具做了什么</a></li><li><a href="#另外几个值得知道的设计取舍">另外几个值得知道的设计取舍</a></li><li><a href="#适用范围">适用范围</a></li><li><a href="#系统要求">系统要求</a></li><li><a href="#使用步骤">使用步骤</a></li><li><a href="#邀请-invite-操作步骤-照着做">邀请（invite）操作步骤（照着做）</a></li><li><a href="#多微信实例配置-可选">多微信实例配置（可选）</a></li><li><a href="#在企业微信-wecom-上批量拉群">在企业微信 (WeCom) 上批量拉群</a></li><li><a href="#查看结果">查看结果</a></li><li><a href="#发消息-send-csv-格式">发消息（send）CSV 格式</a></li><li><a href="#转发-forward-csv-格式">转发（forward）CSV 格式</a></li><li><a href="#在企业微信-wecom-上转发">在企业微信 (WeCom) 上转发</a></li><li><a href="#查看-review-html-人工验收">查看 review.html 人工验收</a></li><li><a href="#运行前检查">运行前检查</a></li><li><a href="#常见问题">常见问题</a></li><li><a href="#注意事项">注意事项</a></li><li><a href="#日志文件">日志文件</a></li><li><a href="#效率评测">效率评测</a></li><li><a href="#技术支持">技术支持</a></li><li><a href="#许可证">许可证</a></li></ul></div><div class="doc"><h2 id="功能说明">功能说明</h2>
-<p>通用自动化框架，支持三种工作流：</p>
+<div class="toc"><strong>本页目录</strong><ul><li><a href="#功能说明">功能说明</a></li><li><a href="#适用范围">适用范围</a></li><li><a href="#系统要求">系统要求</a></li><li><a href="#使用步骤">使用步骤</a></li><li><a href="#邀请-invite-操作步骤-照着做">邀请（invite）操作步骤（照着做）</a></li><li><a href="#多微信实例配置-可选">多微信实例配置（可选）</a></li><li><a href="#在企业微信-wecom-上批量拉群">在企业微信 (WeCom) 上批量拉群</a></li><li><a href="#查看结果">查看结果</a></li><li><a href="#发消息-send-csv-格式">发消息（send）CSV 格式</a></li><li><a href="#转发-forward-csv-格式">转发（forward）CSV 格式</a></li><li><a href="#在企业微信-wecom-上转发">在企业微信 (WeCom) 上转发</a></li><li><a href="#查看-review-html-人工验收">查看 review.html 人工验收</a></li><li><a href="#运行前检查">运行前检查</a></li><li><a href="#常见问题">常见问题</a></li><li><a href="#注意事项">注意事项</a></li><li><a href="#日志文件">日志文件</a></li><li><a href="#效率评测">效率评测</a></li><li><a href="#技术支持">技术支持</a></li><li><a href="#许可证">许可证</a></li></ul></div><div class="doc"><h2 id="功能说明">功能说明</h2>
+<p>微信 + 企微自动化框架，支持三种工作流：</p>
 <ul><li><strong>批量邀请</strong> (<code>invite</code>)：批量邀请联系人进群，同群多人合并为一批（每批人数默认 20，可调：<code>config.json</code> 的 <code>invite.max_batch_size</code>，或单次运行加 <code>--invite-batch-size N</code>）</li><li><strong>批量发消息</strong> (<code>send</code>)：批量发送消息给联系人/群聊</li><li><strong>批量转发</strong> (<code>forward</code>)：把公众号文章卡片以卡片形态批量「逐条转发」给联系人（每批最多 9 人）</li></ul>
 <h3>支持哪些客户端</h3>
 <p>本工具同时支持<strong>微信</strong>和<strong>企业微信 (WeCom)</strong>，但<strong>不是每种工作流都两边都能跑</strong>：</p>
 <div class="tbl-wrap"><table><thead><tr><th>工作流</th><th>微信</th><th>企业微信</th><th>企业微信要做的额外准备</th></tr></thead><tbody><tr><td>批量邀请 <code>invite</code></td><td>✅</td><td>✅</td><td>填 <code>apps.com.tencent.WeWorkMac.invite.add_button_offset</code> 坐标；需开启 OCR。见<a href="#在企业微信-wecom-上批量拉群">「在企业微信上批量拉群」</a></td></tr><tr><td>批量转发 <code>forward</code></td><td>✅</td><td>✅</td><td>填 <code>apps.com.tencent.WeWorkMac.forward</code> 的窗口/框选几何。见<a href="#在企业微信-wecom-上转发">「在企业微信上转发」</a></td></tr><tr><td>批量发消息 <code>send</code></td><td>✅</td><td>❌ <strong>未适配</strong></td><td>—</td></tr></tbody></table></div>
 <blockquote><p>⚠️ <strong><code>send</code> 请勿在企业微信上运行。</strong> 工具<strong>不会拦截</strong>这个组合：加了 <code>--wechat-bundle-id com.tencent.WeWorkMac</code> 照样会跑，但发送流程用的仍是微信的窗口标题和按钮文案，结果不可预期。</p></blockquote>
 <p>企业微信的多开分身（<code>com.tencent.WeWorkMac1</code>、<code>com.tencent.WeWorkMac.clone1</code> 等）按家族自动识别，与主实例享受同一份配置。</p>
-<h2 id="为了不触发风控-工具做了什么">为了不触发风控，工具做了什么</h2>
-<p>这部分是本项目投入最集中、但表面最看不出来的一块——它没有对应的功能按钮，只体现在 「每一次点击和等待都不完全一样」。</p>
-<p><strong>前提：不碰接口，只操作界面。</strong> 不使用任何非公开接口、不注入进程、不改客户端文件、 不伪造网络请求。工具做的事在系统层面和真人坐在电脑前做的是同一类事件——移动鼠标、点击、 敲键盘、读屏幕。没有协议层的异常，就没有协议层的特征可被识别。这也是它和市面上走协议 / hook 的「批量外挂」的根本区别。</p>
-<p><strong>每次点击落在不同像素上。</strong> 每次都精确点中按钮中心的同一个像素，是只有机器才做得到的事。 工具在目标坐标上叠加一个<strong>正态分布</strong>的随机偏移（Box-Muller 采样），按轴截断在 ±5 像素内， 落点是一片以按钮中心为峰值的概率云。用正态分布而非均匀分布，因为真人的手也是「多数时候 接近中心、偶尔偏一点」。参数见 <code>config.json</code> 的 <code>click_jitter</code>（默认 <code>sigma=2.0</code>、 <code>max_radius=5</code>），<strong>不要调大</strong>，原因见下方多实例配置章节的警告。</p>
-<p><strong>每次等待的长度都不一样。</strong> 全流程约 78 处等待，没有一处是写死的固定秒数，每处都是 「基准值 + 随机抖动」（如 <code>0.6s ± 0.1s</code>）。首要作用是等界面渲染完成，同时也让整批操作 不呈现精确的固定节拍。</p>
-<p><strong>逐人循环里一次鼠标都不动。</strong> 选人这个最高频动作是纯键盘完成的：粘贴微信号 → 方向键 → 回车。选第二个人及以后需要重新聚焦弹窗时，用的是辅助功能接口把窗口提到前面，而<strong>不是 点一下</strong>。所以一批 20 人的邀请，合成鼠标事件从「每人若干次」降到「整批一次」。</p>
-<p><strong>同群只开一次邀请窗口。</strong> 同群的人合并成一批（默认 20 人），共用一次「打开群 → 打开邀请 弹窗」，而不是每人重跑整套 UI 流程——窗口开合这类显眼动作因此少了一个量级。</p>
-<p><strong>它刻意不做的事：</strong></p>
-<ul><li><strong>不做拟人化假动作</strong>——没有随机鼠标漫游、无意义滚动、假装犹豫的长停顿。收益不明确， 却显著拉长运行时间、增加出错面。</li><li><strong>不自动限速、不自动分散时段</strong>——每批之间停不停、一天拉多少人由你决定，工具不替你做 这个判断，也不假装帮你规避了什么。</li><li><strong>不隐藏自己</strong>——不改客户端、不 hook 进程、不做反检测对抗。</li></ul>
-<blockquote><p>⚠️ <strong>必须说清楚</strong>：以上措施降低的是「看起来像脚本」的程度，<strong>不等于保证不被限制</strong>。 平台的判定规则不公开也会变化，真正决定风险的是<strong>你的使用强度</strong>——短时间内拉多少人、 频率多高、账号是不是新号。请从小批量开始，观察账号状态再逐步放大（建议值见下方 「注意事项」）。工具能保证的是「每一步都可核对、出问题能立刻停下并留下记录」， 不能保证平台的判定结果。</p></blockquote>
-<h2 id="另外几个值得知道的设计取舍">另外几个值得知道的设计取舍</h2>
-<ul><li><strong>拿不准就标「存疑」，绝不猜着发出去。</strong> 每选中一个人都会核对屏幕真的按预期变了（优先 读弹窗里的已选人数是不是刚好 +1，读不到再比对操作前后的截图）。判不出来就标记失败并 注明存疑，交你人工确认。</li><li><strong>转发按下「分别发送」前会再数一遍人。</strong> 已选人数和本批该选的人数对不上，就整批不发。</li><li><strong>四种状态，没有第五种。</strong> 结果 CSV 只有 <code>pending</code> / <code>success</code> / <code>failed</code> / <code>canceled</code>， 细分原因写在 <code>message</code> 列（<code>[suspect]</code> 存疑、<code>[blocked]</code> 前序失败连带、<code>[skip]</code> 跳过）。 好数、好筛、好交接。</li><li><strong>演练是默认入口。</strong> <code>--dry-run</code> 走完整流程但最后一下不发；演练过的行下次<strong>一定</strong>重新 排队，演练时的「成功」永远不会被当成真干完了。</li><li><strong>随时能叫停。</strong> Shift+ESC 在 0.2 秒内中止，已完成的如实落盘，没轮到的标「已取消」。</li><li><strong>配置运行期只读。</strong> <code>config.json</code> 和坐标文件只从发布包根目录读，运行中绝不写回， 避免「跑一次自己把配置改了」这种难以追查的情况。</li><li><strong>按钮靠认字定位，不靠死坐标。</strong> 关键按钮用 OCR 识别文案来定位，换分辨率、客户端小改版 都不至于直接点空。</li></ul>
+<h3>风控预防</h3>
+<ul><li><strong>不碰接口，只操作界面</strong>：不使用非公开接口、不注入进程、不改客户端文件、不伪造网络请求。</li><li><strong>点击位置随机</strong>：在目标坐标上叠加正态分布偏移（按轴 ±5 像素），不会每次都精确点在同一像素。</li><li><strong>等待时长随机</strong>：全流程约 78 处等待均为「基准值 + 随机抖动」，无固定节拍。</li><li><strong>逐人循环零鼠标</strong>：选人纯键盘完成，重新聚焦弹窗用辅助功能接口而非点击。</li><li><strong>同群只开一次邀请窗口</strong>：同群多人合并为一批，窗口开合次数少一个量级。</li><li><strong>不做拟人化假动作</strong>：无随机鼠标漫游、无意义滚动、假装犹豫的停顿——收益不明确且拖慢运行。</li><li><strong>不自动限速</strong>：每批之间停不停、一天拉多少人由你决定，见下方「注意事项」。</li></ul>
+<blockquote><p>⚠️ 以上降低的是「看起来像脚本」的程度，<strong>不等于保证不被限制</strong>。真正决定风险的是使用强度，请从小批量开始。</p></blockquote>
 <h2 id="适用范围">适用范围</h2>
 <p>邀请功能适用于以下场景：</p>
 <ul><li>群聊邀请需要群主同意</li><li>邀请人非群主</li><li>群聊人数 &gt; 50</li></ul>
@@ -226,7 +217,7 @@ INSTANCE=com.tencent.xinWeChat2</code></pre>
 <p><strong>A</strong>: 查看 <code>failed_tasks_YYYYMMDD.csv</code>，修正后重新运行该文件。</p>
 <h2 id="注意事项">注意事项</h2>
 <p>⚠️ <strong>重要提醒</strong>：</p>
-<ol><li>建议每天邀请不超过 50 次，避免被微信限制</li><li>运行期间不要操作鼠标键盘</li><li>确保微信窗口在主显示器上</li><li>首次使用建议测试 2-3 个任务</li></ol>
+<ol><li>建议单账号每天邀请不超过 100 人——这是经验值，工具本身不做限制</li><li>运行期间不要操作鼠标键盘</li><li>确保微信窗口在主显示器上</li><li>首次使用建议测试 2-3 个任务</li></ol>
 <h2 id="日志文件">日志文件</h2>
 <p>每次运行会生成日志文件（存放在 <code>logs/</code> 目录）：</p>
 <ul><li><code>logs/wechat_invite_YYYYMMDD_HHMMSS.log</code> - 详细执行日志</li><li><code>logs/failed_tasks_YYYYMMDD.csv</code> - 失败任务列表（如有）</li></ul>

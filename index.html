@@ -67,9 +67,20 @@
     <h1>使用手册</h1>
     <p class="lead">三种批量工作流的操作步骤、CSV 格式与常见问题。对应发布版本 v3.14.2。</p>
   </div>
-<div class="toc"><strong>本页目录</strong><ul><li><a href="#功能说明">功能说明</a></li><li><a href="#适用范围">适用范围</a></li><li><a href="#系统要求">系统要求</a></li><li><a href="#使用步骤">使用步骤</a></li><li><a href="#邀请-invite-操作步骤-照着做">邀请（invite）操作步骤（照着做）</a></li><li><a href="#多微信实例配置-可选">多微信实例配置（可选）</a></li><li><a href="#在企业微信-wecom-上批量拉群">在企业微信 (WeCom) 上批量拉群</a></li><li><a href="#查看结果">查看结果</a></li><li><a href="#发消息-send-csv-格式">发消息（send）CSV 格式</a></li><li><a href="#转发-forward-csv-格式">转发（forward）CSV 格式</a></li><li><a href="#在企业微信-wecom-上转发">在企业微信 (WeCom) 上转发</a></li><li><a href="#查看-review-html-人工验收">查看 review.html 人工验收</a></li><li><a href="#运行前检查">运行前检查</a></li><li><a href="#常见问题">常见问题</a></li><li><a href="#注意事项">注意事项</a></li><li><a href="#日志文件">日志文件</a></li><li><a href="#效率评测">效率评测</a></li><li><a href="#技术支持">技术支持</a></li><li><a href="#许可证">许可证</a></li></ul></div><div class="doc"><h2 id="功能说明">功能说明</h2>
+<div class="toc"><strong>本页目录</strong><ul><li><a href="#背景">背景</a></li><li><a href="#效果">效果</a></li><li><a href="#功能说明">功能说明</a></li><li><a href="#适用范围">适用范围</a></li><li><a href="#系统要求">系统要求</a></li><li><a href="#使用步骤">使用步骤</a></li><li><a href="#邀请-invite-操作步骤-照着做">邀请（invite）操作步骤（照着做）</a></li><li><a href="#多微信实例配置-可选">多微信实例配置（可选）</a></li><li><a href="#在企业微信-wecom-上批量拉群">在企业微信 (WeCom) 上批量拉群</a></li><li><a href="#查看结果">查看结果</a></li><li><a href="#发消息-send-csv-格式">发消息（send）CSV 格式</a></li><li><a href="#转发-forward-csv-格式">转发（forward）CSV 格式</a></li><li><a href="#在企业微信-wecom-上转发">在企业微信 (WeCom) 上转发</a></li><li><a href="#查看-review-html-人工验收">查看 review.html 人工验收</a></li><li><a href="#运行前检查">运行前检查</a></li><li><a href="#常见问题">常见问题</a></li><li><a href="#注意事项">注意事项</a></li><li><a href="#日志文件">日志文件</a></li><li><a href="#效率评测">效率评测</a></li><li><a href="#技术支持">技术支持</a></li><li><a href="#许可证">许可证</a></li></ul></div><div class="doc"><h2 id="背景">背景</h2>
+<p>由于产品特点，小助手每月要负责大量的用户运营操作，包含拉群、批量发消息、转发卡片类信息等等。这每一步操作都是人工进行，比如一次拉群，需要人工操作鼠标键盘 16 次，且需要在石墨文档、微信等多个 app 之间切换，新手极易出错。</p>
+<p>小助手们不得不加班，但人力依然不足，需要每周征集其他团队同学支持，在原本 4x7（预估）=28 人天的基础上，还需要额外耗费费 4-5 人天。如果维持现状，参与训练营的用户进一步增加，将需要等比增加更多人力支持，<strong>边际成本极高</strong>。</p>
+<h2 id="效果">效果</h2>
+<p>支持了开营期间的绝大部分重负荷的小助手运营工作，比如新老用户入群、给新用户群发消息；</p>
+<p>一个人+一条命令，即可支持数十个小助手账号（理论上）的以上工作；</p>
+<p>6 月开始，开营期间不再需要征兵，小助手的加班时间也下降；</p>
+<p>并且，用户运营的成本，不会随着用户数等比增加，<strong>边际成本极低。</strong></p>
+<h2 id="功能说明">功能说明</h2>
 <p>微信 + 企微自动化框架，支持三种工作流：</p>
 <ul><li><strong>批量邀请</strong> (<code>invite</code>)：批量邀请联系人进群，同群多人合并为一批（每批人数默认 20，可调：<code>config.json</code> 的 <code>invite.max_batch_size</code>，或单次运行加 <code>--invite-batch-size N</code>）</li><li><strong>批量发消息</strong> (<code>send</code>)：批量发送消息给联系人/群聊</li><li><strong>批量转发</strong> (<code>forward</code>)：把公众号文章卡片以卡片形态批量「逐条转发」给联系人（每批最多 9 人）</li></ul>
+<p>在每个工作流的基础上，叠加了一下特性，以确保工作流稳定运行，出错时也知道如何处理：</p>
+<ul><li><strong>多账号支持</strong>：支持多个微信/企微，可自动切换不同账号实现以上功能（只支持串行）</li><li><strong>风控预防</strong>：实现了很多拟人操作，尽可能避免被发现自动化（但无法确保，控制数量很重要）</li><li><strong>生产模式</strong>：执行除最后一步的全流程，确认没问题以后再开始正式的 “生产流程”</li><li><strong>错误检测</strong>：支持发现执行过程中因为用户信息、网络、人工误触鼠标键盘导致的错误，及时标记人工处理，</li><li><strong>人工中断</strong>：如发现异常，可人工按快捷键 SHIFT+ESC 中断</li><li><strong>错误重试</strong>：如发现错误，可用 --retry-failed 或者 --resume 重试（详情见后续章节）</li><li>……</li></ul>
+<blockquote><p>本方案主要用 MacOS</p><p>appscript（系统操作）默认人工操作鼠标+键盘，不尝试 hack App 内部。</p><p>这可以尽可能避免风控，但也会增加开发难度，且每个环节的状态检测需要靠截图+OCR 识别实现，可能网络影响导致截图时机不对，无法实现 100% 成功率。</p></blockquote>
 <h3>支持哪些客户端</h3>
 <p>本工具同时支持<strong>微信</strong>和<strong>企业微信 (WeCom)</strong>，但<strong>不是每种工作流都两边都能跑</strong>：</p>
 <div class="tbl-wrap"><table><thead><tr><th>工作流</th><th>微信</th><th>企业微信</th><th>企业微信要做的额外准备</th></tr></thead><tbody><tr><td>批量邀请 <code>invite</code></td><td>✅</td><td>✅</td><td>填 <code>apps.com.tencent.WeWorkMac.invite.add_button_offset</code> 坐标；需开启 OCR。见<a href="#在企业微信-wecom-上批量拉群">「在企业微信上批量拉群」</a></td></tr><tr><td>批量转发 <code>forward</code></td><td>✅</td><td>✅</td><td>填 <code>apps.com.tencent.WeWorkMac.forward</code> 的窗口/框选几何。见<a href="#在企业微信-wecom-上转发">「在企业微信上转发」</a></td></tr><tr><td>批量发消息 <code>send</code></td><td>✅</td><td>❌ <strong>未适配</strong></td><td>—</td></tr></tbody></table></div>
